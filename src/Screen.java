@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Main handles of the screen
@@ -6,7 +7,8 @@ import javax.swing.*;
 public class Screen extends JFrame{
     private JPanel screenWrapper;
     private JTabbedPane tabPane;
-    private static Screen screen = new Screen();
+    private static Screen screen = new Screen(); // Static
+    private static StartScreen startScreen = new StartScreen(); // Static
 
     private Screen(){}
 
@@ -30,7 +32,7 @@ public class Screen extends JFrame{
      * Starts the screen
      */
     public void startScreen() {
-        tabPane.addTab("Start", new StartScreen());
+        tabPane.addTab("Start", startScreen);
         createScreen();
     }
 
@@ -43,4 +45,10 @@ public class Screen extends JFrame{
         tabPane.setSelectedComponent(tab);
     }
 
+    /**
+     * Helper function to set focus back to the start tab
+     */
+    public void focusStartTab() {
+        tabPane.setSelectedComponent(startScreen);
+    }
 }

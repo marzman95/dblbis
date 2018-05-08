@@ -4,9 +4,9 @@ import java.awt.*;
 /**
  * Main handles of the screen
  */
-public class Screen extends JFrame{
+public class Screen extends JFrame {
     private JPanel screenWrapper;
-    private JTabbedPane tabPane;
+    public JTabbedPane tabPane;
     private static Screen screen = new Screen(); // Static
     private static StartScreen startScreen = new StartScreen(); // Static
 
@@ -37,12 +37,25 @@ public class Screen extends JFrame{
     }
 
     /**
-     * Adds a panel to the tabbed screen
-     * @param tab the panel to be added
+     * Adds a new tab, with content, to the screen
+     * @param newTab tab to be added
      */
-    public void addTab(Tab tab) {
-        tabPane.addTab(tab.getTitle(), tab);
-        tabPane.setSelectedComponent(tab);
+    private void addTabToScreen(Tab newTab) {
+        int i = tabPane.getTabCount();
+        System.out.println("Index of new: " + i);
+        //tabPane.addTab(title, newTab);
+        tabPane.add(newTab.title, newTab.content);
+        tabPane.setTabComponentAt(i, newTab);
+        tabPane.setSelectedIndex(i);
+    }
+
+    /**
+     * Creates the new tab based on the given content
+     * @param content content for the new tab
+     */
+    public void addTab(TabContent content) {
+        Tab newTab = new Tab(tabPane, content.getTitle(), content);
+        addTabToScreen(newTab);
     }
 
     /**

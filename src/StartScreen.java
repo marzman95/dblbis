@@ -10,23 +10,27 @@ public class StartScreen extends JPanel {
     private JButton addSecondPanelButton;
     private JButton addThirdPanelButton;
     private Screen mainScreen = Screen.getScreen();
+    public JTabbedPane tabPane;
 
     public StartScreen() {
+        this.tabPane = mainScreen.tabPane;
         add(startPanel);
         addSecondPanelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Tab secondTab = new SecondTab();
-                mainScreen.addTab(secondTab);
+                String title = "Second tab";
+                TabContent content = new SomeTab(title);
+                mainScreen.addTab(content);
+
             }
         });
         addThirdPanelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Tab thirdTab = new ThirdTab();
-                mainScreen.addTab(thirdTab);
+                //ThirdTab thirdTab = new ThirdTab();
+                //mainScreen.addTabToScreen(thirdTab);
             }
         });
     }

@@ -29,8 +29,9 @@ public class StartScreen extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //ThirdTab thirdTab = new ThirdTab();
-                //mainScreen.addTabToScreen(thirdTab);
+                String title = "Third tab";
+                TabContent content = new SomeTab(title);
+                mainScreen.addTab(content);
             }
         });
     }

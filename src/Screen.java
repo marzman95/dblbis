@@ -59,9 +59,31 @@ public class Screen extends JFrame {
     }
 
     /**
+     * Removes the given tab from the screen
+     * @param tab the tab to be removed
+     */
+    public void removeTab(Tab tab) {
+        int i = tabPane.indexOfTabComponent(tab);
+        // Selects the current selected tab
+        Component curSelected = tabPane.getSelectedComponent();
+        if (i != -1) {
+            // Selects the tab-component that has to be removed
+            Component removing = tabPane.getComponentAt(i);
+            if (removing == curSelected) {
+                // If removing component is same as selected, switch to start-tab
+                focusStartTab();
+            }
+            // Remove the tab
+            tabPane.remove(removing);
+        } else {
+            throw new NullPointerException("Tab does no exists");
+        }
+    }
+
+    /**
      * Helper function to set focus back to the start tab
      */
-    public void focusStartTab() {
+    private void focusStartTab() {
         tabPane.setSelectedComponent(startScreen);
     }
 }

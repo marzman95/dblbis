@@ -1,6 +1,6 @@
+import javafx.scene.input.MouseButton;
+
 import javax.swing.*;
-import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,9 +10,9 @@ import java.awt.event.*;
  */
 public class Tab extends JPanel {
     private final JTabbedPane tabPane;
-    public final String title;
+    protected final String title;
     private final Screen mainScreen = Screen.getScreen();
-    public Component content;
+    protected Component content;
 
     public Tab(final JTabbedPane tabPane, String title, Component tabContent) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -41,16 +41,18 @@ public class Tab extends JPanel {
         JButton closeButton = new CloseButton();
         add(closeButton);
         setBorder(BorderFactory.createEmptyBorder(2,0,0,0));
+        // TODO: Add mouse listener(s) for middle button close
+        //addMouseListener(new MouseListener() {});
     }
 
     private class CloseButton extends JButton implements ActionListener {
         /**
          * Implements the closing button constructor
          */
-        public CloseButton() {
+        private CloseButton() {
             int size = 17;
             setPreferredSize(new Dimension(size, size));
-            setToolTipText("Close this tab"); // TODO: Implement title in close tooltip
+            setToolTipText("Close " + title + " -tab"); // TODO: Implement title in close tooltip
             setUI(new BasicButtonUI());
             setContentAreaFilled(false);
             setFocusable(false);
@@ -66,11 +68,7 @@ public class Tab extends JPanel {
          * @param e clicking action
          */
         public void actionPerformed(ActionEvent e) {
-            int i = tabPane.indexOfTabComponent(Tab.this);
-            if (i != -1) {
-                tabPane.remove(i);
-                mainScreen.focusStartTab();
-            }
+            mainScreen.removeTab(Tab.this);
         }
 
         public void updateUI() {}
@@ -117,123 +115,4 @@ public class Tab extends JPanel {
             }
         }
     };
-
-//    private String title; // Defines the title to be displayed in the tab
-//    private Screen screen = Screen.getScreen();
-//    public final JTabbedPane tabsPane;
-//
-//    public Tab(final JTabbedPane tabsPane) {
-//        super(new FlowLayout(FlowLayout.LEFT, 0,0));
-//        this.tabsPane = tabsPane;
-//
-//        JLabel label = new JLabel() {
-//            public String getText() {
-//                int i = tabsPane.indexOfTabComponent(Tab.this);
-//                if (i != -1) {
-//                    return tabsPane.getTitleAt(i);
-//                }
-//                return getTitle();
-//            }
-//        };
-//
-//        add(label);
-//        label.setBorder(BorderFactory.createEmptyBorder(0,0,0,5));
-//        JButton tabCloseButton = new CloseButton();
-//        add(tabCloseButton);
-//        setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-//    }
-//
-//    /**
-//     * Retrieves the title of the current tab
-//     * @return title of the current tab
-//     */
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    /**
-//     * Sets the title of the tab
-//     * @param newTitle the new title of the current tab
-//     */
-//    public void setTitle(String newTitle) {
-//        title = newTitle;
-//    }
-//
-//
-//    /**
-//     * Closes the current tab
-//     */
-//    public void closeTab() {
-//        Container i = getParent();
-//        i.remove(this);
-//        screen.focusStartTab();
-//    }
-//
-//    private class CloseButton extends JButton implements ActionListener {
-//        public CloseButton() {
-//            int size = 17;
-//            setPreferredSize(new Dimension(size, size));
-//            setToolTipText("close this tab");
-//            //Make the button looks the same for all Laf's
-//            setUI(new BasicButtonUI());
-//            //Make it transparent
-//            setContentAreaFilled(false);
-//            //No need to be focusable
-//            setFocusable(false);
-//            setBorder(BorderFactory.createEtchedBorder());
-//            setBorderPainted(false);
-//            //Making nice rollover effect
-//            //we use the same listener for all buttons
-//            addMouseListener(buttonMouseListener);
-//            setRolloverEnabled(true);
-//            //Close the proper tab by clicking the button
-//            addActionListener(this);
-//        }
-//
-//        public void actionPerformed(ActionEvent e) {
-//            closeTab();
-//        }
-//
-//        //we don't want to update UI for this button
-//        public void updateUI() {
-//        }
-//
-//        //paint the cross
-//        protected void paintComponent(Graphics g) {
-//            super.paintComponent(g);
-//            Graphics2D g2 = (Graphics2D) g.create();
-//            //shift the image for pressed buttons
-//            if (getModel().isPressed()) {
-//                g2.translate(1, 1);
-//            }
-//            g2.setStroke(new BasicStroke(2));
-//            g2.setColor(Color.BLACK);
-//            if (getModel().isRollover()) {
-//                g2.setColor(Color.MAGENTA);
-//            }
-//            int delta = 6;
-//            g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
-//            g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
-//            g2.dispose();
-//        }
-//    }
-//
-//    private final static MouseListener buttonMouseListener = new MouseAdapter() {
-//        public void mouseEntered(MouseEvent e) {
-//            Component component = e.getComponent();
-//            if (component instanceof AbstractButton) {
-//                AbstractButton button = (AbstractButton) component;
-//                button.setBorderPainted(true);
-//            }
-//        }
-//
-//        public void mouseExited(MouseEvent e) {
-//            Component component = e.getComponent();
-//            if (component instanceof AbstractButton) {
-//                AbstractButton button = (AbstractButton) component;
-//                button.setBorderPainted(false);
-//            }
-//        }
-//    };
-
 }

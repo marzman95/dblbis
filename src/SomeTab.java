@@ -5,32 +5,24 @@ import java.awt.event.MouseEvent;
 
 public class SomeTab extends TabContent {
     private JPanel contentPane;
-    private JButton sidePanelButton;
-    private JPanel sidePanel;
-    private JLabel sideBarTitle;
-    private JButton sideBarCloseButton;
+    private JButton closeTabButton;
+
 
     public SomeTab(String title) {
         super(title);
         add(contentPane);
-        add(sidePanelButton);
-        sidePanel.setBorder(BorderFactory.createEtchedBorder(Color.GREEN, Color.MAGENTA));
-        add(sidePanel);
-        sidePanel.setVisible(false);
-        sidePanelButton.addMouseListener(new MouseAdapter() {
+        add(closeTabButton);
+        closeTabButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                sidePanel.setVisible(true);
-                sidePanelButton.setEnabled(false);
-            }
-        });
-        sideBarCloseButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                sidePanel.setVisible(false);
-                sidePanelButton.setEnabled(true);
+                Container parent = getParent();
+                System.out.println(parent);
+                //Screen.getScreen().removeTab();
+                int removeIndex = Screen.getScreen().tabPane.indexOfTab(title);
+                System.out.println(parent.getComponent(removeIndex));
+                Screen.getScreen().removeTab(title);
+
             }
         });
     }

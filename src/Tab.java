@@ -68,7 +68,7 @@ public class Tab extends JPanel {
          * @param e clicking action
          */
         public void actionPerformed(ActionEvent e) {
-            mainScreen.removeTab(Tab.this);
+            mainScreen.removeTab(Tab.this.title);
         }
 
         public void updateUI() {}

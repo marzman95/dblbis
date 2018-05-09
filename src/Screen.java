@@ -60,10 +60,11 @@ public class Screen extends JFrame {
 
     /**
      * Removes the given tab from the screen
-     * @param tab the tab to be removed
+     * @param title of the tab to be removed
      */
-    public void removeTab(Tab tab) {
-        int i = tabPane.indexOfTabComponent(tab);
+    public void removeTab(String title) {
+        int i = tabPane.indexOfTab(title);
+
         // Selects the current selected tab
         Component curSelected = tabPane.getSelectedComponent();
         if (i != -1) {

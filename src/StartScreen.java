@@ -28,7 +28,7 @@ public class StartScreen extends JPanel {
         sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
         sidePanel.setVisible(false); // Disable sidePanel
 
-        image = new ImageIcon("C:\\Users\\s147433\\OneDrive - TU Eindhoven\\TUE\\Jaar 4\\Y4Q4\\2IOC0 (DBL Business Information Systems)\\Drafts Jeroen\\Map.jpg");
+        image = new ImageIcon("C:\\Users\\20167544\\Pictures\\Camera Roll\\RDM.png");
 
         JLabel label = new JLabel("", image, JLabel.CENTER);
         JPanel panel = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class StartScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //StartScreen.super.action(e);
                 String title = "Second tab";
-                TabContent content = new SomeTab(title);
+                TabContent content = new SettingsTab(title);
                 if (tabPane.indexOfTab(title) != -1) {
                     tabPane.setSelectedIndex(tabPane.indexOfTab(title));
                 } else {

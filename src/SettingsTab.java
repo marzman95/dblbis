@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import javax.swing.filechooser.*;
 
 public class SettingsTab extends TabContent {
     private JPanel contentPane;
@@ -35,28 +34,25 @@ public class SettingsTab extends TabContent {
 
             }
         });
-        fileButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                int returnVal = fc.showOpenDialog(SettingsTab.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile();
-                    //This is where a real application would save the file.
-                    System.out.println(file);
-
-                } else {
-
-                }
-
-            }
-
-
-        });
+//        fileButton.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                int returnVal = fc.showOpenDialog(SettingsTab.this);
+//                if (returnVal == JFileChooser.APPROVE_OPTION) {
+//                    File file = fc.getSelectedFile();
+//                    //This is where a real application would save the file.
+//                    System.out.println(file);
+//
+//                } else {
+//
+//                }
+//
+//            }
+//
+//
+//        });
 
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }

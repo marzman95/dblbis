@@ -4,12 +4,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import javax.swing.filechooser.*;
 
 class SettingsTab extends TabContent {
     private JPanel contentPane;
     private JButton closeTabButton;
-    private String title;
     JButton fileButton;
     JTextField filepath1;
     //JFileChooser fc;

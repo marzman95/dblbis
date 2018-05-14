@@ -20,7 +20,7 @@ public class Screen extends JFrame {
      * Generates and shows the main screen
      */
     private void createScreen() {
-        //screen = new JFrame("Test");
+        //screen = new JFrame("Setup");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setContentPane(screenWrapper);
         screen.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -20,7 +19,7 @@ class SettingsTab extends TabContent {
         add(fileButton);
         add(filepath1);
         JFileChooser fc = new JFileChooser();
-        add(fc);
+        Setup test = new Setup();
 
         closeTabButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -42,8 +41,9 @@ class SettingsTab extends TabContent {
                 int returnVal = fc.showOpenDialog(SettingsTab.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
+                    System.out.println("test");
                     //This is where a real application would save the file.
-                    System.out.println(file);
+                    test.DBSetup(file);
 
                 } else {
 

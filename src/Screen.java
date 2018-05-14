@@ -7,8 +7,8 @@ import java.awt.*;
 public class Screen extends JFrame {
     private JPanel screenWrapper;
     public JTabbedPane tabPane;
-    private static Screen screen = new Screen(); // Static
-    private static StartScreen startScreen = new StartScreen(); // Static
+    private static final Screen screen = new Screen(); // Static
+    private static final StartScreen startScreen = new StartScreen(); // Static
 
     private Screen(){}
 
@@ -42,8 +42,6 @@ public class Screen extends JFrame {
      */
     private void addTabToScreen(Tab newTab) {
         int i = tabPane.getTabCount();
-        System.out.println("Index of new: " + i);
-        //tabPane.addTab(title, newTab);
         tabPane.add(newTab.title, newTab.content);
         tabPane.setTabComponentAt(i, newTab);
         tabPane.setSelectedIndex(i);

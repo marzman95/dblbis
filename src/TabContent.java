@@ -1,9 +1,9 @@
 import javax.swing.*;
 
-public abstract class TabContent extends JPanel {
-    private String title;
+abstract class TabContent extends JPanel {
+    private final String title;
 
-    protected TabContent(final String title) {
+    TabContent(final String title) {
         this.title = title;
     }
 

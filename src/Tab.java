@@ -1,5 +1,3 @@
-import javafx.scene.input.MouseButton;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
@@ -8,18 +6,16 @@ import java.awt.event.*;
 /**
  * Class that defines the functionality each tab
  */
-public class Tab extends JPanel {
-    private final JTabbedPane tabPane;
-    protected final String title;
+class Tab extends JPanel {
+    final String title;
     private final Screen mainScreen = Screen.getScreen();
-    protected Component content;
+    Component content;
 
     public Tab(final JTabbedPane tabPane, String title, Component tabContent) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
         if (tabPane == null) {
             throw new NullPointerException("Tabbed Pane is null");
         }
-        this.tabPane = tabPane;
         this.title = title;
         this.content = tabContent;
         setOpaque(false);
@@ -75,7 +71,7 @@ public class Tab extends JPanel {
 
         /**
          * Paints the cross
-         * @param g
+         * @param g graphics to be painted
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);

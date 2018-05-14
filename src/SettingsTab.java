@@ -6,12 +6,13 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.filechooser.*;
 
-public class SettingsTab extends TabContent {
+class SettingsTab extends TabContent {
     private JPanel contentPane;
     private JButton closeTabButton;
+    private String title;
     JButton fileButton;
     JTextField filepath1;
-    JFileChooser fc;
+    //JFileChooser fc;
 
 
     public SettingsTab(String title) {
@@ -20,6 +21,7 @@ public class SettingsTab extends TabContent {
         add(closeTabButton);
         add(fileButton);
         add(filepath1);
+        JFileChooser fc = new JFileChooser();
         add(fc);
 
         closeTabButton.addMouseListener(new MouseAdapter() {
@@ -56,7 +58,7 @@ public class SettingsTab extends TabContent {
 
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+//    private void createUIComponents() {
+//        // TODO: place custom component creation code here
+//    }
 }

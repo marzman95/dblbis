@@ -1,23 +1,34 @@
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.sql.*;
 
 
-public class Setup {
+public class Setup implements Runnable {
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    private File file;
 
+    public String pathtostr(File file){
+        String string = file.toString();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < string.length(); i++){
+            char c = string.charAt(i);
+            if(c == '\\'){
+                sb.append("\\\\");
+            }
+            else{
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
      //Get data for filling Trip: SELECT `Trip Number`,SUM(`Distance`),SUM(`Duration`),MIN(`Start date`),MAX(`End date`) FROM dataset GROUP BY `Trip Number`
-     public void DBSetup(File file){
+     public void DBSetup(){
          long startTime = System.nanoTime();
          //(new Setup()).readDataBase();
          try {
-             Class.forName("com.mysql.jdbc.Driver");
+             //Class.forName("com.mysql.jdbc.Driver");
              connect = getConnection();
              statement = connect.createStatement();
              statement.executeUpdate("TRUNCATE `city`");
@@ -26,9 +37,12 @@ public class Setup {
              statement.executeUpdate("TRUNCATE `trip`");
              System.out.println("Truncated Tables");
              System.out.println("Loading File...");
-             String str = FileUtils.readFileToString(file,"UTF-8");
+             String str = pathtostr(file);
+             if(file.exists()){
+                 System.out.println("File is there");
+             }
              System.out.println(str);
-             String sql = "LOAD DATA LOCAL INFILE \' "+ str +" \' IGNORE INTO TABLE `test`.`leg` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES (@ColVar0, `From`, `Country Code (Activity From)`, `To`, `Country Code (Activity To)`, `Start date`, `End date`, @ColVar7, @ColVar8, @ColVar9, @ColVar10, @ColVar11, @ColVar12, @ColVar13, @ColVar14, @ColVar15, @ColVar16, @ColVar17) SET `Trip Number` = REPLACE(REPLACE(@ColVar0, ',', ''), '.', '.'), `Duration` = REPLACE(REPLACE(@ColVar7, ',', ''), '.', '.'), `Load Time` = REPLACE(REPLACE(@ColVar8, ',', ''), '.', '.'), `Unload Time` = REPLACE(REPLACE(@ColVar9, ',', ''), '.', '.'), `Distance` = REPLACE(REPLACE(@ColVar10, ',', ''), '.', '.'), `Productive Running` = REPLACE(REPLACE(@ColVar11, ',', ''), '.', '.'), `Empty Running` = REPLACE(REPLACE(@ColVar12, ',', ''), '.', '.'), `Load Index` = REPLACE(REPLACE(@ColVar13, ',', ''), '.', '.'), `Latitude (from)` = REPLACE(REPLACE(@ColVar14, ',', ''), '.', '.'), `longitude (from)` = REPLACE(REPLACE(@ColVar15, ',', ''), '.', '.'), `Latitude (to)` = REPLACE(REPLACE(@ColVar16, ',', ''), '.', '.'), `Longtitude (to)` = REPLACE(REPLACE(@ColVar17, ',', ''), '.', '.')";
+             String sql = "LOAD DATA LOCAL INFILE \'"+ str +"\' IGNORE INTO TABLE `test`.`leg` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES (@ColVar0, `From`, `Country Code (Activity From)`, `To`, `Country Code (Activity To)`, `Start date`, `End date`, @ColVar7, @ColVar8, @ColVar9, @ColVar10, @ColVar11, @ColVar12, @ColVar13, @ColVar14, @ColVar15, @ColVar16, @ColVar17) SET `Trip Number` = REPLACE(REPLACE(@ColVar0, ',', ''), '.', '.'), `Duration` = REPLACE(REPLACE(@ColVar7, ',', ''), '.', '.'), `Load Time` = REPLACE(REPLACE(@ColVar8, ',', ''), '.', '.'), `Unload Time` = REPLACE(REPLACE(@ColVar9, ',', ''), '.', '.'), `Distance` = REPLACE(REPLACE(@ColVar10, ',', ''), '.', '.'), `Productive Running` = REPLACE(REPLACE(@ColVar11, ',', ''), '.', '.'), `Empty Running` = REPLACE(REPLACE(@ColVar12, ',', ''), '.', '.'), `Load Index` = REPLACE(REPLACE(@ColVar13, ',', ''), '.', '.'), `Latitude (from)` = REPLACE(REPLACE(@ColVar14, ',', ''), '.', '.'), `longitude (from)` = REPLACE(REPLACE(@ColVar15, ',', ''), '.', '.'), `Latitude (to)` = REPLACE(REPLACE(@ColVar16, ',', ''), '.', '.'), `Longtitude (to)` = REPLACE(REPLACE(@ColVar17, ',', ''), '.', '.')";
              resultSet = statement.executeQuery(sql);
              System.out.println("Loaded File");
              //writeResultSet(resultSet);
@@ -79,6 +93,13 @@ public class Setup {
         finally {
             return connect;
         }
+    }
+    public Setup(File file){
+        this.file = file;
+    }
+
+    public void run(){
+        DBSetup();
     }
 }
 

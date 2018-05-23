@@ -19,7 +19,6 @@ class SettingsTab extends TabContent {
         add(fileButton);
         add(filepath1);
         JFileChooser fc = new JFileChooser();
-        Setup test = new Setup();
 
         closeTabButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -43,7 +42,9 @@ class SettingsTab extends TabContent {
                     File file = fc.getSelectedFile();
                     System.out.println("test");
                     //This is where a real application would save the file.
-                    test.DBSetup(file);
+                    Thread t = new Thread(new Setup(file));
+                    t.start();
+
 
                 } else {
 

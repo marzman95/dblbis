@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,6 +14,7 @@ class StartScreen extends JPanel {
     private JButton closeSidePanelButton;
     private JPanel sidePanel;
     private JLabel informationLabel;
+    private JButton dataTabButton;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
 
@@ -53,6 +56,18 @@ class StartScreen extends JPanel {
             }
         });
         closeSidePanelButton.addActionListener(e -> sidePanel.setVisible(false));
+        dataTabButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String title = "Data Tab";
+                TabContent content = new DataTab(title);
+                if (tabPane.indexOfTab(title) != -1) {
+                    tabPane.setSelectedIndex(tabPane.indexOfTab(title));
+                } else {
+                    mainScreen.addTab(content);
+                }
+            }
+        });
     }
 
 }

@@ -24,7 +24,7 @@ class StartScreen extends JPanel {
         sidePanel.setVisible(false); // Disable sidePanel
 
         // TODO: Change filepath of image
-        ImageIcon image = new ImageIcon("C:\\Users\\20167544\\Pictures\\Camera Roll\\RDM.png");
+        ImageIcon image = new ImageIcon("C:\\Users\\s147433\\OneDrive - TU Eindhoven\\TUE\\Jaar 4\\Y4Q4\\2IOC0 (DBL Business Information Systems)\\Logo\\logo_test.jpg");
 
         JLabel label = new JLabel("", image, JLabel.CENTER);
         JPanel panel = new JPanel(new BorderLayout());

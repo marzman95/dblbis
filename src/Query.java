@@ -1,13 +1,15 @@
 import javax.xml.transform.Result;
 import java.io.File;
 import java.sql.*;
+import java.util.concurrent.Callable;
 
-public class Query implements Runnable{
+public class Query implements Callable<ResultSet> {
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     private File file;
+    private String type;
 
     public void DBSetup(){
         long startTime = System.nanoTime();
@@ -98,11 +100,16 @@ public class Query implements Runnable{
         }
     }
     public Query(String type){
+        this.type = type;
+        switch (type){
+            case "heat":
+                resultSet=Heatmapdata();
+        }
 
     }
 
-    public void run(){
-        DBSetup();
+    public ResultSet call()throws Exception{
+        return resultSet;
     }
 
 }

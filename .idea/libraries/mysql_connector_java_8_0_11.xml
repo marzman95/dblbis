@@ -1,9 +1,33 @@
 <component name="libraryTable">
   <library name="mysql-connector-java-8.0.11">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/mysql-connector-java-8.0.11/mysql-connector-java-8.0.11.jar!/" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Processing" />
+      <root url="jar://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/library/Unfolding.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/library/json4processing.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/library/log4j-1.2.15.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/DBL BIS/Library folder/Processing/core.jar!/processing/core" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/reference" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/build/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/demo/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/generated/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/legacy/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/main/core-api/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/main/core-impl/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/main/protocol-impl/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/main/user-api/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/main/user-impl/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11/src/test/java" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/examples/CircularMapSnapshotApp" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/examples/GeoRSSStyledMarkerApp" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/examples/LabeledMarkerApp" />
+      <root url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Unfolding/src" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Documents/DBL BIS/Library folder/mysql-connector-java-8.0.11" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Documents/DBL BIS/Library folder/Processing" recursive="false" />
   </library>
 </component>

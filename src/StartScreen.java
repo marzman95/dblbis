@@ -1,3 +1,5 @@
+import processing.core.PApplet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,21 @@ class StartScreen extends JPanel {
 
         JLabel label = new JLabel("", image, JLabel.CENTER);
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(label, BorderLayout.BEFORE_FIRST_LINE);
+        //panel.add(label, BorderLayout.BEFORE_FIRST_LINE);
+
+        processing.core.PApplet map = new MapTest();
+        panel.add(map);
+        map.init();
+        map.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                startPanel.add(sidePanel, 1);
+                sidePanel.setVisible(true);
+            }
+        });
+
+
         startPanel.add(panel, 0);
 
         // Listener for the map

@@ -63,56 +63,57 @@ public class Query implements Callable<ResultSet> {
             connect = getConnection();
             statement = connect.createStatement();
             resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT 50");
+
         }
         catch (Exception e){
             System.out.println(e);
         }
         return resultSet;
     }
-    public ResultSet Routes(){
-        ResultSet Points = Heatmapdata();
-        ArrayList<String> names = new ArrayList<String>();
-        try{
-            connect = getConnection();
-            statement = connect.createStatement();
-            while(Points.next()){
-                names.add(Points.getString("City-name"));
-            }
-            resultSet = statement.executeQuery("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route INNER JOIN test.city ON route.`city-name-from` = city.`City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`City-Name`");
-//            for(String name: names){
-//                for(String name1: names){
-//                    statement.addBatch("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route WHERE `city-name-from` = "+name+" AND `city-name-to` = "+name1+" INNER JOIN test.city ON route.`city-name-from` = city.`City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`City-Name`");
+//    public ResultSet Routes(){
+//        ResultSet Points = Heatmapdata();
+//        ArrayList<String> names = new ArrayList<String>();
+//        try{
+//            connect = getConnection();
+//            statement = connect.createStatement();
+//            while(Points.next()){
+//                names.add(Points.getString("City-name"));
+//            }
+//            resultSet = statement.executeQuery("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route INNER JOIN test.city ON route.`city-name-from` = city.`City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`City-Name`");
+////            for(String name: names){
+////                for(String name1: names){
+////                    statement.addBatch("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route WHERE `city-name-from` = "+name+" AND `city-name-to` = "+name1+" INNER JOIN test.city ON route.`city-name-from` = city.`City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`City-Name`");
+////                }
+////            }
+//            while (resultSet.next()) {
+//                String string1 = resultSet.getString("city-name-from");
+//                String string2 = resultSet.getString("city-name-to");
+//                boolean found1 = false;
+//                boolean found2 = false;
+//                for (String name : names) {
+//                    if (string1 == name) {
+//                        found1 = true;
+//                    }
+//                }
+//                for (String name : names) {
+//                    if (string2 == name) {
+//                        found2 = true;
+//                    }
+//                }
+//                if (found1 && found2) {
+//
+//                } else {
+//                    resultSet.deleteRow();
 //                }
 //            }
-            while (resultSet.next()) {
-                String string1 = resultSet.getString("city-name-from");
-                String string2 = resultSet.getString("city-name-to");
-                boolean found1 = false;
-                boolean found2 = false;
-                for (String name : names) {
-                    if (string1 == name) {
-                        found1 = true;
-                    }
-                }
-                for (String name : names) {
-                    if (string2 == name) {
-                        found2 = true;
-                    }
-                }
-                if (found1 && found2) {
-
-                } else {
-                    resultSet.deleteRow();
-                }
-            }
-
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-        return resultSet;
-    }
-
+//
+//        }
+//        catch (Exception e){
+//            System.out.println(e);
+//        }
+//        return resultSet;
+//    }
+//
 
     private void close() {
         try {
@@ -146,7 +147,7 @@ public class Query implements Callable<ResultSet> {
             case "heat":
                 resultSet=Heatmapdata();
             case "routes":
-                resultSet=Routes();
+                // resultSet=Routes();
         }
 
     }

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Main handles of the screen
+ * Main handlers of the screen, using singleton to assure only one screen is available (use Screen.getScreen();).
  */
 public class Screen extends JFrame {
     private JPanel screenWrapper;

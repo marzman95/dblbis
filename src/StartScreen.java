@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
  * Class that generates the starting/home tab.
  */
 class StartScreen extends JPanel {
+    // Initialization
     private JPanel startPanel;
     private JButton moreButton;
     private JButton closeSidePanelButton;
@@ -21,20 +22,19 @@ class StartScreen extends JPanel {
     private final JTabbedPane tabPane;
 
     public StartScreen() {
-        this.tabPane = mainScreen.tabPane;
+        this.tabPane = mainScreen.tabPane; // Connects the main screen handler to the start screen
+        // Setting layout
         this.setLayout(new GridLayout(0,1));
         startPanel.setLayout(new GridLayout(0,2));
+
         add(startPanel, 0); // Set root panel
         sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
         sidePanel.setVisible(false); // Disable sidePanel
 
-        // TODO: Change filepath of image
-        ImageIcon image = new ImageIcon("C:\\Users\\s147433\\OneDrive - TU Eindhoven\\TUE\\Jaar 4\\Y4Q4\\2IOC0 (DBL Business Information Systems)\\Logo\\logo_test.jpg");
-
-        JLabel label = new JLabel("", image, JLabel.CENTER);
+        // Creating the panel that shows the map
         JPanel panel = new JPanel(new BorderLayout());
-        //panel.add(label, BorderLayout.BEFORE_FIRST_LINE);
 
+        // Opening the map, add it to the panel, with a mouse-listener
         processing.core.PApplet map = new MapTest();
         panel.add(map);
         map.init();
@@ -46,19 +46,8 @@ class StartScreen extends JPanel {
                 sidePanel.setVisible(true);
             }
         });
+        startPanel.add(panel, 0); // Adds panel (with map) to screen
 
-
-        startPanel.add(panel, 0);
-
-        // Listener for the map
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                startPanel.add(sidePanel, 1);
-                sidePanel.setVisible(true);
-            }
-        });
 
         // Listeners for the sidepanel buttons
         moreButton.addActionListener(e -> {

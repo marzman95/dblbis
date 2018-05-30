@@ -165,6 +165,9 @@ public class MapTest extends PApplet {
         map.draw();
     }
 
+    /**
+     * Gives visual feedback on hovering over a marker
+     */
     public void mouseMoved() {
         Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
         if ( hitMarker != null) {
@@ -176,12 +179,17 @@ public class MapTest extends PApplet {
         }
     }
 
+    /**
+     * Listens to a mouse click for the markers.
+     */
     public void mouseClicked() {
         Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
         if (hitMarker != null) {
-            hitMarker.setColor(10);
+            hitMarker.setColor(color(0, 255,0,255));
             hitMarker.setSelected(true);
-            Screen.getScreen().getStartScreen().setMarker(mouseX, mouseY);
+            float markerX = hitMarker.getLocation().x;
+            float markerY = hitMarker.getLocation().y;
+            Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
         } else {
             for (Marker marker : map.getMarkers()) {
                 marker.setSelected(false);
@@ -189,7 +197,12 @@ public class MapTest extends PApplet {
         }
     }
 
-
+    /**
+     * TODO: delete this function to prevent bugs
+     * Starts the map as a separate instance; has no function in the project itself, and can even break since
+     * it does not necessarily have the required dependencies of other classes.
+     * @param args
+     */
     public static void main(String[] args) {
        PApplet.main(new String[] { "MapTest" });
    }

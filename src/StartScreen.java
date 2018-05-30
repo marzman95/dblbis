@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 /**
  * Class that generates the starting/home tab.
+ * Can be called using the Screen.getScreen().getStartScreen();
  */
 class StartScreen extends JPanel {
     // Initialization
@@ -20,6 +21,9 @@ class StartScreen extends JPanel {
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
 
+    /**
+     * Constructor of the start screen
+     */
     public StartScreen() {
         this.tabPane = mainScreen.tabPane; // Connects the main screen handler to the start screen
         // Setting layout
@@ -62,6 +66,7 @@ class StartScreen extends JPanel {
         sidePanel.setVisible(false); // Disable sidePanel
 
         // Attach a mouselistener to the mapPanel
+        // TODO: Delete; and implement showing the sidePanel when clicking on a marker or leg
         map.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -96,7 +101,12 @@ class StartScreen extends JPanel {
         });
     }
 
-    public void setMarker(int mouseX, int mouseY) {
+    /**
+     * Function that sets content of the side panel when a marker is clicked
+     * @param mouseX x-coordinate of the marker
+     * @param mouseY y-coordinate of the marker
+     */
+    public void setMarker(float mouseX, float mouseY) {
         clickLabel.setText("Clicked at x:" + mouseX + " and y: " + mouseY);
     }
 

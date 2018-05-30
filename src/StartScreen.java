@@ -25,11 +25,12 @@ class StartScreen extends JPanel {
         this.setLayout(new GridLayout());
         add(startPanel, 0); // Set root panel
 
-        // Layout of the panel itself
+        // Setup layout of the startpanel itself
         GridBagLayout grid = new GridBagLayout();
         startPanel.setLayout(grid);
         GridBagConstraints gbc = new GridBagConstraints();
 
+        // Setting properties for map panel
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 0;
@@ -47,7 +48,7 @@ class StartScreen extends JPanel {
         map.init();
         startPanel.add(mapPanel, gbc); // Adds panel (with map) to screen
 
-        // Adds the sidepanel already, set to non-visible
+        // Setting up the sidepanel already, set to non-visible
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.gridx = GridBagConstraints.EAST;
@@ -59,6 +60,7 @@ class StartScreen extends JPanel {
         sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
         sidePanel.setVisible(false); // Disable sidePanel
 
+        // Attach a mouselistener to the mapPanel
         map.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -66,8 +68,6 @@ class StartScreen extends JPanel {
                 sidePanel.setVisible(true);
             }
         });
-
-
 
         // Listeners for the sidepanel buttons
         moreButton.addActionListener(e -> {

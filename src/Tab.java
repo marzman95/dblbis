@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Class that defines the functionality each tab
+ * Class that defines the functionality each tab.
+ * Content in placed inside using the constructor and TabContent
  */
 class Tab extends JPanel {
     final String title;

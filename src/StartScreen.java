@@ -22,29 +22,51 @@ class StartScreen extends JPanel {
     public StartScreen() {
         this.tabPane = mainScreen.tabPane; // Connects the main screen handler to the start screen
         // Setting layout
-        this.setLayout(new GridLayout(0,1));
-        startPanel.setLayout(new GridLayout(0,2));
-
+        this.setLayout(new GridLayout());
         add(startPanel, 0); // Set root panel
-        sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
-        sidePanel.setVisible(false); // Disable sidePanel
+
+        // Layout of the panel itself
+        GridBagLayout grid = new GridBagLayout();
+        startPanel.setLayout(grid);
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.1;
+        gbc.weighty = 0.1;
 
         // Creating the panel that shows the map
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel mapPanel = new JPanel(new BorderLayout());
 
         // Opening the map, add it to the panel, with a mouse-listener
         processing.core.PApplet map = new MapTest();
-        panel.add(map);
+        mapPanel.setMinimumSize(new Dimension(800,600));
+        mapPanel.add(map);
         map.init();
+        startPanel.add(mapPanel, gbc); // Adds panel (with map) to screen
+
+        // Adds the sidepanel already, set to non-visible
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        gbc.gridx = GridBagConstraints.EAST;
+        gbc.gridy = 0;
+        gbc.weightx = 0.1;
+        gbc.weighty = 0.2;
+        gbc.gridwidth = 1;
+        startPanel.add(sidePanel, gbc);
+        sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
+        sidePanel.setVisible(false); // Disable sidePanel
+
         map.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                startPanel.add(sidePanel, 1);
                 sidePanel.setVisible(true);
             }
         });
-        startPanel.add(panel, 0); // Adds panel (with map) to screen
+
 
 
         // Listeners for the sidepanel buttons

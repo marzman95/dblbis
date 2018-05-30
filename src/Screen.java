@@ -37,6 +37,14 @@ public class Screen extends JFrame {
     }
 
     /**
+     * Method that returns the startscreen to call functions on it
+     * @return the startscreen-tab
+     */
+    public StartScreen getStartScreen() {
+        return startScreen;
+    }
+
+    /**
      * Adds a new tab, with content, to the screen
      * @param newTab tab to be added
      */

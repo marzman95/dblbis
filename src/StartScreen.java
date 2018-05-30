@@ -16,6 +16,7 @@ class StartScreen extends JPanel {
     private JPanel sidePanel;
     private JLabel informationLabel;
     private JButton dataTabButton;
+    private JLabel clickLabel;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
 
@@ -93,6 +94,10 @@ class StartScreen extends JPanel {
                 }
             }
         });
+    }
+
+    public void setMarker(int mouseX, int mouseY) {
+        clickLabel.setText("Clicked at x:" + mouseX + " and y: " + mouseY);
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap.*;
@@ -164,7 +165,29 @@ public class MapTest extends PApplet {
         map.draw();
     }
 
+    public void mouseMoved() {
+        Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
+        if ( hitMarker != null) {
+            hitMarker.setSelected(true);
+        } else {
+            for (Marker marker : map.getMarkers()) {
+                marker.setSelected(false);
+            }
+        }
+    }
 
+    public void mouseClicked() {
+        Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
+        if (hitMarker != null) {
+            hitMarker.setColor(10);
+            hitMarker.setSelected(true);
+            Screen.getScreen().getStartScreen().setMarker(mouseX, mouseY);
+        } else {
+            for (Marker marker : map.getMarkers()) {
+                marker.setSelected(false);
+            }
+        }
+    }
 
 
     public static void main(String[] args) {

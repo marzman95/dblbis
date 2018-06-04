@@ -68,14 +68,18 @@ public class DataManager {
     /**
      * Returns a list of cities.
      */
-    public List<String> getCitiesList() {
-        List<String> citiesList = new ArrayList<>();
+    public List<City> getCitiesList() {
+        List<City> citiesList = new ArrayList<>();
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT DISTINCT `City-Name` FROM `city`");
+            resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude` FROM `city`");
             while (resultSet.next()) {
-                citiesList.add(resultSet.getString("City-Name"));
+                City city = new City();
+                city.setName(resultSet.getString("City-Name"));
+                city.setLongitude(resultSet.getDouble("Longitude"));
+                city.setLatitude(resultSet.getDouble("Latitude"));
+                citiesList.add(city);
             }
 
         } catch (Exception e) {

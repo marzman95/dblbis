@@ -1,3 +1,5 @@
+package Models;
+
 /**
  * Defines the structure of a city
  */

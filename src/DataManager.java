@@ -1,3 +1,5 @@
+import Models.City;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
             while (resultSet.next()) {
                 City city = new City(
-                        resultSet.getString("City-Name"),
+                        resultSet.getString("Models.City-Name"),
                         resultSet.getDouble("Longitude"),
                         resultSet.getDouble("Latitude"),
                         resultSet.getInt("Times-visited")

@@ -14,15 +14,7 @@ import processing.core.PApplet;
 public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
-
-    /**
-     * Gets the most popular cities
-     * TODO: Can be removed and replace evert "popularCities()" with "dataManager.getHeatmapData()"
-     * @return
-     */
-    private ResultSet popularCities() {
-        return dataManager.getHeatmapData();
-    }
+    private ResultSet popularCities = dataManager.getHeatmapData(); // List of the 50 most popular cities
 
     // Float normalize was never used
 
@@ -46,10 +38,10 @@ public class StartMap extends PApplet {
         try {
             Location genericLocation = new Location(0, 0);
             SimplePointMarker genericMarker = new SimplePointMarker();
-            while (popularCities().next()) {
-                genericLocation = new Location(popularCities().getDouble("Latitude"), popularCities().getDouble("Longitude"));
+            while (popularCities.next()) {
+                genericLocation = new Location(popularCities.getDouble("Latitude"), popularCities.getDouble("Longitude"));
                 genericMarker = new SimplePointMarker(genericLocation);
-                genericMarker.setRadius(((float)popularCities().getInt("Times-visited")/800)+5);
+                genericMarker.setRadius(((float)popularCities.getInt("Times-visited")/800)+5);
                 genericMarker.setColor(color(34, 24, 155));
                 map.addMarker(genericMarker);
             }
@@ -70,7 +62,7 @@ public class StartMap extends PApplet {
      */
     public void mouseMoved() {
         Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
-        if ( hitMarker != null) {
+        if (hitMarker != null) {
             hitMarker.setSelected(true);
         } else {
             for (Marker marker : map.getMarkers()) {

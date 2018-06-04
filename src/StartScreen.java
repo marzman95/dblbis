@@ -91,7 +91,7 @@ class StartScreen extends JPanel {
         dataTabButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String title = "Data Tab";
+                String title = "DataManager Tab";
                 TabContent content = new DataTab(title);
                 if (tabPane.indexOfTab(title) != -1) {
                     tabPane.setSelectedIndex(tabPane.indexOfTab(title));

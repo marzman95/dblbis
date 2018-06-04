@@ -1,25 +1,22 @@
-import javax.xml.transform.Result;
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Class that handles the data and database connection.
  */
-public class Data {
+public class DataManager {
     private Connection dbConnection = null;
     private ResultSet resultSet = null;
     private Statement statement = null;
 
     /**
      * Code block that makes the data handling singleton.
-     * Use Data.useData() to get the instance.
+     * Use DataManager.useData() to get the instance.
      */
-    private static final Data data = new Data();
-    private Data(){}
-    public static Data useData() {return data;}
+    private static final DataManager dataManager = new DataManager();
+    private DataManager(){}
+    public static DataManager getDataManager() {return dataManager;}
 
     /**
      * Gets the database connection.
@@ -72,7 +69,7 @@ public class Data {
      * Returns a list of cities.
      */
     public List<String> getCitiesList() {
-        List<String> citiesList = new ArrayList<String>();
+        List<String> citiesList = new ArrayList<>();
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
@@ -82,7 +79,7 @@ public class Data {
             }
 
         } catch (Exception e) {
-            System.out.println("Exception on getCitiesList(): " + e);
+            System.out.println("[DataManager-exception]: Exception on getCitiesList(): " + e);
         }
         return citiesList;
     }

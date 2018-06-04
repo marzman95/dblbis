@@ -1,8 +1,6 @@
 
 
-import java.awt.Color;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -10,7 +8,6 @@ import java.util.concurrent.Future;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.Marker;
-import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap.*;
 import de.fhpotsdam.unfolding.utils.MapUtils;
@@ -19,14 +16,15 @@ import processing.core.PApplet;
 
 
 public class MapTest extends PApplet {
+    private DataManager dataManager = DataManager.getDataManager();
 
 
     UnfoldingMap map;
     
     public ResultSet test() throws Exception{
-    	ExecutorService executor = Executors.newCachedThreadPool();
-    	Future<ResultSet> futureCall = executor.submit(new Query("heat"));
-    	ResultSet result = futureCall.get();
+//    	ExecutorService executor = Executors.newCachedThreadPool();
+//    	Future<ResultSet> futureCall = executor.submit(new Query("heat"));
+    	ResultSet result = dataManager.getHeatmapData();
     	return result;
     }
     

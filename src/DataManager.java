@@ -11,12 +11,13 @@ public class DataManager {
     private Connection dbConnection = null;
     private ResultSet resultSet = null;
     private Statement statement = null;
+    private List<City> citiesList = null;
 
     /**
      * Code block that makes the data handling singleton.
      */
     private static final DataManager dataManager = new DataManager();
-    private DataManager(){}
+    private DataManager(){ getMains(); }
     public static DataManager getDataManager() {return dataManager;}
 
     /**
@@ -30,6 +31,34 @@ public class DataManager {
         } finally {
             return dbConnection;
         }
+    }
+
+    /**
+     * Fetches some main data
+     */
+    private void getMains() {
+        // Gets the list of all cities
+        if (citiesList == null) {
+            citiesList = new ArrayList<>();
+            try {
+                dbConnection = getConnection();
+                statement = dbConnection.createStatement();
+                resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
+                while (resultSet.next()) {
+                    City city = new City(
+                            resultSet.getString("City-Name"),
+                            resultSet.getDouble("Longitude"),
+                            resultSet.getDouble("Latitude"),
+                            resultSet.getInt("Times-visited")
+                    );
+                    citiesList.add(city);
+                }
+            } catch (Exception e) {
+                System.out.println("[DataManager-exception]: Exception on getAllCities(): " + e);
+            }
+        }
+
+        // Do more general data fetch
     }
 
     /**
@@ -69,10 +98,18 @@ public class DataManager {
 
     /**
      * Gets the 50 most popular cities.
+     * TODO: Choose best option
      * @return List of the 50 most popular cities as {@link models.City}-objects
      */
     public List<City> getPopularCities() {
-        List<City> citiesList = new ArrayList<>();
+        List<City> popularCities = new ArrayList<>();
+//        for (int i = 0; i < citiesList.size(); i++) {
+//            City curCity = citiesList.get(i);
+//            if (curCity.getTimesVisited() > 50) {
+//                popularCities.add(curCity);
+//            }
+//        }
+//        return popularCities;
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
@@ -84,12 +121,12 @@ public class DataManager {
                         resultSet.getDouble("Latitude"),
                         resultSet.getInt("Times-visited")
                 );
-                citiesList.add(city);
+                popularCities.add(city);
             }
         } catch (Exception e) {
             System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
         }
-        return citiesList;
+        return popularCities;
     }
 
     /**
@@ -97,23 +134,6 @@ public class DataManager {
      * @return the list of all cities as {@link models.City}-objects
      */
     public List<City> getAllCities() {
-        List<City> citiesList = new ArrayList<>();
-        try {
-            dbConnection = getConnection();
-            statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
-            while (resultSet.next()) {
-                City city = new City(
-                        resultSet.getString("City-Name"),
-                        resultSet.getDouble("Longitude"),
-                        resultSet.getDouble("Latitude"),
-                        resultSet.getInt("Times-visited")
-                );
-                citiesList.add(city);
-            }
-        } catch (Exception e) {
-            System.out.println("[DataManager-exception]: Exception on getAllCities(): " + e);
-        }
         return citiesList;
     }
 }

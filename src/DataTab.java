@@ -45,9 +45,6 @@ class DataTab extends TabContent {
         // Create table
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
         dataTable = new JTable(tableModel);
-        dataTable.setPreferredScrollableViewportSize(new Dimension(450, 63));
-        dataTable.setFillsViewportHeight(true);
-        
 
         // Fill table
         tableModel.addRow(new Object[] {"ID", "Name", "Long", "Lat"});

@@ -53,6 +53,22 @@ public class DataManager {
     }
 
     /**
+     * Runs a custom query on the database
+     * @param query a string with the SQL-query
+     * @return the resulting resultSet
+     */
+    public ResultSet customQuery(String query) {
+        try {
+            dbConnection = getConnection();
+            statement = dbConnection.createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (Exception e) {
+            System.out.println("[DataManager-exception ]: Exception on customQuery(): " + e);
+        }
+        return resultSet;
+    }
+
+    /**
      * Gets the 50 most popular cities.
      * @return List of the 50 most popular cities
      */

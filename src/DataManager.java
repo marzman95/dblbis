@@ -14,7 +14,6 @@ public class DataManager {
 
     /**
      * Code block that makes the data handling singleton.
-     * Use DataManager.useData() to get the instance.
      */
     private static final DataManager dataManager = new DataManager();
     private DataManager(){}
@@ -22,7 +21,7 @@ public class DataManager {
 
     /**
      * Gets the database connection.
-     * @return Connection with the database
+     * @return connection with the database
      */
     private Connection getConnection() {
         try {
@@ -53,9 +52,9 @@ public class DataManager {
     }
 
     /**
-     * Runs a custom query on the database
+     * Runs a custom query on the database.
      * @param query a string with the SQL-query
-     * @return the resulting resultSet
+     * @return the resulting {@link java.sql.ResultSet}
      */
     public ResultSet customQuery(String query) {
         try {
@@ -70,7 +69,7 @@ public class DataManager {
 
     /**
      * Gets the 50 most popular cities.
-     * @return List of the 50 most popular cities
+     * @return List of the 50 most popular cities as {@link models.City}-objects
      */
     public List<City> getPopularCities() {
         List<City> citiesList = new ArrayList<>();
@@ -80,7 +79,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT 50");
             while (resultSet.next()) {
                 City city = new City(
-                        resultSet.getString("models.City-Name"),
+                        resultSet.getString("City-Name"),
                         resultSet.getDouble("Longitude"),
                         resultSet.getDouble("Latitude"),
                         resultSet.getInt("Times-visited")
@@ -95,8 +94,9 @@ public class DataManager {
 
     /**
      * Returns a list of cities.
+     * @return the list of all cities as {@link models.City}-objects
      */
-    public List<City> getCitiesList() {
+    public List<City> getAllCities() {
         List<City> citiesList = new ArrayList<>();
         try {
             dbConnection = getConnection();
@@ -104,7 +104,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
             while (resultSet.next()) {
                 City city = new City(
-                        resultSet.getString("models.City-Name"),
+                        resultSet.getString("City-Name"),
                         resultSet.getDouble("Longitude"),
                         resultSet.getDouble("Latitude"),
                         resultSet.getInt("Times-visited")
@@ -112,7 +112,7 @@ public class DataManager {
                 citiesList.add(city);
             }
         } catch (Exception e) {
-            System.out.println("[DataManager-exception]: Exception on getCitiesList(): " + e);
+            System.out.println("[DataManager-exception]: Exception on getAllCities(): " + e);
         }
         return citiesList;
     }

@@ -1,5 +1,6 @@
 /**
  * Root class of the project
+ *
  */
 // TODO: Create clear boot sequence
 class Vesta {

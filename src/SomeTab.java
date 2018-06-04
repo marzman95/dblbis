@@ -3,8 +3,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Example class for a tab, using properties of @TabContent.
- * Create form by right-click on /src/ --> new --> Dialog, use GridBayLayout;
+ * Example class for a tab, using properties of @see TabContent.
+ * Create form by right-click on /src/ -- new -- Dialog, use GridBayLayout;
  * see example of GridBagLayout in startScreen
  */
 class SomeTab extends TabContent {

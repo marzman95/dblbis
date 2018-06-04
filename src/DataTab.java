@@ -2,6 +2,7 @@ import models.City;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,11 +40,14 @@ class DataTab extends TabContent {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         String[] columns = {"ID", "Name", "Longitude", "Latitude"};
-        List<City> cities = DataManager.getDataManager().getCitiesList();
+        List<City> cities = DataManager.getDataManager().getAllCities();
 
         // Create table
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
         dataTable = new JTable(tableModel);
+        dataTable.setPreferredScrollableViewportSize(new Dimension(450, 63));
+        dataTable.setFillsViewportHeight(true);
+        
 
         // Fill table
         tableModel.addRow(new Object[] {"ID", "Name", "Long", "Lat"});

@@ -32,7 +32,6 @@ class DataTab extends TabContent {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open table!");
                 dataTable.setVisible(true);
-                //System.out.println(DataManager.getDataManager().getCitiesList());
             }
         });
     }
@@ -40,13 +39,14 @@ class DataTab extends TabContent {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         String[] columns = {"ID", "Name", "Longitude", "Latitude"};
-        List<City> cities = new ArrayList<>();
-        cities = DataManager.getDataManager().getCitiesList();
-        System.out.println(cities);
+        List<City> cities = DataManager.getDataManager().getCitiesList();
 
+        // Create table
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
         dataTable = new JTable(tableModel);
 
+        // Fill table
+        tableModel.addRow(new Object[] {"ID", "Name", "Long", "Lat"});
         for (int i = 0; i < cities.size(); i++) {
             City curCity = cities.get(i);
             tableModel.addRow(new Object[] {
@@ -56,8 +56,6 @@ class DataTab extends TabContent {
                     curCity.getLatitude()
             });
         }
-
-
         dataTable.setVisible(false);
     }
 }

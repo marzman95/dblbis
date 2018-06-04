@@ -73,15 +73,16 @@ public class DataManager {
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude` FROM `city`");
+            resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
             while (resultSet.next()) {
-                City city = new City();
-                city.setName(resultSet.getString("City-Name"));
-                city.setLongitude(resultSet.getDouble("Longitude"));
-                city.setLatitude(resultSet.getDouble("Latitude"));
+                City city = new City(
+                        resultSet.getString("City-Name"),
+                        resultSet.getDouble("Longitude"),
+                        resultSet.getDouble("Latitude"),
+                        resultSet.getInt("Times-visited")
+                );
                 citiesList.add(city);
             }
-
         } catch (Exception e) {
             System.out.println("[DataManager-exception]: Exception on getCitiesList(): " + e);
         }

@@ -2,14 +2,14 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="StartScreen">
   <grid id="cbd77" binding="startPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="48" y="54" width="515" height="536"/>
+      <xy x="48" y="54" width="920" height="536"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
       <grid id="7b5b9" binding="sidePanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
@@ -66,6 +66,18 @@
           </component>
         </children>
       </grid>
+      <component id="d6b9f" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Frequency"/>
+            <item value="Avarages"/>
+          </model>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

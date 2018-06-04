@@ -18,6 +18,7 @@ class StartScreen extends JPanel {
     private JLabel informationLabel;
     private JButton dataTabButton;
     private JLabel clickLabel;
+    private JComboBox comboBox1;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
 
@@ -103,11 +104,11 @@ class StartScreen extends JPanel {
 
     /**
      * Function that sets content of the side panel when a marker is clicked
-     * @param mouseX x-coordinate of the marker
-     * @param mouseY y-coordinate of the marker
+     * @param corX x-coordinate of the marker
+     * @param corY y-coordinate of the marker
      */
-    public void setMarker(float mouseX, float mouseY) {
-        clickLabel.setText("Clicked at x:" + mouseX + " and y: " + mouseY);
+    public void setMarker(float corX, float corY) {
+        clickLabel.setText("Clicked at x:" + corX + " and y: " + corY);
     }
 
 }

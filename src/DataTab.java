@@ -28,6 +28,7 @@ class DataTab extends TabContent {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open table!");
                 dataTable.setVisible(true);
+                System.out.println(Data.useData().getCitiesList());
             }
         });
     }

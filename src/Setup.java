@@ -50,7 +50,7 @@ public class Setup implements Runnable {
              System.out.println("Trip data retrieved");
              System.out.println("Start filling DB with data");
              statement.executeUpdate("INSERT INTO `city`(`City-Name`,`Country`,`Latitude`,`Longitude`,`Times-visited`) SELECT `From`,`Country Code (Activity From)`,`Latitude (from)`,`longitude (from)`,COUNT(`From`) FROM leg GROUP BY `From`");
-             System.out.println("Models.City done");
+             System.out.println("models.City done");
              statement.executeUpdate("INSERT INTO test.trip (`Trip Number`,total_distance,total_duration,start_date,end_date,`From`,`To`) SELECT `Trip Number`, `DisSum` AS total_distance, `DurSum` AS `total_duration`, `Start date` AS `start_date`, `End date` AS `end_date`,`Start` AS `From`, `End` AS `To` FROM (SELECT `Trip Number`, SUM(`Distance`) AS `DisSum`, SUM(`Duration`) AS `DurSum` FROM leg Group By `Trip Number`) AS  `a` NATURAL JOIN (SELECT `Trip Number`, `Start date`, `From` AS `Start` FROM leg NATURAL JOIN (SELECT `Trip Number`, MIN(`Start date`) AS `Start date` FROM leg GROUP BY `Trip Number`) AS `b` ) AS `c` NATURAL JOIN (SELECT `Trip Number`, `End date`, `To` AS `End` FROM leg NATURAL JOIN (SELECT `Trip Number`, MAX(`End date`) AS `End date` FROM leg GROUP BY `Trip Number`) AS `d`) AS `e`");
              System.out.println("trip done");
              statement.executeUpdate("INSERT INTO test.route(`city-name-from`,`city-name-to`,distance) SELECT `From`,`To`,AVG(distance) FROM leg GROUP BY `From`,`To`");

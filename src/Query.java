@@ -1,3 +1,7 @@
+/**
+ * DEPRECATED!
+ */
+
 import javax.xml.transform.Result;
 import java.io.File;
 import java.sql.*;
@@ -38,8 +42,8 @@ public class Query implements Callable<ResultSet> {
             resultSet = statement.executeQuery("SELECT `Trip Number`,SUM(`Distance`),SUM(`Duration`),MIN(`Start date`),MAX(`End date`) FROM leg GROUP BY `Trip Number`");
             System.out.println("Trip data retrieved");
             System.out.println("Start filling DB with data");
-            statement.executeUpdate("INSERT INTO `city`(`Models.City-Name`,`Country`,`Latitude`,`Longitude`,`Times-visited`) SELECT `From`,`Country Code (Activity From)`,`Latitude (from)`,`longitude (from)`,COUNT(`From`) FROM leg GROUP BY `From`");
-            System.out.println("Models.City done");
+            statement.executeUpdate("INSERT INTO `city`(`models.City-Name`,`Country`,`Latitude`,`Longitude`,`Times-visited`) SELECT `From`,`Country Code (Activity From)`,`Latitude (from)`,`longitude (from)`,COUNT(`From`) FROM leg GROUP BY `From`");
+            System.out.println("models.City done");
             statement.executeUpdate("INSERT INTO test.trip (`Trip Number`,total_distance,total_duration,start_date,end_date,`From`,`To`) SELECT `Trip Number`, `DisSum` AS total_distance, `DurSum` AS `total_duration`, `Start date` AS `start_date`, `End date` AS `end_date`,`Start` AS `From`, `End` AS `To` FROM (SELECT `Trip Number`, SUM(`Distance`) AS `DisSum`, SUM(`Duration`) AS `DurSum` FROM leg Group By `Trip Number`) AS  `a` NATURAL JOIN (SELECT `Trip Number`, `Start date`, `From` AS `Start` FROM leg NATURAL JOIN (SELECT `Trip Number`, MIN(`Start date`) AS `Start date` FROM leg GROUP BY `Trip Number`) AS `b` ) AS `c` NATURAL JOIN (SELECT `Trip Number`, `End date`, `To` AS `End` FROM leg NATURAL JOIN (SELECT `Trip Number`, MAX(`End date`) AS `End date` FROM leg GROUP BY `Trip Number`) AS `d`) AS `e`");
             System.out.println("trip done");
             statement.executeUpdate("INSERT INTO test.route(`city-name-from`,`city-name-to`,distance) SELECT `From`,`To`,AVG(distance) FROM leg GROUP BY `From`,`To`");
@@ -77,12 +81,12 @@ public class Query implements Callable<ResultSet> {
 //            connect = getConnection();
 //            statement = connect.createStatement();
 //            while(Points.next()){
-//                names.add(Points.getString("Models.City-name"));
+//                names.add(Points.getString("models.City-name"));
 //            }
-//            resultSet = statement.executeQuery("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route INNER JOIN test.city ON route.`city-name-from` = city.`Models.City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`Models.City-Name`");
+//            resultSet = statement.executeQuery("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route INNER JOIN test.city ON route.`city-name-from` = city.`models.City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`models.City-Name`");
 ////            for(String name: names){
 ////                for(String name1: names){
-////                    statement.addBatch("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route WHERE `city-name-from` = "+name+" AND `city-name-to` = "+name1+" INNER JOIN test.city ON route.`city-name-from` = city.`Models.City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`Models.City-Name`");
+////                    statement.addBatch("SELECT route.`city-name-from`,city.Latitude,city.Longitude,route.`city-name-to`,city_1.Latitude, city_1.Longitude FROM test.route WHERE `city-name-from` = "+name+" AND `city-name-to` = "+name1+" INNER JOIN test.city ON route.`city-name-from` = city.`models.City-Name`INNER JOIN test.city city_1 ON route.`city-name-to` = city_1.`models.City-Name`");
 ////                }
 ////            }
 //            while (resultSet.next()) {

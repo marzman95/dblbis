@@ -1,4 +1,4 @@
-import java.sql.ResultSet;
+import models.*;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
@@ -8,13 +8,15 @@ import de.fhpotsdam.unfolding.providers.OpenStreetMap.*;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 
+import java.util.List;
+
 /**
  * Class that runs the map for the StartScreen.
  */
 public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
-    private ResultSet popularCities = dataManager.getHeatmapData(); // List of the 50 most popular cities
+    private List<City> popularCities = dataManager.getPopularCities(); // List of the 50 most popular cities
 
     // Float normalize was never used
 
@@ -38,10 +40,11 @@ public class StartMap extends PApplet {
         try {
             Location genericLocation = new Location(0, 0);
             SimplePointMarker genericMarker = new SimplePointMarker();
-            while (popularCities.next()) {
-                genericLocation = new Location(popularCities.getDouble("Latitude"), popularCities.getDouble("Longitude"));
+            for (int i = 0; i < popularCities.size(); i++) {
+                City curCity = popularCities.get(i);
+                genericLocation = new Location(curCity.getLatitude(), curCity.getLongitude());
                 genericMarker = new SimplePointMarker(genericLocation);
-                genericMarker.setRadius(((float)popularCities.getInt("Times-visited")/800)+5);
+                genericMarker.setRadius(((float)curCity.getTimesVisited()/800)+5);
                 genericMarker.setColor(color(34, 24, 155));
                 map.addMarker(genericMarker);
             }

@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 /**
  * Defines the structure of a city

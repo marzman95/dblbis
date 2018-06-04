@@ -1,4 +1,4 @@
-import Models.City;
+import models.City;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

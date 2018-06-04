@@ -1,4 +1,4 @@
-import Models.City;
+import models.City;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,18 +53,28 @@ public class DataManager {
     }
 
     /**
-     * Function the get the heatmap data.
-     * @return resultSet with heatmap data
+     * Gets the 50 most popular cities.
+     * @return List of the 50 most popular cities
      */
-    public ResultSet getHeatmapData() {
+    public List<City> getPopularCities() {
+        List<City> citiesList = new ArrayList<>();
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
             resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT 50");
+            while (resultSet.next()) {
+                City city = new City(
+                        resultSet.getString("models.City-Name"),
+                        resultSet.getDouble("Longitude"),
+                        resultSet.getDouble("Latitude"),
+                        resultSet.getInt("Times-visited")
+                );
+                citiesList.add(city);
+            }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
         }
-        return resultSet;
+        return citiesList;
     }
 
     /**
@@ -78,7 +88,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
             while (resultSet.next()) {
                 City city = new City(
-                        resultSet.getString("Models.City-Name"),
+                        resultSet.getString("models.City-Name"),
                         resultSet.getDouble("Longitude"),
                         resultSet.getDouble("Latitude"),
                         resultSet.getInt("Times-visited")

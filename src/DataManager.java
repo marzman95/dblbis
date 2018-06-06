@@ -1,4 +1,5 @@
 import models.City;
+import models.anEdge;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -127,6 +128,31 @@ public class DataManager {
             System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
         }
         return popularCities;
+    }
+
+    public List<anEdge> getEdges() {
+        List<anEdge> allEdges = new ArrayList<>();
+        try {
+            dbConnection = getConnection();
+            statement = dbConnection.createStatement();
+            resultSet = statement.executeQuery("SELECT `c1`.`Latitude`, `c1`.`Longitude`, `c2`.`Latitude`, `c2`.`Longitude` \n" +
+                    "FROM `city` AS `c1`, `city` AS `c2`, `route` \n" +
+                    "WHERE `c1`.`City-Name` = `city-name-from` AND `c2`.`City-Name` = `city-name-to` \n" +
+                    "ORDER BY `route`.`times-used` DESC LIMIT 50");
+            while (resultSet.next()) {
+                anEdge edge = new anEdge(
+                        resultSet.getDouble("c1.Latitude"),
+                        resultSet.getDouble("c1.Longitude"),
+                        resultSet.getDouble("c2.Latitude"),
+                        resultSet.getDouble("c2.Longitude")
+                );
+
+                allEdges.add(edge);
+            }
+        } catch (Exception e) {
+            System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
+        }
+        return allEdges;
     }
 
     /**

@@ -62,11 +62,14 @@ public class StartMap extends PApplet {
             Location genericLocation2 = new Location (0, 0);
             for (int i = 0; i < popularEdges.size(); i++) {
                 anEdge connect = popularEdges.get(i);
-                double f = connect.getLatitude1();
                 genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
                 genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
                 SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
+
+
                 map.addMarker(line);
+               // line.setColor(-10000);
+                line.setStrokeWeight(connect.getFrequency()/1000);
 
             }
         } catch (Exception e) {

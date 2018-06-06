@@ -135,7 +135,7 @@ public class DataManager {
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT `c1`.`Latitude`, `c1`.`Longitude`, `c2`.`Latitude`, `c2`.`Longitude` \n" +
+            resultSet = statement.executeQuery("SELECT `times-used`, `c1`.`Latitude`, `c1`.`Longitude`, `c2`.`Latitude`, `c2`.`Longitude` \n" +
                     "FROM `city` AS `c1`, `city` AS `c2`, `route` \n" +
                     "WHERE `c1`.`City-Name` = `city-name-from` AND `c2`.`City-Name` = `city-name-to` \n" +
                     "ORDER BY `route`.`times-used` DESC LIMIT 50");
@@ -144,7 +144,8 @@ public class DataManager {
                         resultSet.getDouble("c1.Latitude"),
                         resultSet.getDouble("c1.Longitude"),
                         resultSet.getDouble("c2.Latitude"),
-                        resultSet.getDouble("c2.Longitude")
+                        resultSet.getDouble("c2.Longitude"),
+                        resultSet.getInt("times-used")
                 );
 
                 allEdges.add(edge);

@@ -7,12 +7,16 @@ public class anEdge {
     private double latitude2;
     private double longitude2;
 
+    private int frequency;
 
-    public anEdge(double la1, double lo1, double la2, double lo2) {
+
+    public anEdge(double la1, double lo1, double la2, double lo2, int freq) {
         this.latitude1 = la1;
         this.longitude1 = lo1;
         this.latitude2 = la2;
         this.longitude2 = lo2;
+
+        this.frequency = freq;
 
     }
 
@@ -31,6 +35,8 @@ public class anEdge {
     public double getLatitude2() {
         return latitude2;
     }
+
+    public int getFrequency(){return frequency;}
 
 
 }

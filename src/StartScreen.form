@@ -2,14 +2,14 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="StartScreen">
   <grid id="cbd77" binding="startPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="48" y="54" width="920" height="536"/>
+      <xy x="48" y="54" width="935" height="536"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
       <grid id="7b5b9" binding="sidePanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
@@ -66,18 +66,137 @@
           </component>
         </children>
       </grid>
-      <component id="d6b9f" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <grid id="ce2b4" binding="settingsPanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
-        <properties>
-          <model>
-            <item value="Frequency"/>
-            <item value="Avarages"/>
-          </model>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="455f9" class="javax.swing.JLabel" binding="routeSwitchLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Switch between cities or routes"/>
+            </properties>
+          </component>
+          <component id="b0d7b" class="javax.swing.JLabel" binding="settingsLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <font name="Consolas" size="20" style="1"/>
+              <text value="Settings"/>
+            </properties>
+          </component>
+          <component id="1b416" class="javax.swing.JRadioButton" binding="citiesRadio">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Cities (hubs)"/>
+            </properties>
+          </component>
+          <component id="bab96" class="javax.swing.JRadioButton" binding="routesRadio">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Routes"/>
+            </properties>
+          </component>
+          <component id="a2a3f" class="javax.swing.JLabel" binding="typeBoxLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <labelFor value="8c066"/>
+              <text value="Information based on"/>
+            </properties>
+          </component>
+          <component id="8c066" class="javax.swing.JComboBox" binding="infoModeBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Popularity"/>
+                <item value="Duration"/>
+              </model>
+            </properties>
+          </component>
+          <component id="a1861" class="javax.swing.JLabel" binding="amountLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <labelFor value="24d25"/>
+              <text value="Amount"/>
+            </properties>
+          </component>
+          <component id="24d25" class="javax.swing.JTextField" binding="amountInput">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="5"/>
+              <text value=""/>
+              <verifyInputWhenFocusTarget value="true"/>
+            </properties>
+          </component>
+          <component id="fa1f1" class="javax.swing.JLabel" binding="messageLabel">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <font size="12" style="1"/>
+              <text value="Change an option"/>
+            </properties>
+          </component>
+          <component id="3090b" class="javax.swing.JButton" binding="submitButton">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Submit"/>
+            </properties>
+          </component>
+          <component id="effa2" class="javax.swing.JSlider" binding="amountSlider">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <majorTickSpacing value="1"/>
+              <paintLabels value="false"/>
+              <paintTrack value="true"/>
+              <valueIsAdjusting value="true"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="cityHubSwitchGroup">
+      <member id="1b416"/>
+      <member id="bab96"/>
+    </group>
+  </buttonGroups>
 </form>

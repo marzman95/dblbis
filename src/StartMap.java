@@ -1,4 +1,7 @@
+import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import models.*;
+import models.anEdge;
+
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
@@ -8,6 +11,7 @@ import de.fhpotsdam.unfolding.providers.OpenStreetMap.*;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -17,6 +21,7 @@ public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
     private List<City> popularCities = dataManager.getPopularCities(); // List of the 50 most popular cities
+    private List<anEdge> popularEdges = dataManager.getEdges();
 
     // Float normalize was never used
 
@@ -51,6 +56,24 @@ public class StartMap extends PApplet {
         } catch (Exception e) {
             System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
         }
+
+        try {
+            Location genericLocation1 = new Location(0, 0);
+            Location genericLocation2 = new Location (0, 0);
+            for (int i = 0; i < popularEdges.size(); i++) {
+                anEdge connect = popularEdges.get(i);
+                double f = connect.getLatitude1();
+                genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
+                genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
+                SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
+                map.addMarker(line);
+
+            }
+        } catch (Exception e) {
+            System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
+        }
+
+
     }
 
     /**

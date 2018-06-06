@@ -100,7 +100,7 @@ public class DataManager {
     /**
      * Gets the 50 most popular cities.
      * TODO: Choose best option
-     * @return List of the 50 most popular cities as {@link models.City}-objects
+     * @return the list of the 50 most popular cities as a list of {@link models.City}-objects
      */
     public List<City> getPopularCities() {
         List<City> popularCities = new ArrayList<>();
@@ -157,7 +157,7 @@ public class DataManager {
 
     /**
      * Returns a list of cities.
-     * @return the list of all cities as {@link models.City}-objects
+     * @return the list of all cities as list of {@link models.City}-objects
      */
     public List<City> getAllCities() {
         return citiesList;

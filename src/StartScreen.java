@@ -222,7 +222,7 @@ class StartScreen extends JPanel {
                 // Sets the new amount of information
                 curInfoAmount = Integer.parseInt(amountInput.getText());
                 amountSlider.setValue(curInfoAmount);
-                map.method("testMethod");
+                map.method("changeMap");
 
                 System.out.println("Redrawn (from startscreen)");
                     //TODO: Do something

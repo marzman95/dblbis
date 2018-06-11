@@ -12,7 +12,6 @@ import de.fhpotsdam.unfolding.providers.OpenStreetMap.*;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.List;
 public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
-    private List<anEdge> popularEdges = dataManager.getEdges();
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
 
     // Float normalize was never used
@@ -56,25 +54,25 @@ public class StartMap extends PApplet {
         }
 
         try {
-            Location genericLocation1 = new Location(0, 0);
-            Location genericLocation2 = new Location (0, 0);
-            for (int i = 0; i < popularEdges.size(); i++) {
-                anEdge connect = popularEdges.get(i);
-                genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
-                genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
-                SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
-
-
-                map.addMarker(line);
-               // line.setColor(-10000);
-                line.setStrokeWeight(connect.getFrequency()/1000);
-
-            }
+//            Location genericLocation1 = new Location(0, 0);
+//            Location genericLocation2 = new Location (0, 0);
+//            for (int i = 0; i < popularEdges.size(); i++) {
+//                anEdge connect = popularEdges.get(i);
+//                genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
+//                genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
+//                SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
+//
+//
+//                map.addMarker(line);
+//               // line.setColor(-10000);
+//                line.setStrokeWeight(connect.getFrequency()/1000);
+//
+//            }
+            List<anEdge> popularEdges = dataManager.getPopularEdges(50);
+            addEdges(map.getDefaultMarkerManager(), popularEdges);
         } catch (Exception e) {
             System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
         }
-
-
     }
 
     /**
@@ -167,7 +165,6 @@ public class StartMap extends PApplet {
      * @param citiesToAdd the list of {@link models.City} to be added
      */
     private void addMarkers(MarkerManager mm, List<City> citiesToAdd) {
-        try {
             Location genericLocation = new Location(0, 0);
             SimplePointMarker genericMarker = new SimplePointMarker();
             for (int i = 0; i < citiesToAdd.size(); i++) {
@@ -178,15 +175,54 @@ public class StartMap extends PApplet {
                 genericMarker.setColor(color(0,0,255,255));
                 mm.addMarker(genericMarker);
             }
-        } catch (Exception e) {
-            System.out.println("Problem adding markers: " + e);
+    }
+
+    private void addEdges(MarkerManager mm, List<anEdge> edgesToAdd) {
+        Location genericLocation1 = new Location(0, 0);
+        Location genericLocation2 = new Location (0, 0);
+        for (int i = 0; i < edgesToAdd.size(); i++) {
+            anEdge connect = edgesToAdd.get(i);
+            genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
+            genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
+            SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
+            mm.addMarker(line);
+            // line.setColor(-10000);
+            line.setStrokeWeight(connect.getFrequency()/1000);
         }
     }
 
-    private void removeMarkers(MarkerManager mm) {
+    /**
+     * Removes all the markers from the map
+     * @param mm the MarkerManager that manages the markers
+     */
+    private void removeAll(MarkerManager mm) {
         for(Iterator<Marker> iterator = mm.getMarkers().iterator(); ((Iterator) iterator).hasNext();) {
             iterator.next();
             iterator.remove();
+        }
+    }
+
+    private void removeEdges() {
+
+    }
+
+    /**
+     * Changes the map
+     */
+    public void changeMap() {
+        MarkerManager mm = map.getDefaultMarkerManager();
+        try {
+            removeAll(mm);
+        } catch (Exception e) {
+            System.out.println("Problem removing all during [changeMap()]: " + e);
+        }
+        try {
+            List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
+            addMarkers(mm, citiesList);
+            List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().curInfoAmount);
+            addEdges(mm, edgeList);
+        } catch (Exception e) {
+            System.out.println("Problem adding all during [changeMap()]: " + e);
         }
     }
 

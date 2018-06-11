@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+
 /**
  * Class that generates the starting/home tab.
  * Can be called using the Screen.getScreen().getStartScreen();

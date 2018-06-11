@@ -1,9 +1,29 @@
 <component name="libraryTable">
   <library name="mysql-connector-java-8.0.11">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/Library folder/mysql-connector-java-8.0.11/mysql-connector-java-8.0.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/json4processing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/unfolding.0.9.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all-natives-windows-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/libTUIO.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt-natives-windows-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all-natives-windows-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/sqlite-jdbc-3.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt-natives-windows-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all-natives-linux-armv6hf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt-natives-linux-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt-natives-linux-armv6hf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/gluegen-rt-natives-linux-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/log4j-1.2.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all-natives-linux-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/jogl-all-natives-linux-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/mysql-connector-java-8.0.11.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../Unfolding lib/lib/sqlite-jdbc-3.7.2.jar!/" />
+    </SOURCES>
   </library>
 </component>

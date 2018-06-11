@@ -1,5 +1,6 @@
 import models.City;
 import models.anEdge;
+import models.CityTotal;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -155,10 +156,56 @@ public class DataManager {
                 allEdges.add(edge);
             }
         } catch (Exception e) {
-            System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
+            System.out.println("[DataManager-exception]: Exception on getEdges(): " + e);
         }
         return allEdges;
     }
+
+
+    public CityTotal getCityStatistics (double lon, double lat) {
+        CityTotal city = new CityTotal();
+        try{
+
+           dbConnection = getConnection();
+           statement = dbConnection.createStatement();
+           resultSet= statement.executeQuery("SELECT\n" +
+                   "  city.`City-Name`, city.Country," +
+                   "  city.Longitude," +
+                   "  city.Latitude," +
+                   "  city.`Times-visited` " +
+                   " FROM city" +
+                   " WHERE city.Longitude BETWEEN lon-0.01 AND lon+0.01" +
+                   " AND city.Latitude BETWEEN lat-0.01 AND lat+0.01");
+            city = new CityTotal(resultSet.getString("City-Name"),
+                   resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
+                   resultSet.getInt("Times-visited"), resultSet.getString("Country"));
+
+           resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
+                   "FROM\n" +
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                   "INNER JOIN\n" +
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+           city.setCargoPercentTo(resultSet.getDouble("p"));
+
+           resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
+                    "FROM\n" +
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                    "INNER JOIN\n" +
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+            city.setCargoPercentFrom(resultSet.getDouble("p"));
+
+
+            city.setAvgLoadFrom(0);
+            city.setAvgLoadTo(0);
+
+        }
+        catch (Exception e) {
+            System.out.println("[DataManager-exception]: Exception on getCityStatistics(): " + e);
+        }
+        return city;
+    }
+
+
 
     /**
      * Returns a list of cities.

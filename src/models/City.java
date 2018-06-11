@@ -15,6 +15,12 @@ public class City {
         this.latitude = latitude;
         this.timesVisited = timesVisited;
     }
+    public City() {
+        this.name = "test";
+        this.longitude = 0;
+        this.latitude = 0;
+        this.timesVisited = 0;
+    }
 
     public String getName() {
         return name;

@@ -11,8 +11,6 @@ public class CityTotal extends City {
 
     public CityTotal(String name, double longitude, double latitude, int timesVisited,String country){
         super(name, longitude,latitude, timesVisited);
-        this.avgLoadingtime = avgLoadingtime;
-        this.avgUnloadingtime = avgUnloadingtime;
         this.Country = country;
     }
 
@@ -22,11 +20,6 @@ public class CityTotal extends City {
         destinations.add(city);
 
     }
-    public int getAvgLoadingtime() {
-        return avgLoadingtime;
-    }
-
-    public int getAvgUnLoadingtime() { return avgUnloadingtime; }
 
     public String getCountry(){return Country;};
 

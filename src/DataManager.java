@@ -1,5 +1,6 @@
 import models.City;
 import models.anEdge;
+import models.CityTotal;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class DataManager {
      * Gets the 50 most popular edges
      * @return the list of the 50 most popular edges as a list of {@link models.anEdge}-objects
      */
-    public List<anEdge> getEdges() {
+    public List<anEdge> getPopularEdges(int infoAmount) {
         List<anEdge> allEdges = new ArrayList<>();
         try {
             dbConnection = getConnection();
@@ -142,7 +143,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT `times-used`, `c1`.`Latitude`, `c1`.`Longitude`, `c2`.`Latitude`, `c2`.`Longitude` \n" +
                     "FROM `city` AS `c1`, `city` AS `c2`, `route` \n" +
                     "WHERE `c1`.`City-Name` = `city-name-from` AND `c2`.`City-Name` = `city-name-to` \n" +
-                    "ORDER BY `route`.`times-used` DESC LIMIT 50");
+                    "ORDER BY `route`.`times-used` DESC LIMIT " + infoAmount);
             while (resultSet.next()) {
                 anEdge edge = new anEdge(
                         resultSet.getDouble("c1.Latitude"),
@@ -155,10 +156,56 @@ public class DataManager {
                 allEdges.add(edge);
             }
         } catch (Exception e) {
-            System.out.println("[DataManager-exception]: Exception on getPopularCities(): " + e);
+            System.out.println("[DataManager-exception]: Exception on getEdges(): " + e);
         }
         return allEdges;
     }
+
+
+    public CityTotal getCityStatistics (double lon, double lat) {
+        CityTotal city = new CityTotal();
+        try{
+
+           dbConnection = getConnection();
+           statement = dbConnection.createStatement();
+           resultSet= statement.executeQuery("SELECT\n" +
+                   "  city.`City-Name`, city.Country," +
+                   "  city.Longitude," +
+                   "  city.Latitude," +
+                   "  city.`Times-visited` " +
+                   " FROM city" +
+                   " WHERE city.Longitude BETWEEN lon-0.01 AND lon+0.01" +
+                   " AND city.Latitude BETWEEN lat-0.01 AND lat+0.01");
+            city = new CityTotal(resultSet.getString("City-Name"),
+                   resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
+                   resultSet.getInt("Times-visited"), resultSet.getString("Country"));
+
+           resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
+                   "FROM\n" +
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                   "INNER JOIN\n" +
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+           city.setCargoPercentTo(resultSet.getDouble("p"));
+
+           resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
+                    "FROM\n" +
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                    "INNER JOIN\n" +
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+            city.setCargoPercentFrom(resultSet.getDouble("p"));
+
+
+            city.setAvgLoadFrom(0);
+            city.setAvgLoadTo(0);
+
+        }
+        catch (Exception e) {
+            System.out.println("[DataManager-exception]: Exception on getCityStatistics(): " + e);
+        }
+        return city;
+    }
+
+
 
     /**
      * Returns a list of cities.

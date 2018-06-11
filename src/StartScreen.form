@@ -80,36 +80,17 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Switch between cities or routes"/>
+              <text value="Display of"/>
             </properties>
           </component>
           <component id="b0d7b" class="javax.swing.JLabel" binding="settingsLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <font name="Consolas" size="20" style="1"/>
               <text value="Settings"/>
-            </properties>
-          </component>
-          <component id="1b416" class="javax.swing.JRadioButton" binding="citiesRadio">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <selected value="true"/>
-              <text value="Cities (hubs)"/>
-            </properties>
-          </component>
-          <component id="bab96" class="javax.swing.JRadioButton" binding="routesRadio">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="Routes"/>
             </properties>
           </component>
           <component id="a2a3f" class="javax.swing.JLabel" binding="typeBoxLabel">
@@ -124,7 +105,7 @@
           </component>
           <component id="8c066" class="javax.swing.JComboBox" binding="infoModeBox">
             <constraints>
-              <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -146,7 +127,7 @@
           </component>
           <component id="24d25" class="javax.swing.JTextField" binding="amountInput">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
               <gridbag weightx="0.0" weighty="0.0"/>
@@ -168,18 +149,9 @@
               <text value="Change an option"/>
             </properties>
           </component>
-          <component id="3090b" class="javax.swing.JButton" binding="submitButton">
-            <constraints>
-              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <text value="Submit"/>
-            </properties>
-          </component>
           <component id="effa2" class="javax.swing.JSlider" binding="amountSlider">
             <constraints>
-              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -187,6 +159,59 @@
               <paintLabels value="false"/>
               <paintTrack value="true"/>
               <valueIsAdjusting value="true"/>
+            </properties>
+          </component>
+          <component id="3090b" class="javax.swing.JButton" binding="submitButton">
+            <constraints>
+              <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Submit"/>
+            </properties>
+          </component>
+          <component id="903e1" class="javax.swing.JCheckBox" binding="citiesCheckBox">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Cities"/>
+            </properties>
+          </component>
+          <component id="5b4b" class="javax.swing.JCheckBox" binding="routesCheckBox" default-binding="true">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Routes"/>
+            </properties>
+          </component>
+          <component id="ea3ba" class="javax.swing.JFormattedTextField" binding="routesAmountField">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="3"/>
+              <text value="50"/>
+            </properties>
+          </component>
+          <component id="4fc66" class="javax.swing.JFormattedTextField" binding="citiesAmountField">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="3"/>
+              <text value="50"/>
             </properties>
           </component>
         </children>

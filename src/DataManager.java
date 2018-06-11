@@ -135,7 +135,7 @@ public class DataManager {
      * Gets the 50 most popular edges
      * @return the list of the 50 most popular edges as a list of {@link models.anEdge}-objects
      */
-    public List<anEdge> getEdges() {
+    public List<anEdge> getPopularEdges(int infoAmount) {
         List<anEdge> allEdges = new ArrayList<>();
         try {
             dbConnection = getConnection();
@@ -143,7 +143,7 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT `times-used`, `c1`.`Latitude`, `c1`.`Longitude`, `c2`.`Latitude`, `c2`.`Longitude` \n" +
                     "FROM `city` AS `c1`, `city` AS `c2`, `route` \n" +
                     "WHERE `c1`.`City-Name` = `city-name-from` AND `c2`.`City-Name` = `city-name-to` \n" +
-                    "ORDER BY `route`.`times-used` DESC LIMIT 50");
+                    "ORDER BY `route`.`times-used` DESC LIMIT " + infoAmount);
             while (resultSet.next()) {
                 anEdge edge = new anEdge(
                         resultSet.getDouble("c1.Latitude"),

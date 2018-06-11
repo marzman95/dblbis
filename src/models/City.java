@@ -8,6 +8,7 @@ public class City {
     private double longitude;
     private double latitude;
     private int timesVisited;
+    private int distance;
 
     public City(String name, double longitude, double latitude, int timesVisited) {
         this.name = name;
@@ -21,7 +22,21 @@ public class City {
         this.latitude = 0;
         this.timesVisited = 0;
     }
+    public City(String name, int dis){
+        this.name = name;
+        this.distance = dis;
+    }
+    public void setDistance(int dis){
+        this.distance = dis;
+    }
 
+    public int getDistance(){
+        return distance;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
     public String getName() {
         return name;
     }

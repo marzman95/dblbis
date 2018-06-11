@@ -1,3 +1,5 @@
+import processing.core.PApplet;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -34,7 +36,8 @@ class StartScreen extends JPanel {
     private JSlider amountSlider;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
-    private int curAmount = 50;
+    public processing.core.PApplet map;
+    public int curInfoAmount = 50;
     private int curDataMode = 1; // 1 for cities, 2 for routes
     private int curInfoMode = 1; // 1 for popularity, 2 for duration
 
@@ -64,7 +67,7 @@ class StartScreen extends JPanel {
         JPanel mapPanel = new JPanel(new BorderLayout());
 
         // Opening the map, add it to the panel, with a mouse-listener
-        processing.core.PApplet map = new StartMap();
+        map = new StartMap();
         mapPanel.setMinimumSize(new Dimension(800,600));
         mapPanel.add(map);
         map.init();
@@ -142,7 +145,7 @@ class StartScreen extends JPanel {
 
         // Setup of the amount input fields
         amountInput.setColumns(5);
-        amountInput.setText(Integer.toString(curAmount));
+        amountInput.setText(Integer.toString(curInfoAmount));
         amountSlider.setMaximum(1796);
         amountSlider.setMinimum(10);
         amountLabel.setText(amountLabelBuilder());
@@ -188,8 +191,8 @@ class StartScreen extends JPanel {
         amountSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                curAmount = amountSlider.getValue();
-                amountInput.setText(Integer.toString(curAmount));
+                curInfoAmount = amountSlider.getValue();
+                amountInput.setText(Integer.toString(curInfoAmount));
 
             }
         });
@@ -198,6 +201,9 @@ class StartScreen extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Submission of options!");
+
+                // Sets the modes (data and information)
                 if (citiesRadio.isSelected()) {
                     curDataMode = 1;
                 } else if (routesRadio.isSelected()) {
@@ -208,8 +214,20 @@ class StartScreen extends JPanel {
                 } else if (infoModeBox.getSelectedItem().equals("Duration")) {
                     curInfoMode = 2;
                 }
+                System.out.println("Changed data and info");
+                    //TODO: Do something
+
+                // Sets the new amount of information
+                curInfoAmount = Integer.parseInt(amountInput.getText());
+                amountSlider.setValue(curInfoAmount);
+                map.method("testMethod");
+
+                System.out.println("Redrawn (from startscreen)");
+                    //TODO: Do something
+
+                // Changes the text label
                 amountLabel.setText(amountLabelBuilder());
-                curAmount = Integer.parseInt(amountInput.getText());
+
             }
         });
     }
@@ -252,5 +270,6 @@ class StartScreen extends JPanel {
     public String amountLabelBuilder() {
         return "Amount of " + infoModeToString(curInfoMode) + " " + dataModeToString(curDataMode);
     }
+
 
 }

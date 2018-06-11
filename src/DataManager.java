@@ -102,7 +102,7 @@ public class DataManager {
      * TODO: Choose best option
      * @return the list of the 50 most popular cities as a list of {@link models.City}-objects
      */
-    public List<City> getPopularCities() {
+    public List<City> getPopularCities(int infoAmount) {
         List<City> popularCities = new ArrayList<>();
 //        for (int i = 0; i < citiesList.size(); i++) {
 //            City curCity = citiesList.get(i);
@@ -114,7 +114,7 @@ public class DataManager {
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT 50");
+            resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT " + infoAmount + "");
             while (resultSet.next()) {
                 City city = new City(
                         resultSet.getString("City-Name"),
@@ -130,6 +130,10 @@ public class DataManager {
         return popularCities;
     }
 
+    /**
+     * Gets the 50 most popular edges
+     * @return the list of the 50 most popular edges as a list of {@link models.anEdge}-objects
+     */
     public List<anEdge> getEdges() {
         List<anEdge> allEdges = new ArrayList<>();
         try {

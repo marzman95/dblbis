@@ -1,3 +1,4 @@
+import de.fhpotsdam.unfolding.marker.MarkerManager;
 import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import models.*;
 import models.anEdge;
@@ -22,11 +23,19 @@ import java.util.List;
 public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
-    private List<City> popularCities = dataManager.getPopularCities(); // List of the 50 most popular cities
+    private List<City> popularCities = dataManager.getPopularCities(50); // List of the 50 most popular cities
     private List<anEdge> popularEdges = dataManager.getEdges();
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
 
     // Float normalize was never used
+
+    public void testMethod() {
+        MarkerManager mm = map.getDefaultMarkerManager();
+        removeMarkers(mm);
+        popularCities = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
+        addMarkers(mm, popularCities);
+        map.draw();
+    }
 
     /**
      * Setups the map
@@ -46,16 +55,7 @@ public class StartMap extends PApplet {
 
         // Creates the actual markers
         try {
-            Location genericLocation = new Location(0, 0);
-            SimplePointMarker genericMarker = new SimplePointMarker();
-            for (int i = 0; i < popularCities.size(); i++) {
-                City curCity = popularCities.get(i);
-                genericLocation = new Location(curCity.getLatitude(), curCity.getLongitude());
-                genericMarker = new SimplePointMarker(genericLocation);
-                genericMarker.setRadius(((float)curCity.getTimesVisited()/800)+5);
-                genericMarker.setColor(color(34, 24, 155));
-                map.addMarker(genericMarker);
-            }
+            addMarkers(map.getDefaultMarkerManager(), popularCities);
         } catch (Exception e) {
             System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
         }
@@ -160,4 +160,31 @@ public class StartMap extends PApplet {
             }
         }
     }
+
+
+    private void addMarkers(MarkerManager mm, List<City> citiesToAdd) {
+        try {
+            Location genericLocation = new Location(0, 0);
+            SimplePointMarker genericMarker = new SimplePointMarker();
+            for (int i = 0; i < citiesToAdd.size(); i++) {
+                City curCity = citiesToAdd.get(i);
+                genericLocation = new Location(curCity.getLatitude(), curCity.getLongitude());
+                genericMarker = new SimplePointMarker(genericLocation);
+                genericMarker.setRadius(((float) curCity.getTimesVisited() / 800) + 5);
+                genericMarker.setColor(color(34, 24, 155));
+                mm.addMarker(genericMarker);
+            }
+        } catch (Exception e) {
+            System.out.println("Problem adding markers: " + e);
+        }
+    }
+
+    private void removeMarkers(MarkerManager mm) {
+        for(Iterator<Marker> iterator = mm.getMarkers().iterator(); ((Iterator) iterator).hasNext();) {
+            iterator.next();
+            iterator.remove();
+        }
+    }
+
+
 }

@@ -12,6 +12,8 @@ import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ public class StartMap extends PApplet {
     UnfoldingMap map;
     private List<City> popularCities = dataManager.getPopularCities(); // List of the 50 most popular cities
     private List<anEdge> popularEdges = dataManager.getEdges();
+    private List<Marker> selectedMarkers = new ArrayList<Marker>();
 
     // Float normalize was never used
 
@@ -105,12 +108,52 @@ public class StartMap extends PApplet {
      */
     public void mouseClicked() {
         Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
+        boolean found = false;
         if (hitMarker != null) {
-            hitMarker.setColor(color(0, 255,0,255));
-            hitMarker.setSelected(true);
-            float markerX = hitMarker.getLocation().x;
-            float markerY = hitMarker.getLocation().y;
-            Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+            if(selectedMarkers.size()==1){
+                for(Iterator<Marker> iterator =selectedMarkers.iterator(); ((Iterator) iterator).hasNext();) {
+                    Marker marker = iterator.next();
+                    if(hitMarker.getLocation().x == marker.getLocation().x && hitMarker.getLocation().y == marker.getLocation().y) {
+                        iterator.remove();
+                        found = true;
+                        hitMarker.setColor(color(34, 24, 155));
+                        hitMarker.setSelected(false);
+                        float markerX = hitMarker.getLocation().x;
+                        float markerY = hitMarker.getLocation().y;
+                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                    }
+                }
+                if(!found) {
+                    hitMarker.setColor(color(0, 255,0,255));
+                    hitMarker.setSelected(true);
+                    selectedMarkers.add(hitMarker);
+                    float markerX = hitMarker.getLocation().x;
+                    float markerY = hitMarker.getLocation().y;
+                    Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                }
+            }
+            else if(selectedMarkers.size()==2){
+                for(Iterator<Marker> iterator =selectedMarkers.iterator(); ((Iterator) iterator).hasNext();) {
+                    Marker marker = iterator.next();
+                    if(hitMarker.getLocation().x == marker.getLocation().x && hitMarker.getLocation().y == marker.getLocation().y) {
+                        iterator.remove();
+                        found = true;
+                        hitMarker.setColor(color(34, 24, 155));
+                        hitMarker.setSelected(false);
+                        float markerX = hitMarker.getLocation().x;
+                        float markerY = hitMarker.getLocation().y;
+                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                    }
+                }
+            }
+            else{
+               hitMarker.setColor(color(0, 255,0,255));
+               hitMarker.setSelected(true);
+               selectedMarkers.add(hitMarker);
+               float markerX = hitMarker.getLocation().x;
+               float markerY = hitMarker.getLocation().y;
+               Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+            }
         } else {
             for (Marker marker : map.getMarkers()) {
                 marker.setSelected(false);

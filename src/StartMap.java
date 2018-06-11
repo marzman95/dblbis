@@ -23,19 +23,12 @@ import java.util.List;
 public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
-    private List<City> popularCities = dataManager.getPopularCities(50); // List of the 50 most popular cities
     private List<anEdge> popularEdges = dataManager.getEdges();
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
 
     // Float normalize was never used
 
-    public void testMethod() {
-        MarkerManager mm = map.getDefaultMarkerManager();
-        removeMarkers(mm);
-        popularCities = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
-        addMarkers(mm, popularCities);
-        map.draw();
-    }
+
 
     /**
      * Setups the map
@@ -53,7 +46,9 @@ public class StartMap extends PApplet {
         float maxPanningDistance = 700; // Which is in km
         map.setPanningRestriction(centerLocation, maxPanningDistance);
 
-        // Creates the actual markers
+        List<City> popularCities = dataManager.getPopularCities(50); // List of the 50 most popular cities
+
+        // Drawing of the most 50 popular cities
         try {
             addMarkers(map.getDefaultMarkerManager(), popularCities);
         } catch (Exception e) {
@@ -86,7 +81,11 @@ public class StartMap extends PApplet {
      * Draws the map
      */
     public void draw() {
-        map.draw();
+        try {
+            map.draw();
+        } catch (Exception e) {
+            System.out.println("Problem drawing map: " + e);
+        }
     }
 
     /**
@@ -162,6 +161,11 @@ public class StartMap extends PApplet {
     }
 
 
+    /**
+     * Adds markers to the map
+     * @param mm the MarkerManager that manages the markers
+     * @param citiesToAdd the list of {@link models.City} to be added
+     */
     private void addMarkers(MarkerManager mm, List<City> citiesToAdd) {
         try {
             Location genericLocation = new Location(0, 0);
@@ -171,7 +175,7 @@ public class StartMap extends PApplet {
                 genericLocation = new Location(curCity.getLatitude(), curCity.getLongitude());
                 genericMarker = new SimplePointMarker(genericLocation);
                 genericMarker.setRadius(((float) curCity.getTimesVisited() / 800) + 5);
-                genericMarker.setColor(color(34, 24, 155));
+                genericMarker.setColor(color(0,0,255,255));
                 mm.addMarker(genericMarker);
             }
         } catch (Exception e) {

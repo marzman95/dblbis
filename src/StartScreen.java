@@ -197,6 +197,8 @@ class StartScreen extends JPanel {
             }
         });
 
+
+
         // Listens for submission
         submitButton.addActionListener(new ActionListener() {
             @Override

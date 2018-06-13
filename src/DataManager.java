@@ -165,7 +165,6 @@ public class DataManager {
     public CityTotal getCityStatistics (double lon, double lat) {
         CityTotal city = new CityTotal();
         try{
-
            dbConnection = getConnection();
            statement = dbConnection.createStatement();
            resultSet= statement.executeQuery("SELECT\n" +
@@ -182,21 +181,23 @@ public class DataManager {
 
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
                    "FROM\n" +
-                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" AND `Load Index` <> 0) as a\n" +
                    "INNER JOIN\n" +
-                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" ) as b\n");
            city.setCargoPercentTo(resultSet.getDouble("p"));
 
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
                     "FROM\n" +
-                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\" AND `Load Index` <> 0) as a\n" +
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\" AND `Load Index` <> 0) as a\n" +
                     "INNER JOIN\n" +
-                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \"LUCHTHAVEN SCHIPHOL\") as b\n");
+                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\") as b\n");
             city.setCargoPercentFrom(resultSet.getDouble("p"));
 
+            resultSet = statement.executeQuery("SELECT AVG(`Load Index`) FROM `leg` WHERE `From` = \""+city.getName()+"\"");
+            city.setAvgLoadFrom(resultSet.getDouble("Load Index"));
+            resultSet = statement.executeQuery("SELECT AVG(`Load Index`) FROM `leg` WHERE `To` = \""+city.getName()+"\"");
+            city.setAvgLoadTo(resultSet.getDouble("Load Index"));
 
-            city.setAvgLoadFrom(0);
-            city.setAvgLoadTo(0);
 
         }
         catch (Exception e) {

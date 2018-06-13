@@ -40,9 +40,14 @@ public class CityTotal extends City {
         this.avgLoadTo = avgLoadTo;
     }
 
-    public String getCountry(){return Country;};
+    public void setDestinations(ArrayList<City> c) {this.destinations = c; }
+
+    public String getCountry(){return Country;}
+
+
 
     public ArrayList<City> getDestinations() {
         return destinations;
     }
+
 }

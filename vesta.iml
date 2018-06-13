@@ -7,9 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="core" level="project" />
-    <orderEntry type="library" exported="" name="unfolding.0.9.6" level="project" />
-    <orderEntry type="library" exported="" name="json4processing" level="project" />
-    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.11" level="project" />
+    <orderEntry type="library" name="json4processing" level="project" />
+    <orderEntry type="library" name="core" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.11" level="project" />
   </component>
 </module>

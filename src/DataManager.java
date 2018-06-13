@@ -175,28 +175,35 @@ public class DataManager {
                    " FROM city" +
                    " WHERE city.Longitude BETWEEN "+ String.valueOf(lon-0.01)+" AND "+String.valueOf(lon+0.01) +
                    " AND city.Latitude BETWEEN "+ String.valueOf(lat-0.01)+" AND " +String.valueOf(lat+0.01) );
-            city = new CityTotal(resultSet.getString("City-Name"),
-                   resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
-                   resultSet.getInt("Times-visited"), resultSet.getString("Country"));
+           resultSet.first();
+           city = new CityTotal(resultSet.getString("City-Name"),
+               resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
+               resultSet.getInt("Times-visited"), resultSet.getString("Country"));
+
+
 
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
                    "FROM\n" +
-                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" AND `Load Index` <> 0) as a\n" +
+                   "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" AND `Load index` <> 0) as a\n" +
                    "INNER JOIN\n" +
-                   "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" ) as b\n");
+                   "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" ) as b\n");
+           resultSet.first();
            city.setCargoPercentTo(resultSet.getDouble("p"));
 
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
                     "FROM\n" +
-                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\" AND `Load Index` <> 0) as a\n" +
+                    "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\" AND `Load index` <> 0) as a\n" +
                     "INNER JOIN\n" +
-                    "(SELECT COUNT(`Load Index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\") as b\n");
+                    "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\") as b\n");
+            resultSet.first();
             city.setCargoPercentFrom(resultSet.getDouble("p"));
 
-            resultSet = statement.executeQuery("SELECT AVG(`Load Index`) FROM `leg` WHERE `From` = \""+city.getName()+"\"");
-            city.setAvgLoadFrom(resultSet.getDouble("Load Index"));
-            resultSet = statement.executeQuery("SELECT AVG(`Load Index`) FROM `leg` WHERE `To` = \""+city.getName()+"\"");
-            city.setAvgLoadTo(resultSet.getDouble("Load Index"));
+            resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `From` = \""+city.getName()+"\"");
+            resultSet.first();
+            city.setAvgLoadFrom(resultSet.getDouble("Load index"));
+            resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `To` = \""+city.getName()+"\"");
+            resultSet.first();
+            city.setAvgLoadTo(resultSet.getDouble("Load index"));
 
 
         }

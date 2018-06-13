@@ -211,16 +211,21 @@ public class StartMap extends PApplet {
      */
     public void changeMap() {
         MarkerManager mm = map.getDefaultMarkerManager();
+        StartScreen ss = Screen.getScreen().getStartScreen();
         try {
             removeAll(mm);
         } catch (Exception e) {
             System.out.println("Problem removing all during [changeMap()]: " + e);
         }
         try {
-            List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
-            addMarkers(mm, citiesList);
-            List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().curInfoAmount);
-            addEdges(mm, edgeList);
+            if (ss.citiesDisplayed) {
+                List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
+                addMarkers(mm, citiesList);
+            }
+            if (ss.routesDisplayed) {
+                List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().curInfoAmount);
+                addEdges(mm, edgeList);
+            }
         } catch (Exception e) {
             System.out.println("Problem adding all during [changeMap()]: " + e);
         }

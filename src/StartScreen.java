@@ -1,5 +1,3 @@
-import processing.core.PApplet;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,8 +25,6 @@ class StartScreen extends JPanel {
     private JPanel settingsPanel;
     private JLabel settingsLabel;
     private JLabel routeSwitchLabel;
-    private JRadioButton citiesRadio;
-    private JRadioButton routesRadio;
     private JComboBox infoModeBox;
     private JLabel typeBoxLabel;
     public JTextField amountInput;
@@ -36,11 +32,16 @@ class StartScreen extends JPanel {
     private JLabel messageLabel;
     private JButton submitButton;
     private JSlider amountSlider;
+    private JCheckBox citiesCheckBox;
+    private JCheckBox routesCheckBox;
+    private JTextField citiesAmountField;
+    private JFormattedTextField routesAmountField;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
     public int curInfoAmount = 50;
-    private int curDataMode = 1; // 1 for cities, 2 for routes
+    public boolean citiesDisplayed = true;
+    public boolean routesDisplayed = true;
     private int curInfoMode = 1; // 1 for popularity, 2 for duration
 
     /**
@@ -108,7 +109,7 @@ class StartScreen extends JPanel {
         // Sets content of options panel
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; // Switch city-hub label
+        gbc.gridx = 0; // Choose city-hub label
         gbc.gridy = 2;
         gbc.weightx = 0.1;
         gbc.weighty = 0.1;
@@ -116,10 +117,17 @@ class StartScreen extends JPanel {
         gbc.gridheight = 1;
         settingsPanel.add(routeSwitchLabel, gbc);
 
-        gbc.gridx = 3; // City-hub radio buttons
-        settingsPanel.add(citiesRadio, gbc);
+        gbc.gridx = 3; // City-hub check buttons
+        settingsPanel.add(citiesCheckBox, gbc);
         gbc.gridy = 4;
-        settingsPanel.add(routesRadio, gbc);
+        settingsPanel.add(routesCheckBox, gbc);
+
+        gbc.gridx = 5; // Number fields
+        gbc.gridy = 2;
+        settingsPanel.add(citiesAmountField, gbc);
+        gbc.gridy = 4;
+        settingsPanel.add(routesAmountField, gbc);
+
 
         gbc.gridx = 0; // Switch type frequency-time
         gbc.gridy = 5;
@@ -188,7 +196,6 @@ class StartScreen extends JPanel {
             }
         });
 
-
         // Listens to the amount slider
         amountSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -199,8 +206,6 @@ class StartScreen extends JPanel {
             }
         });
 
-
-
         // Listens for submission
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -208,11 +213,18 @@ class StartScreen extends JPanel {
                 System.out.println("Submission of options!");
 
                 // Sets the modes (data and information)
-                if (citiesRadio.isSelected()) {
-                    curDataMode = 1;
-                } else if (routesRadio.isSelected()) {
-                    curDataMode = 2;
-                }
+//                if (citiesCheckBox.isSelected()) {
+//
+//                } else {
+//                    citiesDisplayed = false;
+//                }
+//                if (routesCheckBox.isSelected()) {
+//                    routesDisplayed = true;
+//                    routesAmountField.setEnabled(true);
+//                } else {
+//                    routesDisplayed = false;
+//                    routesAmountField.setEnabled(false);
+//                }
                 if (infoModeBox.getSelectedItem().equals("Popularity")) {
                     curInfoMode = 1;
                 } else if (infoModeBox.getSelectedItem().equals("Duration")) {
@@ -234,6 +246,29 @@ class StartScreen extends JPanel {
 
             }
         });
+        citiesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (citiesCheckBox.isSelected()) {
+                    citiesDisplayed = true;
+
+                } else {
+                    citiesDisplayed = false;
+                }
+                citiesAmountField.setEnabled(citiesDisplayed);
+            }
+        });
+        routesAmountField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (routesCheckBox.isSelected()) {
+                    routesDisplayed = true;
+                } else {
+                    routesDisplayed = false;
+                }
+                routesAmountField.setEnabled(routesDisplayed);
+            }
+        });
     }
 
     /**
@@ -243,19 +278,6 @@ class StartScreen extends JPanel {
      */
     public void setMarker(float corX, float corY) {
         clickLabel.setText("Clicked at x:" + corX + " and y: " + corY);
-    }
-
-    public String dataModeToString (int dataMode) {
-        String returnText = "";
-        switch (dataMode) {
-            case 1:
-                returnText = "cities";
-                break;
-            case 2:
-                returnText = "routes";
-                break;
-        }
-        return returnText;
     }
 
     public String infoModeToString (int infoMode) {
@@ -272,8 +294,7 @@ class StartScreen extends JPanel {
     }
 
     public String amountLabelBuilder() {
-        return "Amount of " + infoModeToString(curInfoMode) + " " + dataModeToString(curDataMode);
+        return "Amount of cities and routes";
     }
-
 
 }

@@ -24,7 +24,6 @@ class StartScreen extends JPanel {
     private JPanel sidePanel;
     private JLabel informationLabel;
     private JButton dataTabButton;
-    private JLabel clickLabel;
     private JPanel settingsPanel;
     private JLabel settingsLabel;
     private JLabel routeSwitchLabel;
@@ -40,6 +39,7 @@ class StartScreen extends JPanel {
     private JTextField citiesAmountField;
     private JFormattedTextField routesAmountField;
     private JTable Information_table;
+    private JProgressBar Querybar;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -280,12 +280,16 @@ class StartScreen extends JPanel {
      * @param corY y-coordinate of the marker
      */
     public void setMarker(float corX, float corY,DataManager dataManager) {
-        CityTotal city= dataManager.getCityStatistics(corY,corX);
+        Querybar.setVisible(true);
+        Information_table.setVisible(false);
+        CityTotal city= dataManager.getCityStatistics(corY,corX,Querybar);
         String[][] tableData = city.getinfo();
         String[] columnNames = new String[2];
         columnNames[0] = "Name";
         columnNames[1] = "Value";
         Information_table.setModel(new DefaultTableModel(tableData,columnNames));
+        Information_table.setVisible(true);
+        Querybar.setVisible(false);
     }
 
     public String infoModeToString (int infoMode) {

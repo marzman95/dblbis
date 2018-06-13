@@ -197,6 +197,10 @@ public class StartMap extends PApplet {
             iterator.next();
             iterator.remove();
         }
+        for(Iterator<Marker> iterator =selectedMarkers.iterator(); ((Iterator) iterator).hasNext();) {
+            iterator.next();
+            iterator.remove();
+        }
     }
 
     private void removeEdges() {
@@ -209,6 +213,10 @@ public class StartMap extends PApplet {
     public void changeMap() {
         MarkerManager mm = map.getDefaultMarkerManager();
         StartScreen ss = Screen.getScreen().getStartScreen();
+        for(Iterator<Marker> iterator = mm.getMarkers().iterator(); ((Iterator) iterator).hasNext();) {
+            iterator.next();
+            iterator.remove();
+        }
         try {
             removeAll(mm);
         } catch (Exception e) {

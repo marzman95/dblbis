@@ -2,6 +2,7 @@ import models.City;
 import models.anEdge;
 import models.CityTotal;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,11 +163,12 @@ public class DataManager {
     }
 
 
-    public CityTotal getCityStatistics (double lon, double lat) {
+    public CityTotal getCityStatistics (double lon, double lat, JProgressBar bar) {
         CityTotal city = new CityTotal();
         try{
            dbConnection = getConnection();
            statement = dbConnection.createStatement();
+           bar.setValue(0);
            resultSet= statement.executeQuery("SELECT" +
                    "  city.`City-Name`, city.Country," +
                    "  city.Longitude," +
@@ -179,7 +181,7 @@ public class DataManager {
            city = new CityTotal(resultSet.getString("City-Name"),
                resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
                resultSet.getInt("Times-visited"), resultSet.getString("Country"));
-
+            bar.setValue(20);
 
 
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
@@ -189,7 +191,7 @@ public class DataManager {
                    "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `To` = \""+city.getName()+"\" ) as b\n");
            resultSet.first();
            city.setCargoPercentTo(resultSet.getDouble("p"));
-
+           bar.setValue(40);
            resultSet = statement.executeQuery("SELECT 100*a.cnt/b.cnt AS `p`" +
                     "FROM\n" +
                     "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\" AND `Load index` <> 0) as a\n" +
@@ -197,14 +199,15 @@ public class DataManager {
                     "(SELECT COUNT(`Load index`) AS cnt FROM `leg` WHERE `From` = \""+city.getName()+"\") as b\n");
             resultSet.first();
             city.setCargoPercentFrom(resultSet.getDouble("p"));
-
+            bar.setValue(60);
             resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `From` = \""+city.getName()+"\"");
             resultSet.first();
+            bar.setValue(80);
             city.setAvgLoadFrom(resultSet.getDouble("Load index"));
             resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `To` = \""+city.getName()+"\"");
             resultSet.first();
             city.setAvgLoadTo(resultSet.getDouble("Load index"));
-
+            bar.setValue(100);
 
         }
         catch (Exception e) {

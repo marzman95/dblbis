@@ -15,16 +15,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <text value="Close this panel"/>
-              <toolTipText value="Click here to close this panel"/>
-            </properties>
-          </component>
           <component id="92474" class="javax.swing.JLabel" binding="informationLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -34,16 +24,6 @@
               <font name="Consolas" size="28" style="1"/>
               <horizontalAlignment value="2"/>
               <text value="This is the starting screen"/>
-            </properties>
-          </component>
-          <component id="779d9" class="javax.swing.JButton" binding="moreButton">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <text value="More information"/>
-              <toolTipText value="Click here for more information"/>
             </properties>
           </component>
           <component id="a3eb2" class="javax.swing.JButton" binding="dataTabButton">
@@ -63,6 +43,25 @@
             <properties>
               <text value="no click"/>
             </properties>
+          </component>
+          <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Close this panel"/>
+              <toolTipText value="Click here to close this panel"/>
+            </properties>
+          </component>
+          <component id="c7d79" class="javax.swing.JTable" binding="Information_table">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>

@@ -1,6 +1,9 @@
+import models.CityTotal;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +39,7 @@ class StartScreen extends JPanel {
     private JCheckBox routesCheckBox;
     private JTextField citiesAmountField;
     private JFormattedTextField routesAmountField;
+    private JTable Information_table;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -162,7 +166,6 @@ class StartScreen extends JPanel {
 
 
         // Attach a mouselistener to the mapPanel
-        // TODO: Delete; and implement showing the sidePanel when clicking on a marker or leg
         map.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -172,16 +175,16 @@ class StartScreen extends JPanel {
         });
 
         // Listeners for the sidepanel buttons
-        moreButton.addActionListener(e -> {
-            //StartScreen.super.action(e);
-            String title = "Second tab";
-            TabContent content = new SettingsTab(title);
-            if (tabPane.indexOfTab(title) != -1) {
-                tabPane.setSelectedIndex(tabPane.indexOfTab(title));
-            } else {
-                mainScreen.addTab(content);
-            }
-        });
+//        moreButton.addActionListener(e -> {
+//            //StartScreen.super.action(e);
+//            String title = "Second tab";
+//            TabContent content = new SettingsTab(title);
+//            if (tabPane.indexOfTab(title) != -1) {
+//                tabPane.setSelectedIndex(tabPane.indexOfTab(title));
+//            } else {
+//                mainScreen.addTab(content);
+//            }
+//        });
         closeSidePanelButton.addActionListener(e -> sidePanel.setVisible(false));
         dataTabButton.addActionListener(new ActionListener() {
             @Override
@@ -276,8 +279,13 @@ class StartScreen extends JPanel {
      * @param corX x-coordinate of the marker
      * @param corY y-coordinate of the marker
      */
-    public void setMarker(float corX, float corY) {
-        clickLabel.setText("Clicked at x:" + corX + " and y: " + corY);
+    public void setMarker(float corX, float corY,DataManager dataManager) {
+        CityTotal city= dataManager.getCityStatistics(corY,corX);
+        String[][] tableData = city.getinfo();
+        String[] columnNames = new String[2];
+        columnNames[0] = "Name";
+        columnNames[1] = "Value";
+        Information_table.setModel(new DefaultTableModel(tableData,columnNames));
     }
 
     public String infoModeToString (int infoMode) {

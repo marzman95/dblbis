@@ -167,14 +167,14 @@ public class DataManager {
         try{
            dbConnection = getConnection();
            statement = dbConnection.createStatement();
-           resultSet= statement.executeQuery("SELECT\n" +
+           resultSet= statement.executeQuery("SELECT" +
                    "  city.`City-Name`, city.Country," +
                    "  city.Longitude," +
                    "  city.Latitude," +
                    "  city.`Times-visited` " +
                    " FROM city" +
-                   " WHERE city.Longitude BETWEEN lon-0.01 AND lon+0.01" +
-                   " AND city.Latitude BETWEEN lat-0.01 AND lat+0.01");
+                   " WHERE city.Longitude BETWEEN "+ String.valueOf(lon-0.01)+" AND "+String.valueOf(lon+0.01) +
+                   " AND city.Latitude BETWEEN "+ String.valueOf(lat-0.01)+" AND " +String.valueOf(lat+0.01) );
             city = new CityTotal(resultSet.getString("City-Name"),
                    resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
                    resultSet.getInt("Times-visited"), resultSet.getString("Country"));

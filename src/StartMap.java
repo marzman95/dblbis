@@ -24,9 +24,6 @@ public class StartMap extends PApplet {
     UnfoldingMap map;
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
 
-    // Float normalize was never used
-
-
 
     /**
      * Setups the map
@@ -117,7 +114,7 @@ public class StartMap extends PApplet {
                         hitMarker.setSelected(false);
                         float markerX = hitMarker.getLocation().x;
                         float markerY = hitMarker.getLocation().y;
-                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                     }
                 }
                 if(!found) {
@@ -126,7 +123,7 @@ public class StartMap extends PApplet {
                     selectedMarkers.add(hitMarker);
                     float markerX = hitMarker.getLocation().x;
                     float markerY = hitMarker.getLocation().y;
-                    Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                    Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                 }
             }
             else if(selectedMarkers.size()==2){
@@ -139,7 +136,7 @@ public class StartMap extends PApplet {
                         hitMarker.setSelected(false);
                         float markerX = hitMarker.getLocation().x;
                         float markerY = hitMarker.getLocation().y;
-                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                     }
                 }
             }
@@ -149,7 +146,7 @@ public class StartMap extends PApplet {
                selectedMarkers.add(hitMarker);
                float markerX = hitMarker.getLocation().x;
                float markerY = hitMarker.getLocation().y;
-               Screen.getScreen().getStartScreen().setMarker(markerX, markerY);
+               Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
             }
         } else {
             for (Marker marker : map.getMarkers()) {

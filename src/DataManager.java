@@ -1,4 +1,5 @@
 import models.City;
+import models.CityPair;
 import models.anEdge;
 import models.CityTotal;
 
@@ -217,6 +218,9 @@ public class DataManager {
         return city;
     }
 
+//    public CityPair Select2cities(double lon1, double lat1,double lon2, double lat2, JProgressBar bar){
+//        return;
+//    }
 
 
     /**

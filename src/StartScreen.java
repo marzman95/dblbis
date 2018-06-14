@@ -279,7 +279,7 @@ class StartScreen extends JPanel {
      * @param corX x-coordinate of the marker
      * @param corY y-coordinate of the marker
      */
-    public void setMarker(float corX, float corY,DataManager dataManager) {
+    public CityTotal setMarker(float corX, float corY,DataManager dataManager) {
         Querybar.setVisible(true);
         Information_table.setVisible(false);
         CityTotal city= dataManager.getCityStatistics(corY,corX,Querybar);
@@ -290,7 +290,18 @@ class StartScreen extends JPanel {
         Information_table.setModel(new DefaultTableModel(tableData,columnNames));
         Information_table.setVisible(true);
         Querybar.setVisible(false);
+        return city;
     }
+    public void filltable(CityTotal city){
+        Information_table.setVisible(false);
+        String[][] tableData = city.getinfo();
+        String[] columnNames = new String[2];
+        columnNames[0] = "Name";
+        columnNames[1] = "Value";
+        Information_table.setModel(new DefaultTableModel(tableData,columnNames));
+        Information_table.setVisible(true);
+    }
+
 
     public String infoModeToString (int infoMode) {
         String returnText ="";

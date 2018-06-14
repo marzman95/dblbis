@@ -23,8 +23,7 @@ public class StartMap extends PApplet {
     private DataManager dataManager = DataManager.getDataManager();
     UnfoldingMap map;
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
-
-
+    private List<CityTotal> checkedCities = new ArrayList<CityTotal>();
     /**
      * Setups the map
      */
@@ -117,35 +116,51 @@ public class StartMap extends PApplet {
                     }
                 }
                 if(!found) {
+                    for(CityTotal acity:checkedCities){
+                        if(acity.getLongitude() == hitMarker.getLocation().y && acity.getLatitude() == hitMarker.getLocation().x ){
+                            hitMarker.setColor(color(0, 255,0,255));
+                            hitMarker.setSelected(true);
+                            selectedMarkers.add(hitMarker);
+                            Screen.getScreen().getStartScreen().filltable(acity);
+                            return;
+                        }
+                    }
                     hitMarker.setColor(color(0, 255,0,255));
                     hitMarker.setSelected(true);
                     selectedMarkers.add(hitMarker);
                     float markerX = hitMarker.getLocation().x;
                     float markerY = hitMarker.getLocation().y;
-                    Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
+                    CityTotal city = Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
+                    checkedCities.add(city);
                 }
             }
             else if(selectedMarkers.size()==2){
                 for(Iterator<Marker> iterator =selectedMarkers.iterator(); ((Iterator) iterator).hasNext();) {
                     Marker marker = iterator.next();
                     if(hitMarker.getLocation().x == marker.getLocation().x && hitMarker.getLocation().y == marker.getLocation().y) {
-                        iterator.remove();
-                        found = true;
                         hitMarker.setColor(color(34, 24, 155));
                         hitMarker.setSelected(false);
-                        float markerX = hitMarker.getLocation().x;
-                        float markerY = hitMarker.getLocation().y;
-                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
+                        iterator.remove();
                     }
                 }
             }
             else{
+                for(CityTotal acity:checkedCities){
+                    if(acity.getLongitude() == hitMarker.getLocation().y && acity.getLatitude() == hitMarker.getLocation().x ){
+                        hitMarker.setColor(color(0, 255,0,255));
+                        hitMarker.setSelected(true);
+                        selectedMarkers.add(hitMarker);
+                        Screen.getScreen().getStartScreen().filltable(acity);
+                        return;
+                    }
+                }
                hitMarker.setColor(color(0, 255,0,255));
                hitMarker.setSelected(true);
                selectedMarkers.add(hitMarker);
                float markerX = hitMarker.getLocation().x;
                float markerY = hitMarker.getLocation().y;
-               Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
+               CityTotal city = Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
+               checkedCities.add(city);
             }
         } else {
             for (Marker marker : map.getMarkers()) {

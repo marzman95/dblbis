@@ -38,7 +38,7 @@ public class StartMap extends PApplet {
         map.zoomAndPanTo(5, centerLocation);
 
         // Restricts the map panning
-        float maxPanningDistance = 700; // Which is in km
+        float maxPanningDistance = 1000; // Which is in km
         map.setPanningRestriction(centerLocation, maxPanningDistance);
 
         List<City> popularCities = dataManager.getPopularCities(50); // List of the 50 most popular cities
@@ -114,7 +114,6 @@ public class StartMap extends PApplet {
                         hitMarker.setSelected(false);
                         float markerX = hitMarker.getLocation().x;
                         float markerY = hitMarker.getLocation().y;
-                        Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                     }
                 }
                 if(!found) {

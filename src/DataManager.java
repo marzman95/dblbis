@@ -165,6 +165,7 @@ public class DataManager {
 
     public CityTotal getCityStatistics (double lon, double lat, JProgressBar bar) {
         CityTotal city = new CityTotal();
+        bar.setValue(0);
         try{
            dbConnection = getConnection();
            statement = dbConnection.createStatement();

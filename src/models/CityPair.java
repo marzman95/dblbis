@@ -1,13 +1,36 @@
 package models;
 
+
 public class CityPair {
     private City city1;
     private City city2;
-    private int Distance;
+    private double Distance;
     private int times;
     private double loadindex;
 
-    public CityPair(City city1,City city2){
+    public CityPair(){}
+
+    public void setCity1(City city1) {
+        this.city1 = city1;
+    }
+
+    public void setCity2(City city2) {
+        this.city2 = city2;
+    }
+
+    public void setDistance(double distance) {
+        Distance = distance;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
+
+    public void setLoadindex(double loadindex) {
+        this.loadindex = loadindex;
+    }
+
+    public CityPair(City city1, City city2){
         this.city1 = city1;
         this.city2 = city2;
     }

@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.fhpotsdam.unfolding.utils.GeoUtils.getDistance;
+
 /**
  * Class that handles the data and database connection.
  */
@@ -221,6 +223,53 @@ public class DataManager {
 //    public CityPair Select2cities(double lon1, double lat1,double lon2, double lat2, JProgressBar bar){
 //        return;
 //    }
+
+    public CityPair twoCityStatistics(double lat1, double lon1, double lat2, double lon2, JProgressBar bar) {
+        CityPair pair = new CityPair();
+        try {
+            dbConnection = getConnection();
+            statement = dbConnection.createStatement();
+
+            //get first city name and times-visited from location
+            resultSet = statement.executeQuery("SELECT\n" +
+                    "  city.`City-Name`, city.Country," +
+                    "  city.Longitude," +
+                    "  city.Latitude," +
+                    "  city.`Times-visited` " +
+                    " FROM city" +
+                    " WHERE city.Longitude BETWEEN lon1-0.01 AND lon1+0.01" +
+                    " AND city.Latitude BETWEEN lat1-0.01 AND lat1+0.01");
+            //create city and add to cityPair
+            City city1 = new City(resultSet.getString("City-Name"),
+                    resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
+                    resultSet.getInt("Times-visited"));
+            pair.setCity1(city1);
+
+            //get second city name and times-visited from location
+            resultSet = statement.executeQuery("SELECT\n" +
+                    "  city.`City-Name`, city.Country," +
+                    "  city.Longitude," +
+                    "  city.Latitude," +
+                    "  city.`Times-visited` " +
+                    " FROM city" +
+                    " WHERE city.Longitude BETWEEN lon2-0.01 AND lon2+0.01" +
+                    " AND city.Latitude BETWEEN lat2-0.01 AND lat2+0.01");
+            //create city and add to cityPair
+            City city2 = new City(resultSet.getString("City-Name"),
+                    resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
+                    resultSet.getInt("Times-visited"));
+            pair.setCity2(city2);
+            //get distance between cities and add to cityPair
+            pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
+
+
+
+
+        } catch (Exception e) {
+            System.out.println("[DataManager-exception]: Exception on twoCityStatistics(): " + e);}
+        return pair;
+    }
+
 
 
     /**

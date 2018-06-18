@@ -44,6 +44,7 @@ class StartScreen extends JPanel {
     private JProgressBar Querybar1;
     private JScrollPane table1ScrollPane;
     private JScrollPane table2ScrollPane;
+    private JFileChooser fileChooser = new JFileChooser();
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -151,6 +152,7 @@ class StartScreen extends JPanel {
         settingsPanel.add(messageLabel, gbc);
         gbc.gridx = 3;
         settingsPanel.add(submitButton, gbc);
+
 
         // Layout for sidepanel
         sidePanel.setLayout(grid);

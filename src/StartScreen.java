@@ -7,11 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
+import java.awt.event.*;
 
 
 /**
@@ -45,6 +41,9 @@ class StartScreen extends JPanel {
     private JProgressBar Querybar1;
     private JScrollPane table1ScrollPane;
     private JScrollPane table2ScrollPane;
+    private JTextField fileTextField;
+    private JButton fileSubmitButton;
+    private JProgressBar fileProgressBar;
     private JFileChooser fileChooser = new JFileChooser();
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
@@ -145,14 +144,29 @@ class StartScreen extends JPanel {
         gbc.gridy = 5;
         settingsPanel.add(typeBoxLabel, gbc);
         gbc.gridx = 3;
+        gbc.gridwidth = 5;
         settingsPanel.add(infoModeBox, gbc);
+        gbc.gridwidth = 2;
 
         gbc.gridx = 0; // Message label and submit button
         gbc.gridy = 8;
         settingsPanel.add(messageLabel, gbc);
         gbc.gridx = 3;
+        gbc.gridwidth = 5;
         settingsPanel.add(submitButton, gbc);
+        gbc.gridwidth = 2;
 
+        gbc.gridx = 0; // Textfield for file input
+        gbc.gridy = 9;
+        gbc.gridwidth = 3;
+        settingsPanel.add(fileTextField, gbc);
+        gbc.gridx = 3;
+        gbc.gridwidth = 5;
+        settingsPanel.add(fileSubmitButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridwidth = 7;
+        gbc.gridy = 10;
+        settingsPanel.add(fileProgressBar, gbc);
 
         // Layout for sidepanel
         sidePanel.setLayout(grid);
@@ -268,6 +282,27 @@ class StartScreen extends JPanel {
                 routesAmountField.setEnabled(routesDisplayed);
             }
         });
+        table2.addComponentListener(new ComponentAdapter() {
+        });
+        table2.addFocusListener(new FocusAdapter() {
+        });
+        table2.addContainerListener(new ContainerAdapter() {
+        });
+        table2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Object selectedCity = null;
+                if (table2.getSelectedColumn() == 0) {
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn());
+                } else if (table2.getSelectedColumn() == 1) {
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn()-1);
+                } else if (table2.getSelectedColumn() == 2){
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn()-2);
+                }
+                System.out.println(selectedCity.toString());
+            }
+        });
     }
 
     /**
@@ -313,11 +348,13 @@ class StartScreen extends JPanel {
         columnNames2[2] = "Times-used";
         String[][] tableData2 = city.getDestinations();
         table2.setModel(new DefaultTableModel(tableData2,columnNames2));
+        table2.setCellSelectionEnabled(true);
         table2.setVisible(true);
         table1.setVisible(true);
     }
 
     public void activateSidePanel() {
+        sidePanelTitle.setText("City is loading");
         sidePanel.setVisible(true);
     }
 

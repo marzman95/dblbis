@@ -41,6 +41,9 @@ class StartScreen extends JPanel {
     private JProgressBar Querybar1;
     private JScrollPane table1ScrollPane;
     private JScrollPane table2ScrollPane;
+    private JTextField fileTextField;
+    private JButton fileSubmitButton;
+    private JProgressBar fileProgressBar;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -140,13 +143,29 @@ class StartScreen extends JPanel {
         gbc.gridy = 5;
         settingsPanel.add(typeBoxLabel, gbc);
         gbc.gridx = 3;
+        gbc.gridwidth = 5;
         settingsPanel.add(infoModeBox, gbc);
+        gbc.gridwidth = 2;
 
         gbc.gridx = 0; // Message label and submit button
         gbc.gridy = 8;
         settingsPanel.add(messageLabel, gbc);
         gbc.gridx = 3;
+        gbc.gridwidth = 5;
         settingsPanel.add(submitButton, gbc);
+        gbc.gridwidth = 2;
+
+        gbc.gridx = 0; // Textfield for file input
+        gbc.gridy = 9;
+        gbc.gridwidth = 3;
+        settingsPanel.add(fileTextField, gbc);
+        gbc.gridx = 3;
+        gbc.gridwidth = 5;
+        settingsPanel.add(fileSubmitButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridwidth = 7;
+        gbc.gridy = 10;
+        settingsPanel.add(fileProgressBar, gbc);
 
         // Layout for sidepanel
         sidePanel.setLayout(grid);

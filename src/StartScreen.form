@@ -53,6 +53,7 @@
             <properties>
               <background color="-11317164"/>
               <editable value="false"/>
+              <font name="Consolas" size="14" style="0"/>
               <foreground color="-1285"/>
               <text value="Destinations"/>
             </properties>
@@ -67,6 +68,7 @@
             <properties>
               <background color="-11317164"/>
               <editable value="false"/>
+              <font name="Consolas" size="14" style="0"/>
               <foreground color="-393219"/>
               <text value="Information"/>
             </properties>
@@ -149,7 +151,7 @@
             </constraints>
             <properties>
               <labelFor value="8c066"/>
-              <text value="Information based on"/>
+              <text value="Sizes based on"/>
             </properties>
           </component>
           <component id="8c066" class="javax.swing.JComboBox" binding="infoModeBox">

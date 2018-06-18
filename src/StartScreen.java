@@ -96,7 +96,7 @@ class StartScreen extends JPanel {
         gbc.weighty = 0.2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         startPanel.add(sidePanel, gbc);
-        sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
+        sidePanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         sidePanel.setVisible(false); // Disable sidePanel
 
         // Setup options/settings panel
@@ -163,47 +163,25 @@ class StartScreen extends JPanel {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         sidePanel.add(informationTextArea, gbc);
-        gbc.fill = GridBagConstraints.NONE;
         gbc.gridy = 2;
         sidePanel.add(Querybar, gbc);
-        gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridheight = 5;
         sidePanel.add(table1ScrollPane, gbc);
         gbc.gridy = 9;
         gbc.gridheight = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         sidePanel.add(destinationsTextArea, gbc);
-        gbc.fill = GridBagConstraints.NONE;
         gbc.gridy = 10;
         sidePanel.add(Querybar1, gbc);
         gbc.gridy = 11;
         gbc.gridheight = 5;
         sidePanel.add(table2ScrollPane, gbc);
         gbc.gridy = 17;
+        gbc.fill = GridBagConstraints.NONE;
         sidePanel.add(closeSidePanelButton, gbc);
 
 
-        // Attach a mouselistener to the mapPanel
-//        map.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                sidePanel.setVisible(true);
-//            }
-//        });
-
-        // Listeners for the sidepanel buttons
-//        moreButton.addActionListener(e -> {
-//            //StartScreen.super.action(e);
-//            String title = "Second tab";
-//            TabContent content = new SettingsTab(title);
-//            if (tabPane.indexOfTab(title) != -1) {
-//                tabPane.setSelectedIndex(tabPane.indexOfTab(title));
-//            } else {
-//                mainScreen.addTab(content);
-//            }
-//        });
+        // Listener for closing sidepanel
         closeSidePanelButton.addActionListener(e -> sidePanel.setVisible(false));
 
         // Listens for submission
@@ -236,7 +214,6 @@ class StartScreen extends JPanel {
                 }
 
                 System.out.println("Changed data and info");
-                    //TODO: Do something
                 if (citiesDisplayed) {
                     citiesAmount = Integer.parseInt(citiesAmountField.getText());
                     if (citiesAmount > 1796) {

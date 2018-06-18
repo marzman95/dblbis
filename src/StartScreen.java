@@ -2,12 +2,15 @@ import models.City;
 import models.CityTotal;
 import models.Destination;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 /**
@@ -44,6 +47,10 @@ class StartScreen extends JPanel {
     private JTextField fileTextField;
     private JButton fileSubmitButton;
     private JProgressBar fileProgressBar;
+    private JPanel legendPanel;
+    private JLabel legendLabel;
+    private JPanel cityCirclePanel;
+    private JLabel unselCityLabel;
     private JFileChooser fileChooser = new JFileChooser();
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
@@ -76,6 +83,7 @@ class StartScreen extends JPanel {
         gbc.weightx = 0.1;
         gbc.weighty = 0.1;
         gbc.gridwidth = 1;
+
 
         // Creating the panel that shows the map
         JPanel mapPanel = new JPanel(new BorderLayout());
@@ -112,6 +120,7 @@ class StartScreen extends JPanel {
         settingsPanel.setLayout(grid);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridy = 0;
         gbc.gridheight = 1;
         gbc.weightx = 0.1;
         gbc.weighty = 0.1;
@@ -168,6 +177,29 @@ class StartScreen extends JPanel {
         gbc.gridy = 10;
         settingsPanel.add(fileProgressBar, gbc);
 
+        // Legend panel
+        gbc.gridy = 11;
+        settingsPanel.add(legendPanel, gbc);
+        legendPanel.setLayout(grid);
+        gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        legendPanel.add(legendLabel, gbc);
+        try {
+            BufferedImage unselectedCityIcon = ImageIO.read(new File("circle.png"));
+            JLabel unselectedCityImage = new JLabel(new ImageIcon(unselectedCityIcon));
+            gbc.gridy = 1;
+            legendPanel.add(unselectedCityImage, gbc);
+        } catch (Exception e) {
+
+        }
+        gbc.gridy = 1;
+        gbc.gridx = 3;
+        legendPanel.add(unselCityLabel, gbc);
+
+
         // Layout for sidepanel
         sidePanel.setLayout(grid);
         gbc = new GridBagConstraints();
@@ -195,6 +227,8 @@ class StartScreen extends JPanel {
         gbc.gridy = 17;
         gbc.fill = GridBagConstraints.NONE;
         sidePanel.add(closeSidePanelButton, gbc);
+
+
 
 
         // Listener for closing sidepanel
@@ -372,5 +406,9 @@ class StartScreen extends JPanel {
                 return false;
             }
         };
+    }
+
+    public void draw(Graphics2D g) {
+        g.fillOval(0, 0, 10, 10);
     }
 }

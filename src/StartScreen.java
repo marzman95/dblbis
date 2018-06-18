@@ -51,7 +51,7 @@ class StartScreen extends JPanel {
     public int routesAmount = 50;
     public boolean citiesDisplayed = true;
     public boolean routesDisplayed = true;
-    private int curInfoMode = 1; // 1 for popularity, 2 for duration
+    public int curInfoMode = 1; // 1 for popularity, 2 for duration
 
     /**
      * Constructor of the start screen
@@ -220,11 +220,16 @@ class StartScreen extends JPanel {
 //                    routesDisplayed = false;
 //                    routesAmountField.setEnabled(false);
 //                }
-                if (infoModeBox.getSelectedItem().equals("Popularity")) {
+                if (infoModeBox.getSelectedItem().equals("Frequency")) {
                     curInfoMode = 1;
-                } else if (infoModeBox.getSelectedItem().equals("Duration")) {
+                } else if (infoModeBox.getSelectedItem().equals("In Degree")) {
                     curInfoMode = 2;
+                } else if (infoModeBox.getSelectedItem().equals("Out Degree")) {
+                    curInfoMode = 3;
+                } else if (infoModeBox.getSelectedItem().equals("Total Degree")) {
+                    curInfoMode = 4;
                 }
+
                 System.out.println("Changed data and info");
                     //TODO: Do something
                 if (citiesDisplayed) {
@@ -331,11 +336,16 @@ class StartScreen extends JPanel {
         String returnText ="";
         switch (infoMode) {
             case 1:
-                returnText = "most popular";
+                returnText = "highest frequency";
                 break;
             case 2:
-                returnText = "longest waiting";
+                returnText = "number of incoming edges";
                 break;
+            case 3:
+                returnText = "number of outgoing edges";
+                break;
+            case 4:
+                returnText = "total number of edges";
         }
         return returnText;
     }

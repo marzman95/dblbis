@@ -159,8 +159,10 @@
             </constraints>
             <properties>
               <model>
-                <item value="Popularity"/>
-                <item value="Duration"/>
+                <item value="Frequency"/>
+                <item value="In Degree"/>
+                <item value="Out Degree"/>
+                <item value="Total Degree"/>
               </model>
             </properties>
           </component>

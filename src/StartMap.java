@@ -43,6 +43,14 @@ public class StartMap extends PApplet {
 
         List<City> popularCities = dataManager.getPopularCities(50); // List of the 50 most popular cities
 
+
+        try {
+           List<anEdge> popularEdges = dataManager.getPopularEdges(50);
+            addEdges(map.getDefaultMarkerManager(), popularEdges);
+        } catch (Exception e) {
+            System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
+        }
+
         // Drawing of the most 50 popular cities
         try {
             addMarkers(map.getDefaultMarkerManager(), popularCities);
@@ -50,26 +58,6 @@ public class StartMap extends PApplet {
             System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
         }
 
-        try {
-//            Location genericLocation1 = new Location(0, 0);
-//            Location genericLocation2 = new Location (0, 0);
-//            for (int i = 0; i < popularEdges.size(); i++) {
-//                anEdge connect = popularEdges.get(i);
-//                genericLocation1 = new Location(connect.getLatitude1(), connect.getLongitude1());
-//                genericLocation2 = new Location (connect.getLatitude2(), connect.getLongitude2());
-//                SimpleLinesMarker line = new SimpleLinesMarker(genericLocation1, genericLocation2);
-//
-//
-//                map.addMarker(line);
-//               // line.setColor(-10000);
-//                line.setStrokeWeight(connect.getFrequency()/1000);
-//
-//            }
-            List<anEdge> popularEdges = dataManager.getPopularEdges(50);
-            addEdges(map.getDefaultMarkerManager(), popularEdges);
-        } catch (Exception e) {
-            System.out.println("[Exception StartMap]: Exception during creation of markers: " + e);
-        }
     }
 
     /**
@@ -236,14 +224,15 @@ public class StartMap extends PApplet {
             System.out.println("Problem removing all during [changeMap()]: " + e);
         }
         try {
-            if (ss.citiesDisplayed) {
-                List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().citiesAmount);
-                addMarkers(mm, citiesList);
-            }
             if (ss.routesDisplayed) {
                 List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().routesAmount);
                 addEdges(mm, edgeList);
             }
+            if (ss.citiesDisplayed) {
+                List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().citiesAmount);
+                addMarkers(mm, citiesList);
+            }
+
         } catch (Exception e) {
             System.out.println("Problem adding all during [changeMap()]: " + e);
         }

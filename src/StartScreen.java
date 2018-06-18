@@ -73,6 +73,7 @@ class StartScreen extends JPanel {
         gbc.gridy = 0;
         gbc.weightx = 0.1;
         gbc.weighty = 0.1;
+        gbc.gridwidth = 1;
 
         // Creating the panel that shows the map
         JPanel mapPanel = new JPanel(new BorderLayout());
@@ -91,7 +92,7 @@ class StartScreen extends JPanel {
         gbc.gridy = 0;
         gbc.weightx = 0.2;
         gbc.weighty = 0.2;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
         startPanel.add(sidePanel, gbc);
         sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
         sidePanel.setVisible(false); // Disable sidePanel
@@ -99,11 +100,11 @@ class StartScreen extends JPanel {
         // Setup options/settings panel
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.NORTH;
-        gbc.gridx = 0;
+        gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.weightx = 0.7;
         gbc.weighty = 0.1;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridwidth = 1;
         startPanel.add(settingsPanel, gbc);
 
         settingsPanel.setLayout(grid);
@@ -149,12 +150,39 @@ class StartScreen extends JPanel {
         gbc.gridx = 3;
         settingsPanel.add(submitButton, gbc);
 
+        // Layout for sidepanel
+        sidePanel.setLayout(grid);
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        sidePanel.add(informationLabel, gbc);
+        gbc.gridy = 1;
+        sidePanel.add(informationTextArea, gbc);
+        gbc.gridy = 2;
+        sidePanel.add(Querybar, gbc);
+        gbc.gridy = 3;
+        gbc.gridheight = 5;
+        sidePanel.add(table1ScrollPane, gbc);
+        gbc.gridy = 9;
+        sidePanel.add(destinationsTextArea, gbc);
+        gbc.gridy = 10;
+        sidePanel.add(Querybar1, gbc);
+        gbc.gridy = 11;
+        gbc.gridheight = 5;
+        sidePanel.add(table2ScrollPane, gbc);
+        gbc.gridy = 17;
+        sidePanel.add(closeSidePanelButton, gbc);
+
+
         // Attach a mouselistener to the mapPanel
         map.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 sidePanel.setVisible(true);
+
             }
         });
 

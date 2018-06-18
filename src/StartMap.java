@@ -238,11 +238,11 @@ public class StartMap extends PApplet {
         }
         try {
             if (ss.citiesDisplayed) {
-                List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().curInfoAmount);
+                List<City> citiesList = dataManager.getPopularCities(Screen.getScreen().getStartScreen().citiesAmount);
                 addMarkers(mm, citiesList);
             }
             if (ss.routesDisplayed) {
-                List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().curInfoAmount);
+                List<anEdge> edgeList = dataManager.getPopularEdges(Screen.getScreen().getStartScreen().routesAmount);
                 addEdges(mm, edgeList);
             }
         } catch (Exception e) {

@@ -61,6 +61,7 @@ public class DataManager {
                 }
             } catch (Exception e) {
                 System.out.println("[DataManager-exception]: Exception on getAllCities(): " + e);
+                e.printStackTrace();
             }
         }
 
@@ -160,7 +161,7 @@ public class DataManager {
                 allEdges.add(edge);
             }
         } catch (Exception e) {
-            System.out.println("[DataManager-exception]: Exception on getEdges(): " + e);
+            //System.out.println("[DataManager-exception]: Exception on getEdges(): " + e);
         }
         return allEdges;
     }

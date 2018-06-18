@@ -29,21 +29,19 @@ class StartScreen extends JPanel {
     private JLabel routeSwitchLabel;
     private JComboBox infoModeBox;
     private JLabel typeBoxLabel;
-    public JTextField amountInput;
-    private JLabel amountLabel;
     private JLabel messageLabel;
     private JButton submitButton;
-    private JSlider amountSlider;
     private JCheckBox citiesCheckBox;
     private JCheckBox routesCheckBox;
-    private JTextField citiesAmountField;
     private JFormattedTextField routesAmountField;
     private JTable Information_table;
     private JProgressBar Querybar;
+    private JFormattedTextField citiesAmountField;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
-    public int curInfoAmount = 50;
+    public int citiesAmount = 50;
+    public int routesAmount = 50;
     public boolean citiesDisplayed = true;
     public boolean routesDisplayed = true;
     private int curInfoMode = 1; // 1 for popularity, 2 for duration
@@ -139,31 +137,11 @@ class StartScreen extends JPanel {
         gbc.gridx = 3;
         settingsPanel.add(infoModeBox, gbc);
 
-        gbc.gridx = 0; // Amount of cities/routes input
-        gbc.gridy = 6;
-        settingsPanel.add(amountLabel, gbc);
-        gbc.gridx = 3;
-        settingsPanel.add(amountInput, gbc);
-
         gbc.gridx = 0; // Message label and submit button
         gbc.gridy = 8;
         settingsPanel.add(messageLabel, gbc);
         gbc.gridx = 3;
         settingsPanel.add(submitButton, gbc);
-
-        gbc.gridx = 0; // Amount slider
-        gbc.gridy = 7;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        settingsPanel.add(amountSlider, gbc);
-
-
-        // Setup of the amount input fields
-        amountInput.setColumns(5);
-        amountInput.setText(Integer.toString(curInfoAmount));
-        amountSlider.setMaximum(1796);
-        amountSlider.setMinimum(10);
-        amountLabel.setText(amountLabelBuilder());
-
 
         // Attach a mouselistener to the mapPanel
         map.addMouseListener(new MouseAdapter() {
@@ -199,16 +177,6 @@ class StartScreen extends JPanel {
             }
         });
 
-        // Listens to the amount slider
-        amountSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                curInfoAmount = amountSlider.getValue();
-                amountInput.setText(Integer.toString(curInfoAmount));
-
-            }
-        });
-
         // Listens for submission
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -235,17 +203,33 @@ class StartScreen extends JPanel {
                 }
                 System.out.println("Changed data and info");
                     //TODO: Do something
+                if (citiesDisplayed) {
+                    citiesAmount = Integer.parseInt(citiesAmountField.getText());
+                    if (citiesAmount > 1796) {
+                        citiesAmount = 1796;
+                        citiesAmountField.setValue(1796);
+                    } else if (citiesAmount < 10) {
+                        citiesAmount = 10;
+                        citiesAmountField .setValue(10);
+                    }
+                }
+                if (routesDisplayed) {
+                    routesAmount = Integer.parseInt(routesAmountField.getText());
+                    if (routesAmount > 1000) {
+                        routesAmount = 1000;
+                        routesAmountField.setValue(1000);
+                    } else if (routesAmount < 10) {
+                        routesAmount = 10;
+                        routesAmountField.setValue(10);
+                    }
+                }
 
                 // Sets the new amount of information
-                curInfoAmount = Integer.parseInt(amountInput.getText());
-                amountSlider.setValue(curInfoAmount);
                 map.method("changeMap");
 
                 System.out.println("Redrawn (from startscreen)");
                     //TODO: Do something
 
-                // Changes the text label
-                amountLabel.setText(amountLabelBuilder());
 
             }
         });
@@ -254,14 +238,13 @@ class StartScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (citiesCheckBox.isSelected()) {
                     citiesDisplayed = true;
-
                 } else {
                     citiesDisplayed = false;
                 }
                 citiesAmountField.setEnabled(citiesDisplayed);
             }
         });
-        routesAmountField.addActionListener(new ActionListener() {
+        routesCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (routesCheckBox.isSelected()) {

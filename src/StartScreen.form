@@ -26,16 +26,6 @@
               <text value="City is loading"/>
             </properties>
           </component>
-          <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
-            <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <text value="Close this panel"/>
-              <toolTipText value="Click here to close this panel"/>
-            </properties>
-          </component>
           <component id="a181c" class="javax.swing.JProgressBar" binding="Querybar">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -115,6 +105,16 @@
               </component>
             </children>
           </scrollpane>
+          <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Close this panel"/>
+              <toolTipText value="Click here to close this panel"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="ce2b4" binding="settingsPanel" layout-manager="GridBagLayout">

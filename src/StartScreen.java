@@ -7,11 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
+import java.awt.event.*;
 
 
 /**
@@ -266,6 +262,27 @@ class StartScreen extends JPanel {
                 routesAmountField.setEnabled(routesDisplayed);
             }
         });
+        table2.addComponentListener(new ComponentAdapter() {
+        });
+        table2.addFocusListener(new FocusAdapter() {
+        });
+        table2.addContainerListener(new ContainerAdapter() {
+        });
+        table2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Object selectedCity = null;
+                if (table2.getSelectedColumn() == 0) {
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn());
+                } else if (table2.getSelectedColumn() == 1) {
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn()-1);
+                } else if (table2.getSelectedColumn() == 2){
+                    selectedCity = table2.getValueAt(table2.getSelectedRow(), table2.getSelectedColumn()-2);
+                }
+                System.out.println(selectedCity.toString());
+            }
+        });
     }
 
     /**
@@ -311,11 +328,13 @@ class StartScreen extends JPanel {
         columnNames2[2] = "Times-used";
         String[][] tableData2 = city.getDestinations();
         table2.setModel(new DefaultTableModel(tableData2,columnNames2));
+        table2.setCellSelectionEnabled(true);
         table2.setVisible(true);
         table1.setVisible(true);
     }
 
     public void activateSidePanel() {
+        sidePanelTitle.setText("City is loading");
         sidePanel.setVisible(true);
     }
 

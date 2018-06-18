@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 
 import static de.fhpotsdam.unfolding.utils.GeoUtils.getDistance;
 
@@ -15,12 +20,42 @@ public class DataManager {
     private ResultSet resultSet = null;
     private Statement statement = null;
     private List<City> citiesList = null;
+    Properties prop = new Properties();
+    InputStream input = null;
+    String db;
+    String dbuser;
+    String dbpass;
 
     /**
      * Code block that makes the data handling singleton.
      */
     private static final DataManager dataManager = new DataManager();
-    private DataManager(){ getMains(); }
+    private DataManager(){
+        try {
+
+            input = new FileInputStream("config.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            db = prop.getProperty("database");
+            dbuser = prop.getProperty("dbuser");
+            dbpass = prop.getProperty("dbpassword");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        getMains();
+    }
     public static DataManager getDataManager() {return dataManager;}
 
     /**
@@ -29,7 +64,7 @@ public class DataManager {
      */
     private Connection getConnection() {
         try {
-            dbConnection = DriverManager.getConnection("jdbc:mysql://85.150.153.235:128/test?autoReconnect=true&useSSL=false","IFSystems", "test123");
+            dbConnection = DriverManager.getConnection("jdbc:mysql://"+db+"?autoReconnect=true&useSSL=false",dbuser, dbpass);
         } catch (Exception e) {
         } finally {
             return dbConnection;
@@ -264,11 +299,12 @@ public class DataManager {
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon1-0.01)+" AND "+String.valueOf(lon1+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat1-0.01)+" AND " +String.valueOf(lat1+0.01));
             //create city and add to cityPair
-            City city1 = new City(
+            CityTotal city1 = new CityTotal(
                     resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"),
                     resultSet.getDouble("Latitude"),
                     resultSet.getInt("Times-visited"),
+                    resultSet.getString("Country"),
                     resultSet.getInt("out-degree"),
                     resultSet.getInt("in-degree"),
                     resultSet.getInt("tot-degree")
@@ -285,11 +321,12 @@ public class DataManager {
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon2-0.01)+" AND "+String.valueOf(lon2+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat2-0.01)+" AND " +String.valueOf(lat2+0.01));
             //create city and add to cityPair
-            City city2 = new City(
+            CityTotal city2 = new CityTotal(
                     resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"),
                     resultSet.getDouble("Latitude"),
                     resultSet.getInt("Times-visited"),
+                    resultSet.getString("Country"),
                     resultSet.getInt("out-degree"),
                     resultSet.getInt("in-degree"),
                     resultSet.getInt("tot-degree")
@@ -298,10 +335,9 @@ public class DataManager {
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
 
-            resultSet = statement.executeQuery("select a.cnt+b.cnt as res from \n" +
-                    "\n" +
-                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") as a\n" +
-                    "inner join\n" +
+            resultSet = statement.executeQuery("select a.cnt+b.cnt as res from " +
+                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") as a" +
+                    "inner join" +
                     "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity2() + "\" and trip.`To`= \" "+pair.getCity1()+"\") as b");
 
             pair.setTimes(resultSet.getInt("res"));

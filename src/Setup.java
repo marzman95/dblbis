@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
-
+import java.io.InputStream;
+import java.util.Properties;
 /**
  * Used for setting up the database. Reads from a CSV file.
  */
@@ -10,6 +13,11 @@ public class Setup implements Runnable {
     private Statement statement = null;
     private ResultSet resultSet = null;
     private File file;
+    private Properties prop = new Properties();
+    private InputStream input = null;
+    private String db;
+    private String dbuser;
+    private String dbpass;
 
     /**
      * Fills the database with the data from the CSV file.
@@ -62,7 +70,7 @@ public class Setup implements Runnable {
 
     /**
      * Converts the path to a CSV file to a readable string
-     * @param a CSV file with input data
+     * @param /* a CSV file with input data
      * @return the input data as a string
      */
     public String pathtostr(File file){
@@ -103,19 +111,42 @@ public class Setup implements Runnable {
      */
     private Connection getConnection() {
         try {
-            connect = DriverManager.getConnection("jdbc:mysql://85.150.153.235:128/test", "IFSystems", "test123");
+            connect = DriverManager.getConnection("jdbc:mysql://"+db+"?autoReconnect=true&useSSL=false",dbuser, dbpass);
         } catch (Exception e) {
         } finally {
             return connect;
         }
     }
-
     /**
      * Sets the data file
      * @param file CSV file containing the data
      */
     public Setup(File file){
         this.file = file;
+        try {
+
+            input = new FileInputStream("config.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            db = prop.getProperty("database");
+            dbuser = prop.getProperty("dbuser");
+            dbpass = prop.getProperty("dbpassword");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
 }
 

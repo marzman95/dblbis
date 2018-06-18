@@ -44,6 +44,7 @@ class StartScreen extends JPanel {
     private JTextField fileTextField;
     private JButton fileSubmitButton;
     private JProgressBar fileProgressBar;
+    private JFileChooser fileChooser = new JFileChooser();
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;

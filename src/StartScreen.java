@@ -1,5 +1,3 @@
-
-import de.fhpotsdam.unfolding.marker.Marker;
 import models.City;
 import models.CityPair;
 import models.CityTotal;
@@ -56,6 +54,9 @@ class StartScreen extends JPanel {
     private JLabel legendLabel;
     private JPanel cityCirclePanel;
     private JLabel unselCityLabel;
+    private JLabel selCityLabel;
+    private JLabel routeLabel;
+    private JFileChooser fileChooser = new JFileChooser();
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -188,21 +189,47 @@ class StartScreen extends JPanel {
         gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill = GridBagConstraints.BOTH;
+
+        // Unselected city legend
         gbc.gridx = 0;
         gbc.gridy = 0;
         legendPanel.add(legendLabel, gbc);
         try {
-            BufferedImage unselectedCityIcon = ImageIO.read(new File("circle.png"));
+            BufferedImage unselectedCityIcon = ImageIO.read(new File("blue-circle.png"));
             JLabel unselectedCityImage = new JLabel(new ImageIcon(unselectedCityIcon));
             gbc.gridy = 1;
             legendPanel.add(unselectedCityImage, gbc);
         } catch (Exception e) {
-
         }
         gbc.gridy = 1;
         gbc.gridx = 3;
         legendPanel.add(unselCityLabel, gbc);
 
+        // Selected city legend
+        gbc.gridx = 0;
+        try {
+            BufferedImage selectedCityIcon = ImageIO.read(new File("green-circle.png"));
+            JLabel selectedCityImage = new JLabel(new ImageIcon(selectedCityIcon));
+            gbc.gridy = 2;
+            legendPanel.add(selectedCityImage, gbc);
+        } catch (Exception e) {
+        }
+        gbc.gridy = 2;
+        gbc.gridx = 3;
+        legendPanel.add(selCityLabel, gbc);
+
+        // Route legend
+        gbc.gridx = 0;
+        try {
+            BufferedImage routeIcon = ImageIO.read(new File("route-line.png"));
+            JLabel routeImage = new JLabel(new ImageIcon(routeIcon));
+            gbc.gridy = 3;
+            legendPanel.add(routeImage, gbc);
+        } catch (Exception e) {
+        }
+        gbc.gridy = 3;
+        gbc.gridx = 3;
+        legendPanel.add(routeLabel, gbc);
 
         // Layout for sidepanel
         sidePanel.setLayout(grid);

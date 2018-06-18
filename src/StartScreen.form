@@ -259,7 +259,7 @@
           </component>
           <component id="fdd8e" class="javax.swing.JProgressBar" binding="fileProgressBar">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties/>
@@ -278,7 +278,8 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
-                  <text value="&lt;html&gt;I'm a&lt;b&gt;LEGEND&lt;/b&gt;&lt;/html&gt;"/>
+                  <font name="Consolas" size="14" style="0"/>
+                  <text value="Legend"/>
                 </properties>
               </component>
               <component id="a523b" class="javax.swing.JLabel" binding="unselCityLabel">
@@ -288,6 +289,24 @@
                 </constraints>
                 <properties>
                   <text value="Unselected City"/>
+                </properties>
+              </component>
+              <component id="e719" class="javax.swing.JLabel" binding="selCityLabel">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Selected city"/>
+                </properties>
+              </component>
+              <component id="2e05e" class="javax.swing.JLabel" binding="routeLabel">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Route"/>
                 </properties>
               </component>
             </children>

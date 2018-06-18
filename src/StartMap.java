@@ -29,7 +29,7 @@ public class StartMap extends PApplet {
      * Setups the map
      */
     public void setup() {
-        size(800, 600);
+        size(1000, 900);
         map = new UnfoldingMap(this, new OpenStreetMapProvider());
         MapUtils.createDefaultEventDispatcher(this, map);
 

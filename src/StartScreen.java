@@ -81,7 +81,8 @@ class StartScreen extends JPanel {
 
         // Opening the map, add it to the panel, with a mouse-listener
         map = new StartMap();
-        mapPanel.setMinimumSize(new Dimension(800,600));
+        //TODO: Resize!
+        mapPanel.setMinimumSize(new Dimension(1000,900));
         mapPanel.add(map);
         map.init();
         startPanel.add(mapPanel, gbc); // Adds panel (with map) to screen

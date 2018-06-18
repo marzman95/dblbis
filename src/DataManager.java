@@ -163,7 +163,6 @@ public class DataManager {
         return allEdges;
     }
 
-
     public CityTotal getCityStatistics (double lon, double lat, JProgressBar bar,JProgressBar bar1) {
         CityTotal city = new CityTotal();
         bar.setValue(0);

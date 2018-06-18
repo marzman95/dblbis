@@ -15,7 +15,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="92474" class="javax.swing.JLabel" binding="informationLabel">
+          <component id="92474" class="javax.swing.JLabel" binding="sidePanelTitle">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="1.0"/>
@@ -23,7 +23,7 @@
             <properties>
               <font name="Consolas" size="28" style="1"/>
               <horizontalAlignment value="2"/>
-              <text value="This is the starting screen"/>
+              <text value="City is loading"/>
             </properties>
           </component>
           <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
@@ -162,6 +162,7 @@
                 <item value="Popularity"/>
                 <item value="Duration"/>
               </model>
+              <toolTipText value="&lt;html&gt;Switch between &lt;b&gt;times visited or driven&lt;/b&gt; and &lt;b&gt;duration of loading or driving&lt;/b&gt;&lt;/html&gt;"/>
             </properties>
           </component>
           <component id="fa1f1" class="javax.swing.JLabel" binding="messageLabel">

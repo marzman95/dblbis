@@ -1,16 +1,11 @@
+import models.City;
 import models.CityTotal;
-import models.Destination;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 
 
 /**
@@ -23,7 +18,7 @@ class StartScreen extends JPanel {
     private JButton moreButton;
     private JButton closeSidePanelButton;
     private JPanel sidePanel;
-    private JLabel informationLabel;
+    private JLabel sidePanelTitle;
     private JButton dataTabButton;
     private JPanel settingsPanel;
     private JLabel settingsLabel;
@@ -52,6 +47,7 @@ class StartScreen extends JPanel {
     public boolean citiesDisplayed = true;
     public boolean routesDisplayed = true;
     private int curInfoMode = 1; // 1 for popularity, 2 for duration
+    public City selectedCity;
 
     /**
      * Constructor of the start screen
@@ -81,7 +77,6 @@ class StartScreen extends JPanel {
 
         // Opening the map, add it to the panel, with a mouse-listener
         map = new StartMap();
-        //TODO: Resize!
         mapPanel.setMinimumSize(new Dimension(1000,900));
         mapPanel.add(map);
         map.init();
@@ -159,15 +154,17 @@ class StartScreen extends JPanel {
         gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        sidePanel.add(informationLabel, gbc);
+        sidePanel.add(sidePanelTitle, gbc);
         gbc.gridy = 1;
         sidePanel.add(informationTextArea, gbc);
         gbc.gridy = 2;
         sidePanel.add(Querybar, gbc);
+        gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridheight = 5;
         sidePanel.add(table1ScrollPane, gbc);
         gbc.gridy = 9;
+        gbc.gridheight = 1;
         sidePanel.add(destinationsTextArea, gbc);
         gbc.gridy = 10;
         sidePanel.add(Querybar1, gbc);
@@ -179,14 +176,13 @@ class StartScreen extends JPanel {
 
 
         // Attach a mouselistener to the mapPanel
-        map.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                sidePanel.setVisible(true);
-
-            }
-        });
+//        map.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                sidePanel.setVisible(true);
+//            }
+//        });
 
         // Listeners for the sidepanel buttons
 //        moreButton.addActionListener(e -> {
@@ -307,6 +303,7 @@ class StartScreen extends JPanel {
         table1.setVisible(true);
         Querybar.setVisible(false);
         Querybar1.setVisible(false);
+        sidePanelTitle.setText("<html>City: <span style='color:lime'>" + city.getName() + "</span></html>");
         return city;
     }
     public void filltable(CityTotal city){
@@ -327,21 +324,8 @@ class StartScreen extends JPanel {
         table1.setVisible(true);
     }
 
-    public String infoModeToString (int infoMode) {
-        String returnText ="";
-        switch (infoMode) {
-            case 1:
-                returnText = "most popular";
-                break;
-            case 2:
-                returnText = "longest waiting";
-                break;
-        }
-        return returnText;
-    }
-
-    public String amountLabelBuilder() {
-        return "Amount of cities and routes";
+    public void activateSidePanel() {
+        sidePanel.setVisible(true);
     }
 
     private void createUIComponents() {

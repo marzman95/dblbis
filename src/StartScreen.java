@@ -38,8 +38,12 @@ class StartScreen extends JPanel {
     private JCheckBox routesCheckBox;
     private JTextField citiesAmountField;
     private JFormattedTextField routesAmountField;
-    private JTable Information_table;
+    private JTable table1;
     private JProgressBar Querybar;
+    private JTable table2;
+    private JTextArea destinationsTextArea;
+    private JTextArea informationTextArea;
+    private JProgressBar Querybar1;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -186,18 +190,6 @@ class StartScreen extends JPanel {
 //            }
 //        });
         closeSidePanelButton.addActionListener(e -> sidePanel.setVisible(false));
-        dataTabButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String title = "DataManager Tab";
-                TabContent content = new DataTab(title);
-                if (tabPane.indexOfTab(title) != -1) {
-                    tabPane.setSelectedIndex(tabPane.indexOfTab(title));
-                } else {
-                    mainScreen.addTab(content);
-                }
-            }
-        });
 
         // Listens to the amount slider
         amountSlider.addChangeListener(new ChangeListener() {
@@ -281,27 +273,35 @@ class StartScreen extends JPanel {
      */
     public CityTotal setMarker(float corX, float corY,DataManager dataManager) {
         Querybar.setVisible(true);
-        Information_table.setVisible(false);
-        CityTotal city= dataManager.getCityStatistics(corY,corX,Querybar);
-        String[][] tableData = city.getinfo();
-        String[] columnNames = new String[2];
-        columnNames[0] = "Name";
-        columnNames[1] = "Value";
-        Information_table.setModel(new DefaultTableModel(tableData,columnNames));
-        Information_table.setVisible(true);
+        Querybar1.setVisible(true);
+        table1.setVisible(false);
+        table2.setVisible(false);
+        CityTotal city= dataManager.getCityStatistics(corY,corX,Querybar,Querybar1);
+        String[][] tableData1 = city.getinfo();
+        String[] columnNames1 = new String[2];
+        columnNames1[0] = "Name";
+        columnNames1[1] = "Value";
+        table1.setModel(new DefaultTableModel(tableData1,columnNames1));
+        String[] columnNames2 = new String[2];
+        columnNames2[0] = "Destination";
+        columnNames2[1] = "Distance";
+        String[][] tableData2 = city.getDestinations();
+        table2.setModel(new DefaultTableModel(tableData2,columnNames2));
+        table2.setVisible(true);
+        table1.setVisible(true);
         Querybar.setVisible(false);
+        Querybar1.setVisible(false);
         return city;
     }
     public void filltable(CityTotal city){
-        Information_table.setVisible(false);
+        table1.setVisible(false);
         String[][] tableData = city.getinfo();
         String[] columnNames = new String[2];
         columnNames[0] = "Name";
         columnNames[1] = "Value";
-        Information_table.setModel(new DefaultTableModel(tableData,columnNames));
-        Information_table.setVisible(true);
+        table1.setModel(new DefaultTableModel(tableData,columnNames));
+        table1.setVisible(true);
     }
-
 
     public String infoModeToString (int infoMode) {
         String returnText ="";

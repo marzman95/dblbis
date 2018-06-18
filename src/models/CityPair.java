@@ -30,6 +30,14 @@ public class CityPair {
         this.loadindex = loadindex;
     }
 
+    public City getCity1(){
+        return city1;
+    }
+
+    public City getCity2(){
+        return city2;
+    }
+
     public CityPair(City city1, City city2){
         this.city1 = city1;
         this.city2 = city2;

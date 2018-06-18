@@ -1,7 +1,4 @@
-import models.City;
-import models.CityPair;
-import models.anEdge;
-import models.CityTotal;
+import models.*;
 
 import javax.swing.*;
 import java.sql.*;
@@ -32,7 +29,7 @@ public class DataManager {
      */
     private Connection getConnection() {
         try {
-            dbConnection = DriverManager.getConnection("jdbc:mysql://85.150.153.235:128/test","IFSystems", "test123");
+            dbConnection = DriverManager.getConnection("jdbc:mysql://85.150.153.235:128/test?autoReconnect=true&useSSL=false","IFSystems", "test123");
         } catch (Exception e) {
         } finally {
             return dbConnection;
@@ -166,13 +163,13 @@ public class DataManager {
     }
 
 
-    public CityTotal getCityStatistics (double lon, double lat, JProgressBar bar) {
+    public CityTotal getCityStatistics (double lon, double lat, JProgressBar bar,JProgressBar bar1) {
         CityTotal city = new CityTotal();
         bar.setValue(0);
+        bar1.setValue(0);
         try{
            dbConnection = getConnection();
            statement = dbConnection.createStatement();
-           bar.setValue(0);
            resultSet= statement.executeQuery("SELECT" +
                    "  city.`City-Name`, city.Country," +
                    "  city.Longitude," +
@@ -211,8 +208,13 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `To` = \""+city.getName()+"\"");
             resultSet.first();
             city.setAvgLoadTo(resultSet.getDouble("Load index"));
+            resultSet = statement.executeQuery("SELECT `city-name-to`, `distance` FROM `route` WHERE `city-name-from` = \""+city.getName()+"\"");
             bar.setValue(100);
-
+            while(resultSet.next()){
+                Destination d = new Destination(resultSet.getString("city-name-to"),resultSet.getInt("distance"));
+                city.addDestination(d);
+            }
+            bar1.setValue(100);
         }
         catch (Exception e) {
             System.out.println("[DataManager-exception]: Exception on getCityStatistics(): " + e);
@@ -237,8 +239,8 @@ public class DataManager {
                     "  city.Latitude," +
                     "  city.`Times-visited` " +
                     " FROM city" +
-                    " WHERE city.Longitude BETWEEN lon1-0.01 AND lon1+0.01" +
-                    " AND city.Latitude BETWEEN lat1-0.01 AND lat1+0.01");
+                    " WHERE city.Longitude BETWEEN "+ String.valueOf(lon1-0.01)+" AND "+String.valueOf(lon1+0.01) +
+                    " AND city.Latitude BETWEEN "+ String.valueOf(lat1-0.01)+" AND " +String.valueOf(lat1+0.01));
             //create city and add to cityPair
             City city1 = new City(resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
@@ -252,8 +254,8 @@ public class DataManager {
                     "  city.Latitude," +
                     "  city.`Times-visited` " +
                     " FROM city" +
-                    " WHERE city.Longitude BETWEEN lon2-0.01 AND lon2+0.01" +
-                    " AND city.Latitude BETWEEN lat2-0.01 AND lat2+0.01");
+                    " WHERE city.Longitude BETWEEN "+ String.valueOf(lon2-0.01)+" AND "+String.valueOf(lon2+0.01) +
+                    " AND city.Latitude BETWEEN "+ String.valueOf(lat2-0.01)+" AND " +String.valueOf(lat2+0.01));
             //create city and add to cityPair
             City city2 = new City(resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
@@ -261,8 +263,6 @@ public class DataManager {
             pair.setCity2(city2);
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
-
-
 
 
         } catch (Exception e) {

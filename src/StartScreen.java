@@ -1,3 +1,4 @@
+import models.City;
 import models.CityTotal;
 import models.Destination;
 
@@ -23,7 +24,7 @@ class StartScreen extends JPanel {
     private JButton moreButton;
     private JButton closeSidePanelButton;
     private JPanel sidePanel;
-    private JLabel informationLabel;
+    private JLabel sidePanelTitle;
     private JButton dataTabButton;
     private JPanel settingsPanel;
     private JLabel settingsLabel;
@@ -82,7 +83,6 @@ class StartScreen extends JPanel {
 
         // Opening the map, add it to the panel, with a mouse-listener
         map = new StartMap();
-        //TODO: Resize!
         mapPanel.setMinimumSize(new Dimension(1000,900));
         mapPanel.add(map);
         map.init();
@@ -97,7 +97,7 @@ class StartScreen extends JPanel {
         gbc.weighty = 0.2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         startPanel.add(sidePanel, gbc);
-        sidePanel.setBorder(BorderFactory.createLineBorder(Color.CYAN, 5));
+        sidePanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         sidePanel.setVisible(false); // Disable sidePanel
 
         // Setup options/settings panel
@@ -161,8 +161,9 @@ class StartScreen extends JPanel {
         gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        sidePanel.add(informationLabel, gbc);
+        sidePanel.add(sidePanelTitle, gbc);
         gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         sidePanel.add(informationTextArea, gbc);
         gbc.gridy = 2;
         sidePanel.add(Querybar, gbc);
@@ -170,6 +171,7 @@ class StartScreen extends JPanel {
         gbc.gridheight = 5;
         sidePanel.add(table1ScrollPane, gbc);
         gbc.gridy = 9;
+        gbc.gridheight = 1;
         sidePanel.add(destinationsTextArea, gbc);
         gbc.gridy = 10;
         sidePanel.add(Querybar1, gbc);
@@ -177,30 +179,11 @@ class StartScreen extends JPanel {
         gbc.gridheight = 5;
         sidePanel.add(table2ScrollPane, gbc);
         gbc.gridy = 17;
+        gbc.fill = GridBagConstraints.NONE;
         sidePanel.add(closeSidePanelButton, gbc);
 
 
-        // Attach a mouselistener to the mapPanel
-        map.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                sidePanel.setVisible(true);
-
-            }
-        });
-
-        // Listeners for the sidepanel buttons
-//        moreButton.addActionListener(e -> {
-//            //StartScreen.super.action(e);
-//            String title = "Second tab";
-//            TabContent content = new SettingsTab(title);
-//            if (tabPane.indexOfTab(title) != -1) {
-//                tabPane.setSelectedIndex(tabPane.indexOfTab(title));
-//            } else {
-//                mainScreen.addTab(content);
-//            }
-//        });
+        // Listener for closing sidepanel
         closeSidePanelButton.addActionListener(e -> sidePanel.setVisible(false));
 
         // Listens for submission
@@ -233,7 +216,6 @@ class StartScreen extends JPanel {
                 }
 
                 System.out.println("Changed data and info");
-                    //TODO: Do something
                 if (citiesDisplayed) {
                     citiesAmount = Integer.parseInt(citiesAmountField.getText());
                     if (citiesAmount > 1796) {
@@ -314,6 +296,7 @@ class StartScreen extends JPanel {
         table1.setVisible(true);
         Querybar.setVisible(false);
         Querybar1.setVisible(false);
+        sidePanelTitle.setText("<html>City: <b><span style='color:red'>" + city.getName() + "</b></span></html>");
         return city;
     }
     public void filltable(CityTotal city){
@@ -334,26 +317,8 @@ class StartScreen extends JPanel {
         table1.setVisible(true);
     }
 
-    public String infoModeToString (int infoMode) {
-        String returnText ="";
-        switch (infoMode) {
-            case 1:
-                returnText = "highest frequency";
-                break;
-            case 2:
-                returnText = "number of incoming edges";
-                break;
-            case 3:
-                returnText = "number of outgoing edges";
-                break;
-            case 4:
-                returnText = "total number of edges";
-        }
-        return returnText;
-    }
-
-    public String amountLabelBuilder() {
-        return "Amount of cities and routes";
+    public void activateSidePanel() {
+        sidePanel.setVisible(true);
     }
 
     private void createUIComponents() {

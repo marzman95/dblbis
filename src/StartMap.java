@@ -92,6 +92,7 @@ public class StartMap extends PApplet {
         Marker hitMarker = map.getFirstHitMarker(mouseX, mouseY);
         boolean found = false;
         if (hitMarker != null) {
+            Screen.getScreen().getStartScreen().activateSidePanel();
             if(selectedMarkers.size()==1){
                 for(Iterator<Marker> iterator =selectedMarkers.iterator(); ((Iterator) iterator).hasNext();) {
                     Marker marker = iterator.next();

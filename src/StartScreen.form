@@ -15,15 +15,15 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="92474" class="javax.swing.JLabel" binding="informationLabel">
+          <component id="92474" class="javax.swing.JLabel" binding="sidePanelTitle">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <font name="Consolas" size="28" style="1"/>
+              <font name="Consolas" size="28" style="0"/>
               <horizontalAlignment value="2"/>
-              <text value="This is the starting screen"/>
+              <text value="City is loading"/>
             </properties>
           </component>
           <component id="74d8c" class="javax.swing.JButton" binding="closeSidePanelButton">
@@ -53,6 +53,7 @@
             <properties>
               <background color="-11317164"/>
               <editable value="false"/>
+              <font name="Consolas" size="14" style="0"/>
               <foreground color="-1285"/>
               <text value="Destinations"/>
             </properties>
@@ -67,6 +68,7 @@
             <properties>
               <background color="-11317164"/>
               <editable value="false"/>
+              <font name="Consolas" size="14" style="0"/>
               <foreground color="-393219"/>
               <text value="Information"/>
             </properties>
@@ -138,7 +140,7 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <font name="Consolas" size="20" style="1"/>
+              <font name="Consolas" size="20" style="0"/>
               <text value="Settings"/>
             </properties>
           </component>
@@ -149,7 +151,7 @@
             </constraints>
             <properties>
               <labelFor value="8c066"/>
-              <text value="Information based on"/>
+              <text value="Sizes based on"/>
             </properties>
           </component>
           <component id="8c066" class="javax.swing.JComboBox" binding="infoModeBox">
@@ -164,6 +166,7 @@
                 <item value="Out Degree"/>
                 <item value="Total Degree"/>
               </model>
+              <toolTipText value="&lt;html&gt;Switch between different options of data on the map&lt;/html&gt;"/>
             </properties>
           </component>
           <component id="fa1f1" class="javax.swing.JLabel" binding="messageLabel">

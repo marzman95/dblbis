@@ -46,13 +46,16 @@ public class DataManager {
             try {
                 dbConnection = getConnection();
                 statement = dbConnection.createStatement();
-                resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited` FROM `city`");
+                resultSet = statement.executeQuery("SELECT DISTINCT `City-Name`, `Longitude`, `Latitude`, `Times-visited`,`out-degree`,`in-degree`,`tot-degree` FROM `city`");
                 while (resultSet.next()) {
                     City city = new City(
                             resultSet.getString("City-Name"),
                             resultSet.getDouble("Longitude"),
                             resultSet.getDouble("Latitude"),
-                            resultSet.getInt("Times-visited")
+                            resultSet.getInt("Times-visited"),
+                            resultSet.getInt("out-degree"),
+                            resultSet.getInt("in-degree"),
+                            resultSet.getInt("tot-degree")
                     );
                     citiesList.add(city);
                 }
@@ -117,13 +120,16 @@ public class DataManager {
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited` FROM `city` ORDER BY `Times-visited` DESC LIMIT " + infoAmount + "");
+            resultSet = statement.executeQuery("SELECT `City-Name`,`Latitude`,`Longitude`,`Times-visited`,`out-degree`,`in-degree`,`tot-degree` FROM `city` ORDER BY `Times-visited` DESC LIMIT " + infoAmount + "");
             while (resultSet.next()) {
                 City city = new City(
                         resultSet.getString("City-Name"),
                         resultSet.getDouble("Longitude"),
                         resultSet.getDouble("Latitude"),
-                        resultSet.getInt("Times-visited")
+                        resultSet.getInt("Times-visited"),
+                        resultSet.getInt("out-degree"),
+                        resultSet.getInt("in-degree"),
+                        resultSet.getInt("tot-degree")
                 );
                 popularCities.add(city);
             }
@@ -172,17 +178,28 @@ public class DataManager {
            dbConnection = getConnection();
            statement = dbConnection.createStatement();
            resultSet= statement.executeQuery("SELECT" +
-                   "  city.`City-Name`, city.Country," +
-                   "  city.Longitude," +
-                   "  city.Latitude," +
-                   "  city.`Times-visited` " +
+                   "  city.`City-Name`," +
+                   "  city.`Country`," +
+                   "  city.`Longitude`," +
+                   "  city.`Latitude`," +
+                   "  city.`Times-visited`," +
+                   "  city.`out-degree`," +
+                   "  city.`in-degree`," +
+                   "  city.`tot-degree`" +
                    " FROM city" +
-                   " WHERE city.Longitude BETWEEN "+ String.valueOf(lon-0.01)+" AND "+String.valueOf(lon+0.01) +
-                   " AND city.Latitude BETWEEN "+ String.valueOf(lat-0.01)+" AND " +String.valueOf(lat+0.01) );
+                   " WHERE city.`Longitude` BETWEEN "+ String.valueOf(lon-0.01)+" AND "+String.valueOf(lon+0.01) +
+                   " AND city.`Latitude` BETWEEN "+ String.valueOf(lat-0.01)+" AND " +String.valueOf(lat+0.01) );
            resultSet.first();
-           city = new CityTotal(resultSet.getString("City-Name"),
-               resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
-               resultSet.getInt("Times-visited"), resultSet.getString("Country"));
+           city = new CityTotal(
+                   resultSet.getString("City-Name"),
+                   resultSet.getDouble("Longitude"),
+                   resultSet.getDouble("Latitude"),
+                   resultSet.getInt("Times-visited"),
+                   resultSet.getString("Country"),
+                   resultSet.getInt("out-degree"),
+                   resultSet.getInt("in-degree"),
+                   resultSet.getInt("tot-degree")
+           );
             bar.setValue(20);
 
 
@@ -241,13 +258,22 @@ public class DataManager {
                     "  city.Longitude," +
                     "  city.Latitude," +
                     "  city.`Times-visited` " +
+                    "  city.`out-degree`," +
+                    "  city.`in-degree`," +
+                    "  city.`tot-degree`," +
                     " FROM city" +
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon1-0.01)+" AND "+String.valueOf(lon1+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat1-0.01)+" AND " +String.valueOf(lat1+0.01));
             //create city and add to cityPair
-            City city1 = new City(resultSet.getString("City-Name"),
-                    resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
-                    resultSet.getInt("Times-visited"));
+            City city1 = new City(
+                    resultSet.getString("City-Name"),
+                    resultSet.getDouble("Longitude"),
+                    resultSet.getDouble("Latitude"),
+                    resultSet.getInt("Times-visited"),
+                    resultSet.getInt("out-degree"),
+                    resultSet.getInt("in-degree"),
+                    resultSet.getInt("tot-degree")
+            );
             pair.setCity1(city1);
 
             //get second city name and times-visited from location
@@ -260,9 +286,15 @@ public class DataManager {
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon2-0.01)+" AND "+String.valueOf(lon2+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat2-0.01)+" AND " +String.valueOf(lat2+0.01));
             //create city and add to cityPair
-            City city2 = new City(resultSet.getString("City-Name"),
-                    resultSet.getDouble("Longitude"), resultSet.getDouble("Latitude"),
-                    resultSet.getInt("Times-visited"));
+            City city2 = new City(
+                    resultSet.getString("City-Name"),
+                    resultSet.getDouble("Longitude"),
+                    resultSet.getDouble("Latitude"),
+                    resultSet.getInt("Times-visited"),
+                    resultSet.getInt("out-degree"),
+                    resultSet.getInt("in-degree"),
+                    resultSet.getInt("tot-degree")
+            );
             pair.setCity2(city2);
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));

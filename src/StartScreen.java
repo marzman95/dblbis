@@ -383,7 +383,6 @@ class StartScreen extends JPanel {
         fileSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("test");
                 Thread thread = new Thread(new Setup(csvfile));
                 thread.start();
             }

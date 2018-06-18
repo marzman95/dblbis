@@ -291,14 +291,15 @@ public class DataManager {
                     "  city.`City-Name`, city.Country," +
                     "  city.Longitude," +
                     "  city.Latitude," +
-                    "  city.`Times-visited` " +
+                    "  city.`Times-visited`, " +
                     "  city.`out-degree`," +
                     "  city.`in-degree`," +
-                    "  city.`tot-degree`," +
+                    "  city.`tot-degree`" +
                     " FROM city" +
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon1-0.01)+" AND "+String.valueOf(lon1+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat1-0.01)+" AND " +String.valueOf(lat1+0.01));
             //create city and add to cityPair
+            resultSet.first();
             CityTotal city1 = new CityTotal(
                     resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"),
@@ -316,11 +317,15 @@ public class DataManager {
                     "  city.`City-Name`, city.Country," +
                     "  city.Longitude," +
                     "  city.Latitude," +
-                    "  city.`Times-visited` " +
+                    "  city.`Times-visited`, " +
+                    "  city.`out-degree`," +
+                    "  city.`in-degree`," +
+                    "  city.`tot-degree`" +
                     " FROM city" +
                     " WHERE city.Longitude BETWEEN "+ String.valueOf(lon2-0.01)+" AND "+String.valueOf(lon2+0.01) +
                     " AND city.Latitude BETWEEN "+ String.valueOf(lat2-0.01)+" AND " +String.valueOf(lat2+0.01));
             //create city and add to cityPair
+            resultSet.first();
             CityTotal city2 = new CityTotal(
                     resultSet.getString("City-Name"),
                     resultSet.getDouble("Longitude"),
@@ -336,10 +341,10 @@ public class DataManager {
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
 
-            resultSet = statement.executeQuery("select a.cnt+b.cnt as res from " +
-                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") as a" +
+            resultSet = statement.executeQuery("select a.cnt+b.cnt  as res from " +
+                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = "+pair.getCity1().getName()+" and trip.`To`= "+pair.getCity2().getName()+") AS A " +
                     "inner join" +
-                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity2() + "\" and trip.`To`= \" "+pair.getCity1()+"\") as b");
+                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = "+pair.getCity2().getName() + " AND trip.`To`=  "+pair.getCity1().getName()+ ") AS B");
 
             pair.setTimes(resultSet.getInt("res"));
             bar.setValue(40);

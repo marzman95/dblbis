@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ public class Setup implements Runnable {
      * Fills the database with the data from the CSV file.
      * Already interferes some general statistics about the data upon construction
      */
+    @Override
      public void run(){
          long startTime = System.nanoTime(); // measures start time to check built time.
          try { // writes to output to indicate progress.
@@ -46,13 +48,17 @@ public class Setup implements Runnable {
 
              resultSet = statement.executeQuery("SELECT `Trip Number`,SUM(`Distance`),SUM(`Duration`),MIN(`Start date`),MAX(`End date`) FROM leg GROUP BY `Trip Number`");
              System.out.println("Trip data retrieved");
+
              System.out.println("Start filling DB with data");
              statement.executeUpdate("INSERT INTO test.trip (`Trip Number`,total_distance,total_duration,start_date,end_date,`From`,`To`) SELECT `Trip Number`, `DisSum` AS total_distance, `DurSum` AS `total_duration`, `Start date` AS `start_date`, `End date` AS `end_date`,`Start` AS `From`, `End` AS `To` FROM (SELECT `Trip Number`, SUM(`Distance`) AS `DisSum`, SUM(`Duration`) AS `DurSum` FROM leg Group By `Trip Number`) AS  `a` NATURAL JOIN (SELECT `Trip Number`, `Start date`, `From` AS `Start` FROM leg NATURAL JOIN (SELECT `Trip Number`, MIN(`Start date`) AS `Start date` FROM leg GROUP BY `Trip Number`) AS `b` ) AS `c` NATURAL JOIN (SELECT `Trip Number`, `End date`, `To` AS `End` FROM leg NATURAL JOIN (SELECT `Trip Number`, MAX(`End date`) AS `End date` FROM leg GROUP BY `Trip Number`) AS `d`) AS `e`");
              System.out.println("trip done");
-             statement.executeUpdate("INSERT INTO test.route(`city-name-from`,`city-name-to`,`distance`,`times-used`) SELECT `From`,`To`,AVG(distance),COUNT(ALL) FROM leg GROUP BY `From`,`To`");
+
+             statement.executeUpdate("INSERT INTO test.route(`city-name-from`,`city-name-to`,`distance`,`times-used`) SELECT `From`,`To`,AVG(distance),COUNT(*) FROM leg GROUP BY `From`,`To`");
              System.out.println("route done");
-             statement.executeUpdate("INSERT INTO `city` (`City-Name`,`Country`,`Latitude`,`Longitude`,`Times-visited`,`out-degree`,`in-degree`,`tot-degree`) SELECT `City-Name`, `Country`, `Latitude`, `Longitude`, `Times-visited`, `out-degree`, `in-degree`, `tot-degree` FROM (SELECT `city-name-from` AS `City-Name`, COUNT(`city-name-to`) AS `out-degree` FROM route GROUP BY `city-name-from`) AS `out` NATURAL JOIN ( SELECT `city-name-to` AS `City-Name`, COUNT(`city-name-from`) AS `in-degree` FROM route GROUP BY `city-name-to`) AS `in` NATURAL JOIN ( SELECT `City-Name`, COUNT(`other-city`) AS `tot-degree` FROM (SELECT `city-name-from` AS `City-Name`, `city-name-to` AS `other-city` FROM route ) UNION ( SELECT `city-name-to` AS `City-Name`, `city-name-from` AS `other-city` FROM route ) ) AS `tot` GROUP BY `City-Name` AS `tot` NATURAL JOIN ( SELECT `From` AS `City-Name`, `Country Code (Activity From)` AS `Country`, `Latitude (from)` AS `Latitude`, `Longitude (from)` AS `Longitude`, Count(`From`) AS `Times-visited` FROM leg GROUP BY `From` ) AS `gen`");
+
+             statement.executeUpdate("INSERT INTO `city` (`City-Name`,`Country`,`Latitude`,`Longitude`,`Times-visited`,`out-degree`,`in-degree`,`tot-degree`) SELECT `City-Name`, `Country`, `Latitude`, `Longitude`, `Times-visited`, `out-degree`, `in-degree`, `tot-degree` FROM ( SELECT `city-name-from` AS `City-Name`, COUNT(`city-name-to`) AS `out-degree` FROM route GROUP BY `city-name-from` ) AS `out` NATURAL JOIN ( SELECT `city-name-to` AS `City-Name`, COUNT(`city-name-from`) AS `in-degree` FROM route GROUP BY `city-name-to` ) AS `in` NATURAL JOIN ( SELECT `City-Name`, COUNT(`other-city`) AS `tot-degree` FROM ( SELECT `city-name-from` AS `City-Name`, `city-name-to` AS `other-city` FROM route UNION ( SELECT `city-name-to` AS `City-Name`, `city-name-from` AS `other-city` FROM route ) ) AS `a` GROUP BY `City-Name` ) AS `tot`  NATURAL JOIN ( SELECT `From` AS `City-Name`, `Country Code (Activity From)` AS `Country`, `Latitude (from)` AS `Latitude`, `Longitude (from)` AS `Longitude`, Count(`From`) AS `Times-visited` FROM leg GROUP BY `From` ) AS `gen`");
              System.out.println("models.City done");
+
              System.out.println("Filled DB with data");
          }
          catch (Exception e){

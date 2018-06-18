@@ -1,5 +1,7 @@
 
+import de.fhpotsdam.unfolding.marker.Marker;
 import models.City;
+import models.CityPair;
 import models.CityTotal;
 import models.Destination;
 
@@ -393,6 +395,7 @@ class StartScreen extends JPanel {
     }
     public void filltable(CityTotal city){
         table1.setVisible(false);
+        table2.setVisible(false);
         table1.setDefaultEditor(Object.class, null);
         String[][] tableData = city.getinfo();
         String[] columnNames = new String[2];
@@ -408,6 +411,15 @@ class StartScreen extends JPanel {
         table2.setCellSelectionEnabled(true);
         table2.setVisible(true);
         table1.setVisible(true);
+    }
+    public void twocitiestable(double corX1, double corY1,double corX2,double corY2,DataManager dataManager){
+        table1.setVisible(false);
+        CityPair citypair= dataManager.twoCityStatistics(corX1,corY1,corX2,corY2,Querybar);
+        String[][] tableData = citypair.getinfo();
+        String[] columnNames = new String[2];
+        columnNames[0] = "Name";
+        columnNames[1] = "Value";
+        table1.setModel(new DefaultTableModel(tableData,columnNames));
     }
 
     public void activateSidePanel() {

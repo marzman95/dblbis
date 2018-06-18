@@ -285,7 +285,7 @@ public class DataManager {
         try {
             dbConnection = getConnection();
             statement = dbConnection.createStatement();
-
+            bar.setValue(10);
             //get first city name and times-visited from location
             resultSet = statement.executeQuery("SELECT\n" +
                     "  city.`City-Name`, city.Country," +
@@ -310,7 +310,7 @@ public class DataManager {
                     resultSet.getInt("tot-degree")
             );
             pair.setCity1(city1);
-
+            bar.setValue(20);
             //get second city name and times-visited from location
             resultSet = statement.executeQuery("SELECT\n" +
                     "  city.`City-Name`, city.Country," +
@@ -332,6 +332,7 @@ public class DataManager {
                     resultSet.getInt("tot-degree")
             );
             pair.setCity2(city2);
+            bar.setValue(30);
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
 
@@ -341,7 +342,7 @@ public class DataManager {
                     "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity2() + "\" and trip.`To`= \" "+pair.getCity1()+"\") as b");
 
             pair.setTimes(resultSet.getInt("res"));
-
+            bar.setValue(40);
             double [] array = new double[3];
 
             resultSet=statement.executeQuery("select avg(`Duration`) as a from leg inner join (\n" +
@@ -350,21 +351,21 @@ public class DataManager {
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[0] = resultSet.getDouble("a");
-
+            bar.setValue(50);
             resultSet=statement.executeQuery("select max(`Duration`) as a from leg inner join (\n" +
                     "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
                     "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[1] = resultSet.getDouble("a");
-
+            bar.setValue(60);
             resultSet=statement.executeQuery("select min(`Duration`) as a from leg inner join (\n" +
                     "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
                     "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[2] = resultSet.getDouble("a");
-
+            bar.setValue(70);
             pair.setduration(array);
 
             resultSet=statement.executeQuery("select avg(`Distance`) as a from leg inner join (\n" +
@@ -373,21 +374,21 @@ public class DataManager {
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[0] = resultSet.getDouble("a");
-
+            bar.setValue(80);
             resultSet=statement.executeQuery("select max(`Distance`) as a from leg inner join (\n" +
                     "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
                     "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[1] = resultSet.getDouble("a");
-
+            bar.setValue(90);
             resultSet=statement.executeQuery("select min(`Distance`) as a from leg inner join (\n" +
                     "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
                     "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
                     "on leg.`Trip Number`= `s`.`Trip Number`");
 
             array[2] = resultSet.getDouble("a");
-
+            bar.setValue(100);
             pair.setdistance(array);
 
 

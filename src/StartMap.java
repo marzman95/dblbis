@@ -109,7 +109,7 @@ public class StartMap extends PApplet {
                             hitMarker.setColor(color(0, 255,0,255));
                             hitMarker.setSelected(true);
                             selectedMarkers.add(hitMarker);
-                            Screen.getScreen().getStartScreen().filltable(acity);
+                            Screen.getScreen().getStartScreen().twocitiestable(acity.getLatitude(),acity.getLongitude(),hitMarker.getLocation().x,hitMarker.getLocation().y,dataManager);
                             return;
                         }
                     }
@@ -120,6 +120,7 @@ public class StartMap extends PApplet {
                     float markerY = hitMarker.getLocation().y;
                     CityTotal city = Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                     checkedCities.add(city);
+                    return;
                 }
             }
             else if(selectedMarkers.size()==2){
@@ -127,8 +128,19 @@ public class StartMap extends PApplet {
                     Marker marker = iterator.next();
                     if(hitMarker.getLocation().x == marker.getLocation().x && hitMarker.getLocation().y == marker.getLocation().y) {
                         hitMarker.setColor(color(34, 24, 155));
+                        found=true;
                         hitMarker.setSelected(false);
                         iterator.remove();
+                        return;
+                    }
+                }
+                if(found){
+                    Marker citymarker = selectedMarkers.get(0);
+                    for(CityTotal acity:checkedCities){
+                        if(acity.getLongitude() == citymarker.getLocation().y && acity.getLatitude() == citymarker.getLocation().x ){
+                            Screen.getScreen().getStartScreen().filltable(acity);
+                            return;
+                        }
                     }
                 }
             }
@@ -149,6 +161,7 @@ public class StartMap extends PApplet {
                float markerY = hitMarker.getLocation().y;
                CityTotal city = Screen.getScreen().getStartScreen().setMarker(markerX, markerY,dataManager);
                checkedCities.add(city);
+               return;
             }
         } else {
             for (Marker marker : map.getMarkers()) {

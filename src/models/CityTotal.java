@@ -1,4 +1,5 @@
 package models;
+
 import java.util.ArrayList;
 
 
@@ -8,7 +9,7 @@ public class CityTotal extends City {
     double avgLoadFrom;
     double avgLoadTo;
     String Country;
-    ArrayList<City> destinations;
+    ArrayList<Destination> destinations = new ArrayList<Destination>();
 
 
     public CityTotal(){}
@@ -16,13 +17,6 @@ public class CityTotal extends City {
     public CityTotal(String name, double longitude, double latitude, int timesVisited,String country){
         super(name, longitude,latitude, timesVisited);
         this.Country = country;
-    }
-
-
-    public void addDestination(String name,int dis) {
-        City city = new City(name,dis);
-        destinations.add(city);
-
     }
     public void setCargoPercentFrom(double cargoPercentFrom) {
         this.cargoPercentFrom = cargoPercentFrom;
@@ -40,11 +34,9 @@ public class CityTotal extends City {
         this.avgLoadTo = avgLoadTo;
     }
 
-    public void setDestinations(ArrayList<City> c) {this.destinations = c; }
+    public void addDestination(Destination d) {destinations.add(d); }
 
     public String getCountry(){return Country;}
-
-
 
     public String[][] getinfo(){
         String[][] returninfo = new String[9][2];
@@ -69,8 +61,17 @@ public class CityTotal extends City {
         return returninfo;
 
     }
-    public ArrayList<City> getDestinations() {
-        return destinations;
+    public String[][] getDestinations() {
+        System.out.println(destinations.size());
+        String[][] returnlist = new String[destinations.size()][2];
+        int i=0;
+        for(Destination d:destinations){
+            returnlist[i][0] = d.getName();
+            returnlist[i][1] = String.valueOf(d.getDistance());
+            i++;
+        }
+        return returnlist;
+
     }
 
 }

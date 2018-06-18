@@ -21,7 +21,7 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <font name="Consolas" size="28" style="1"/>
+              <font name="Consolas" size="28" style="0"/>
               <horizontalAlignment value="2"/>
               <text value="City is loading"/>
             </properties>
@@ -138,7 +138,7 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <font name="Consolas" size="20" style="1"/>
+              <font name="Consolas" size="20" style="0"/>
               <text value="Settings"/>
             </properties>
           </component>
@@ -164,7 +164,7 @@
                 <item value="Out Degree"/>
                 <item value="Total Degree"/>
               </model>
-              <toolTipText value="&lt;html&gt;Switch between &lt;b&gt;times visited or driven&lt;/b&gt; and &lt;b&gt;duration of loading or driving&lt;/b&gt;&lt;/html&gt;"/>
+              <toolTipText value="&lt;html&gt;Switch between different options of data on the map&lt;/html&gt;"/>
             </properties>
           </component>
           <component id="fa1f1" class="javax.swing.JLabel" binding="messageLabel">

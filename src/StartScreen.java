@@ -161,7 +161,9 @@ class StartScreen extends JPanel {
         gbc.gridy = 0;
         sidePanel.add(sidePanelTitle, gbc);
         gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         sidePanel.add(informationTextArea, gbc);
+        gbc.fill = GridBagConstraints.NONE;
         gbc.gridy = 2;
         sidePanel.add(Querybar, gbc);
         gbc.gridx = 0;
@@ -170,7 +172,9 @@ class StartScreen extends JPanel {
         sidePanel.add(table1ScrollPane, gbc);
         gbc.gridy = 9;
         gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         sidePanel.add(destinationsTextArea, gbc);
+        gbc.fill = GridBagConstraints.NONE;
         gbc.gridy = 10;
         sidePanel.add(Querybar1, gbc);
         gbc.gridy = 11;
@@ -313,7 +317,7 @@ class StartScreen extends JPanel {
         table1.setVisible(true);
         Querybar.setVisible(false);
         Querybar1.setVisible(false);
-        sidePanelTitle.setText("<html>City: <span style='color:lime'>" + city.getName() + "</span></html>");
+        sidePanelTitle.setText("<html>City: <b><span style='color:red'>" + city.getName() + "</b></span></html>");
         return city;
     }
     public void filltable(CityTotal city){

@@ -342,6 +342,55 @@ public class DataManager {
 
             pair.setTimes(resultSet.getInt("res"));
 
+            double [] array = new double[3];
+
+            resultSet=statement.executeQuery("select avg(`Duration`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[0] = resultSet.getDouble("a");
+
+            resultSet=statement.executeQuery("select max(`Duration`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[1] = resultSet.getDouble("a");
+
+            resultSet=statement.executeQuery("select min(`Duration`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[2] = resultSet.getDouble("a");
+
+            pair.setduration(array);
+
+            resultSet=statement.executeQuery("select avg(`Distance`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[0] = resultSet.getDouble("a");
+
+            resultSet=statement.executeQuery("select max(`Distance`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[1] = resultSet.getDouble("a");
+
+            resultSet=statement.executeQuery("select min(`Distance`) as a from leg inner join (\n" +
+                    "(select `Trip Number` from trip where (trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") or \n" +
+                    "(trip.`From` = \""+pair.getCity2()+"\" and trip.`To`= \""+pair.getCity1()+"\")) as `s`)\n" +
+                    "on leg.`Trip Number`= `s`.`Trip Number`");
+
+            array[2] = resultSet.getDouble("a");
+
+            pair.setdistance(array);
+
+
         } catch (Exception e) {
             System.out.println("[DataManager-exception]: Exception on twoCityStatistics(): " + e);}
         return pair;

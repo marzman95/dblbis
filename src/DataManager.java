@@ -265,6 +265,13 @@ public class DataManager {
             //get distance between cities and add to cityPair
             pair.setDistance(getDistance(lat1, lon1, lat2, lon2));
 
+            resultSet = statement.executeQuery("select a.cnt+b.cnt as res from \n" +
+                    "\n" +
+                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity1()+"\" and trip.`To`= \""+pair.getCity2()+"\") as a\n" +
+                    "inner join\n" +
+                    "(select count(`trip number`) as cnt  from `trip` where trip.`From` = \""+pair.getCity2() + "\" and trip.`To`= \" "+pair.getCity1()+"\") as b");
+
+            pair.setTimes(resultSet.getInt("res"));
 
         } catch (Exception e) {
             System.out.println("[DataManager-exception]: Exception on twoCityStatistics(): " + e);}

@@ -52,8 +52,7 @@ class StartScreen extends JPanel {
     public int routesAmount = 50;
     public boolean citiesDisplayed = true;
     public boolean routesDisplayed = true;
-    private int curInfoMode = 1; // 1 for popularity, 2 for duration
-    public City selectedCity;
+    public int curInfoMode = 1; // 1 for popularity, 2 for duration
 
     /**
      * Constructor of the start screen

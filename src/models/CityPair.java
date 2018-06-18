@@ -83,7 +83,7 @@ public class CityPair {
         returninfo[5][0] = "Distance between cities:";
         returninfo[5][1] = String.valueOf(getDistance());
         returninfo[6][0] = "Average leg duration:";
-        returninfo[6][1] = String.valueOf(getDuration()[0]);
+        returninfo[6][1] = String.valueOf(duration[0]);
         returninfo[7][0] = "Maximum leg duration:";
         returninfo[7][1] = String.valueOf(getDuration()[1]);
         returninfo[8][0] = "Minimum leg duration:";

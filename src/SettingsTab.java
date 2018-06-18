@@ -40,7 +40,6 @@ class SettingsTab extends TabContent {
                 int returnVal = fc.showOpenDialog(SettingsTab.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
-                    System.out.println("test");
                     //This is where a real application would save the file.
                     Thread t = new Thread(new Setup(file));
                     t.start();

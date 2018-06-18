@@ -1,3 +1,4 @@
+
 import models.City;
 import models.CityTotal;
 import models.Destination;
@@ -8,6 +9,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 
 /**
@@ -44,7 +46,8 @@ class StartScreen extends JPanel {
     private JTextField fileTextField;
     private JButton fileSubmitButton;
     private JProgressBar fileProgressBar;
-    private JFileChooser fileChooser = new JFileChooser();
+    private JFileChooser fc = new JFileChooser();
+    private File csvfile;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -303,7 +306,28 @@ class StartScreen extends JPanel {
                 System.out.println(selectedCity.toString());
             }
         });
+        fileTextField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                int returnVal = fc.showOpenDialog(StartScreen.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                   csvfile = fc.getSelectedFile();
+                   fileTextField.setText(csvfile.getAbsolutePath());
+                } else {
+
+                }
+            }
+        });
+        fileSubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("test");
+                Thread thread = new Thread(new Setup(csvfile));
+                thread.start();
+            }
+        });
     }
+
 
     /**
      * Function that sets content of the side panel when a marker is clicked

@@ -41,6 +41,8 @@ class StartScreen extends JPanel {
     private JTextArea destinationsTextArea;
     private JTextArea informationTextArea;
     private JProgressBar Querybar1;
+    private JScrollPane table1ScrollPane;
+    private JScrollPane table2ScrollPane;
     private final Screen mainScreen = Screen.getScreen();
     private final JTabbedPane tabPane;
     public processing.core.PApplet map;
@@ -278,6 +280,7 @@ class StartScreen extends JPanel {
     }
     public void filltable(CityTotal city){
         table1.setVisible(false);
+        table1.setDefaultEditor(Object.class, null);
         String[][] tableData = city.getinfo();
         String[] columnNames = new String[2];
         columnNames[0] = "Name";
@@ -303,4 +306,19 @@ class StartScreen extends JPanel {
         return "Amount of cities and routes";
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        table1 = new JTable() {
+            private static final long serialVersionUID = 1L;
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table2 = new JTable() {
+            private static final long serialVersionUID = 1L;
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    }
 }

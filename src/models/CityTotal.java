@@ -63,15 +63,24 @@ public class CityTotal extends City {
     }
     public String[][] getDestinations() {
         System.out.println(destinations.size());
-        String[][] returnlist = new String[destinations.size()][2];
+        String[][] returnlist = new String[destinations.size()][3];
         int i=0;
         for(Destination d:destinations){
             returnlist[i][0] = d.getName();
             returnlist[i][1] = String.valueOf(d.getDistance());
+            returnlist[i][2] = String.valueOf(d.getTimesvisited());
             i++;
         }
         return returnlist;
 
+    }
+    public Destination[][] testDestinations(){
+        Destination[][] returnlist = new Destination[1][destinations.size()];
+        int i = 0;
+        for(Destination d:destinations){
+            returnlist[0][i] = d;
+        }
+        return returnlist;
     }
 
 }

@@ -1,4 +1,5 @@
 import models.CityTotal;
+import models.Destination;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -295,9 +296,10 @@ class StartScreen extends JPanel {
         columnNames1[0] = "Name";
         columnNames1[1] = "Value";
         table1.setModel(new DefaultTableModel(tableData1,columnNames1));
-        String[] columnNames2 = new String[2];
+        String[] columnNames2 = new String[3];
         columnNames2[0] = "Destination";
         columnNames2[1] = "Distance";
+        columnNames2[2] = "Times-used";
         String[][] tableData2 = city.getDestinations();
         table2.setModel(new DefaultTableModel(tableData2,columnNames2));
         table2.setVisible(true);
@@ -314,6 +316,13 @@ class StartScreen extends JPanel {
         columnNames[0] = "Name";
         columnNames[1] = "Value";
         table1.setModel(new DefaultTableModel(tableData,columnNames));
+        String[] columnNames2 = new String[3];
+        columnNames2[0] = "Destination";
+        columnNames2[1] = "Distance";
+        columnNames2[2] = "Times-used";
+        String[][] tableData2 = city.getDestinations();
+        table2.setModel(new DefaultTableModel(tableData2,columnNames2));
+        table2.setVisible(true);
         table1.setVisible(true);
     }
 

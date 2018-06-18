@@ -209,11 +209,13 @@ public class DataManager {
             resultSet = statement.executeQuery("SELECT AVG(`Load index`) AS `Load index` FROM `leg` WHERE `To` = \""+city.getName()+"\"");
             resultSet.first();
             city.setAvgLoadTo(resultSet.getDouble("Load index"));
-            resultSet = statement.executeQuery("SELECT `city-name-to`, `distance` FROM `route` WHERE `city-name-from` = \""+city.getName()+"\"");
+            resultSet = statement.executeQuery("SELECT `city-name-to`, `distance`,`times-used` FROM `route` WHERE `city-name-from` = \""+city.getName()+"\"ORDER BY `times-used` DESC");
             bar.setValue(100);
             while(resultSet.next()){
-                Destination d = new Destination(resultSet.getString("city-name-to"),resultSet.getInt("distance"));
-                city.addDestination(d);
+                if(resultSet.getInt("distance")!= 0) {
+                    Destination d = new Destination(resultSet.getString("city-name-to"),resultSet.getInt("distance"),resultSet.getInt("times-used"));
+                    city.addDestination(d);
+                }
             }
             bar1.setValue(100);
         }

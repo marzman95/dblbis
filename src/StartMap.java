@@ -24,6 +24,7 @@ public class StartMap extends PApplet {
     UnfoldingMap map;
     private List<Marker> selectedMarkers = new ArrayList<Marker>();
     private List<CityTotal> checkedCities = new ArrayList<CityTotal>();
+    private List<CityPair> checked2Cities = new ArrayList<CityPair>();
     /**
      * Setups the map
      */
@@ -111,8 +112,6 @@ public class StartMap extends PApplet {
                         found = true;
                         hitMarker.setColor(color(34, 24, 155));
                         hitMarker.setSelected(false);
-                        float markerX = hitMarker.getLocation().x;
-                        float markerY = hitMarker.getLocation().y;
                     }
                 }
                 if(!found) {

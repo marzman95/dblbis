@@ -170,7 +170,16 @@ public class StartMap extends PApplet {
                 City curCity = citiesToAdd.get(i);
                 genericLocation = new Location(curCity.getLatitude(), curCity.getLongitude());
                 genericMarker = new SimplePointMarker(genericLocation);
-                genericMarker.setRadius(((float) curCity.getTimesVisited() / 800) + 5);
+                int drawRadiusMode = Screen.getScreen().getStartScreen().curInfoMode;
+                if (drawRadiusMode == 1) {
+                    genericMarker.setRadius(((float) curCity.getTimesVisited() / 800) + 5);
+                } else if (drawRadiusMode == 2) {
+                    genericMarker.setRadius(((float) curCity.getIndegree() / 20) + 5);
+                } else if (drawRadiusMode == 3) {
+                    genericMarker.setRadius(((float) curCity.getOutdegree() / 20) + 5);
+                } else if (drawRadiusMode == 4) {
+                    genericMarker.setRadius(((float) curCity.getTotaldegree() / 20) + 5);
+                }
                 genericMarker.setColor(color(0,0,255,255));
                 mm.addMarker(genericMarker);
             }

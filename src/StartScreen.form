@@ -159,8 +159,10 @@
             </constraints>
             <properties>
               <model>
-                <item value="Popularity"/>
-                <item value="Duration"/>
+                <item value="Frequency"/>
+                <item value="In Degree"/>
+                <item value="Out Degree"/>
+                <item value="Total Degree"/>
               </model>
               <toolTipText value="&lt;html&gt;Switch between &lt;b&gt;times visited or driven&lt;/b&gt; and &lt;b&gt;duration of loading or driving&lt;/b&gt;&lt;/html&gt;"/>
             </properties>

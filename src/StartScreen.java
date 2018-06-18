@@ -1,11 +1,17 @@
 import models.City;
 import models.CityTotal;
+import models.Destination;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 
 /**
@@ -216,11 +222,16 @@ class StartScreen extends JPanel {
 //                    routesDisplayed = false;
 //                    routesAmountField.setEnabled(false);
 //                }
-                if (infoModeBox.getSelectedItem().equals("Popularity")) {
+                if (infoModeBox.getSelectedItem().equals("Frequency")) {
                     curInfoMode = 1;
-                } else if (infoModeBox.getSelectedItem().equals("Duration")) {
+                } else if (infoModeBox.getSelectedItem().equals("In Degree")) {
                     curInfoMode = 2;
+                } else if (infoModeBox.getSelectedItem().equals("Out Degree")) {
+                    curInfoMode = 3;
+                } else if (infoModeBox.getSelectedItem().equals("Total Degree")) {
+                    curInfoMode = 4;
                 }
+
                 System.out.println("Changed data and info");
                     //TODO: Do something
                 if (citiesDisplayed) {

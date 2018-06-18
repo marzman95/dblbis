@@ -14,8 +14,8 @@ public class CityTotal extends City {
 
     public CityTotal(){}
 
-    public CityTotal(String name, double longitude, double latitude, int timesVisited,String country){
-        super(name, longitude,latitude, timesVisited);
+    public CityTotal(String name, double longitude, double latitude, int timesVisited,String country, int out, int in, int tot){
+        super(name, longitude,latitude, timesVisited, out, in, tot);
         this.Country = country;
     }
     public void setCargoPercentFrom(double cargoPercentFrom) {
